@@ -9,9 +9,9 @@
             
             <!-- Desktop Navigation -->
             <ul v-show="!mobile" class="navigation1">
-                <RouterLink class="link" to="">Project</RouterLink>
-                <RouterLink class="link" to="">Templates</RouterLink>
-                <RouterLink class="link" to="">Groups</RouterLink>
+                <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
+                <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
+                <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
                 <i class="fa-solid fa-gear"></i>
             </ul>
 
@@ -158,6 +158,12 @@ header {
                 color: $primary-color;
             }
         }
+
+        .active-link {
+            color: $primary-color;
+            border-bottom: 3px solid $primary-color;
+        }
+
 
         .icon {
             display: flex;
