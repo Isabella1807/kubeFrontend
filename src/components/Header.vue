@@ -5,6 +5,16 @@
                 <RouterLink to="/">
                     <img src="../img/kubelab.png" alt="Kubelab logo" />
                 </RouterLink>
+                <!-- Søgefelt -->
+                <div class="soge-felt">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input 
+                        type="text" 
+                        v-model="searchQuery" 
+                        placeholder="Seach..." 
+                        @input="searchItems"
+                         />
+                </div>
             </div>
             
             <!-- Desktop Navigation -->
@@ -31,6 +41,7 @@
         </nav>
     </header>
 </template>
+
   
   <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -38,6 +49,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const scrolledNav = ref(false);
 const mobile = ref(false);
 const mobileNav = ref(false);
+const searchQuery = ref('');
 const windowWidth = ref(window.innerWidth);
 
 // Funktion til at tjekke skærmbredden
@@ -62,6 +74,12 @@ const toggleMobileNav = () => {
     mobileNav.value = !mobileNav.value;
 };
 
+// Søgefunktion
+const searchItems = () => {
+    console.log('Søger efter: ', searchQuery.value);
+    // Her kan du implementere søgning via API eller filtrering af lokale data
+};
+
 // Setup event listeners
 onMounted(() => {
     window.addEventListener('resize', checkScreen);
@@ -73,13 +91,15 @@ onUnmounted(() => {
     window.removeEventListener('resize', checkScreen);
     window.removeEventListener('scroll', updateScroll);
 });
-  </script>
-  
+</script>
+
   <style lang="scss" scoped>
+
 // Variabler
 $primary-color: #5C007E;
 $secondary-color: #333;
 $white-color: #fff;
+$bacgroundgrey: #F6F6F6;
 $header-height: 100%;
 $font-size-desktop: 15px;
 $font-weight: 700;
@@ -89,6 +109,7 @@ $header-padding: 10px 0;
 $max-width-desktop: 1350px;
 $max-width-tablet: 700px;
 $max-width-mobile: 320px;
+
 
 // Mixins
 @mixin transition($duration: $transition-duration) {
@@ -102,6 +123,34 @@ $max-width-mobile: 320px;
 }
 
 // Styling
+
+.soge-felt {
+    margin-left: 20px;
+    position: relative;
+    
+    input {
+        padding: 10px 40px;
+        font-size: $font-size-desktop;
+        border: none ;
+        border-radius: 5px;
+        background: $bacgroundgrey;
+        width: 349px;
+
+        &:focus {
+            border-color: #5C007E; /* Juster farve efter behov */
+            outline: none;
+        }
+    }
+
+    i {
+        font-size: 20px;
+        padding: 10px 0px;
+        position: absolute; 
+        left: 10px; 
+        color: #333; 
+        pointer-events: none; 
+    }
+}
 header {
     background-color: $white-color;
     z-index: 2;
