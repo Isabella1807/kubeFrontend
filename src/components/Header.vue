@@ -125,6 +125,7 @@ header {
             img {
                 width: 50px;
             }
+
         }
 
         .navigation1 {
@@ -133,6 +134,15 @@ header {
             align-items: center;
             flex: 1;
             justify-content: flex-end;
+
+            i {
+                font-size: 25px;
+                @include transition();
+
+                &:hover {
+                color: $primary-color;
+            }
+            }
         }
 
         .link {
