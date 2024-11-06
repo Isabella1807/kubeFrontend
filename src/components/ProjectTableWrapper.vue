@@ -8,16 +8,36 @@ import Icon from "@/components/Icon.vue";
   <div class="table-wrapper">
     <div class="table-header">
       <div class="table-cell">
-        <p>Project</p>
+        <div class="tableHeaderItemsContainer">
+          <p>Project</p>
+          <div>
+            <img src="/icons/caretDown.svg" alt="Sort alphabetically">
+          </div>
+        </div>
       </div>
       <div class="table-cell wide">
-        <p>Domain</p>
+        <div class="tableHeaderItemsContainer">
+          <p>Domain</p>
+          <div>
+            <img src="/icons/caretDown.svg" alt="Sort alphabetically">
+          </div>
+        </div>
       </div>
       <div class="table-cell">
-        <p>Group</p>
+        <div class="tableHeaderItemsContainer">
+          <p>Group</p>
+          <div>
+            <img src="/icons/caretDown.svg" alt="Sort alphabetically">
+          </div>
+        </div>
       </div>
       <div class="table-actions">
-        <p>Status</p>
+        <div class="tableHeaderItemsContainer">
+          <p>Status</p>
+          <div>
+            <img src="/icons/caretDown.svg" alt="Sort alphabetically">
+          </div>
+        </div>
       </div>
     </div>
     <slot/> <!--    Rows ligger her-->
@@ -43,6 +63,12 @@ import Icon from "@/components/Icon.vue";
     .table-actions {
       width: 6.5rem;
     }
+  }
+
+  .tableHeaderItemsContainer{
+    display: inline-flex;
+    border: 2px solid pink;
+    cursor: pointer;
   }
 }
 </style>

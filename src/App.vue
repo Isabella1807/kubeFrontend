@@ -4,6 +4,7 @@ import {RouterView} from 'vue-router'
 
 <template>
   <div class="body_container">
+
     <div class="main_container">
       <main>
         <RouterView/>
@@ -29,7 +30,7 @@ import {RouterView} from 'vue-router'
       max-width: 1350px;
       background-color: green;
       flex: 1;
-      padding: 16px 24px;
+      padding: 4rem 0;
     }
   }
 }

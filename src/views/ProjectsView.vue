@@ -26,10 +26,10 @@ const projectRows = [
 </script>
 
 <template>
-  <h2>Tester:)</h2>
-  <IconButton icon="addIcon" large primary/>
-  <IconButton icon="stopIcon"/>
-  <IconButton icon="playIcon"/>
+  <div class="createNewProjectButtonContainer">
+    <IconButton icon="addIcon" large primary/>
+    <h1 class="createProjectText">Create new project</h1>
+  </div>
   <div>
     <ProjectTableWrapper>
       <ProjectRows v-for="item in projectRows" :project-name="item.projectName" :subdomain-name="item.subdomainName"/>
@@ -38,4 +38,14 @@ const projectRows = [
 </template>
 
 <style scoped lang="scss">
+.createNewProjectButtonContainer{
+  display: flex;
+  align-items: center;
+  border: 2px solid red;
+  margin-bottom: 4rem;
+
+  .createProjectText{
+    margin-left: 10px;
+  }
+}
 </style>
