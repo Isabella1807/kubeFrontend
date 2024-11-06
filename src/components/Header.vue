@@ -23,14 +23,14 @@
                 <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
                 <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
                     <label class="switch">
-                        <input type="checkbox" @click="toggleDark()">
+                        <input type="checkbox" v-model="isDark" @click="toggleDark()">
                         <span class="slider round">
                             <i class="fa-solid fa-moon moon-icon"></i>
                             <i class="fa-solid fa-sun sun-icon"></i>
                         </span>
                     </label>
 
-                <i class="fa-solid fa-gear"></i>
+                <i class="fa-solid fa-gear settings"></i>
             </ul>
 
             <!-- Mobile Navigation Icon -->
@@ -56,14 +56,22 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 
-const isDark = useDark({
-    selector: "header",
-    attribute: "color-scheme",
-    valueDark: 'dark',
-    valueLight: 'light',
-})
+// Læs dark mode-præference fra localStorage
+const isDark = ref(localStorage.getItem('isDarkMode') === 'true');
 
-const toggleDark = useToggle(isDark)
+// Funktion til at skifte dark mode og gemme indstillingen i localStorage
+const toggleDark = () => {
+  isDark.value = !isDark.value;
+  localStorage.setItem('isDarkMode', isDark.value);
+  document.documentElement.setAttribute('color-scheme', isDark.value ? 'dark' : 'light');
+};
+
+// Genindlæs farveskema ved sideindlæsning
+onMounted(() => {
+  document.documentElement.setAttribute('color-scheme', isDark.value ? 'dark' : 'light');
+});
+
+
 
 const scrolledNav = ref(false);
 const mobile = ref(false);
@@ -119,6 +127,7 @@ $primary-color: #5C007E;
 $secondary-color: #333;
 $white-color: #fff;
 $bacgroundgrey: #F6F6F6;
+$color-darkmode: #fff;
 $header-height: 100%;
 $font-size-desktop: 15px;
 $font-weight: 700;
@@ -172,10 +181,10 @@ $max-width-mobile: 320px;
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  right: 4px;
-  bottom: 4px;
+  height: 35px;
+  width: 45px;
+  right: 0px;
+  bottom: 0px;
   background-color:$primary-color;
   border-radius: 50%;
   transition: 0.4s;
@@ -186,17 +195,17 @@ $max-width-mobile: 320px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 15px;
+  font-size: 20px;
   transition: color 0.4s;
 }
 
 /* Placér måne til venstre og sol til højre */
 .moon-icon {
-  left: 10px;
+  left: 12px;
 }
 
 .sun-icon {
-  right: 10px;
+  right: 12px;
   color: #fff;
 }
 
@@ -209,17 +218,27 @@ input:checked + .slider .moon-icon {
 }
 
 input:checked + .slider .sun-icon {
-  color: #fff; /* Guld farve til sol i light mode */
+  color: #333; /* Guld farve til sol i light mode */
 }
 
-/* Farveskema */
-[color-scheme= 'dark'] {
-    background-color: #180020;
+/* Farveskema Darkmode*/
+
+/* Farveskema Darkmode */
+[color-scheme="dark"], body {
+  background-color: #c58ad8; /* Baggrundsfarve for dark mode */
+  color: $color-darkmode;
+
+  .link {
+    color: $color-darkmode;
+    @include transition();
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
 }
 
-[color-scheme= 'light'] {
-    background-color: #fff;
-}
+
 
 
 .soge-felt {
@@ -282,13 +301,14 @@ header {
             flex: 1;
             justify-content: flex-end;
 
-            i {
+            .settings {
                 font-size: 25px;
-                @include transition();
+                margin-left: 20px;
 
                 &:hover {
                 color: $primary-color;
             }
+            
             }
         }
 
@@ -298,7 +318,7 @@ header {
             color: $secondary-color;
             list-style: none;
             text-decoration: none;
-            margin-right: 40px;
+            margin-right: 30px;
             @include transition();
 
             &:hover {
