@@ -1,5 +1,5 @@
 <script setup>
-import CreateButton from "@/components/CreateButton.vue";
+import IconButton from "@/components/IconButton.vue";
 import ProjectRows from "@/components/ProjectRows.vue";
 import ProjectTableWrapper from "@/components/ProjectTableWrapper.vue";
 
@@ -27,10 +27,15 @@ const projectRows = [
 
 <template>
   <h2>Tester:)</h2>
-  <CreateButton/>
+  <IconButton icon="playIcon"/>
+  <IconButton icon="playIcon" primary/>
+  <IconButton icon="playIcon" large/>
+  <IconButton icon="playIcon" large primary/>
+  <IconButton icon="playIcon" ghost @click="() => console.log('ARGH')"/>
+  <IconButton icon="playIcon" large ghost/>
   <div>
     <ProjectTableWrapper>
-      <ProjectRows v-for="item in projectRows" :project-name="item.projectName"/>
+      <ProjectRows v-for="item in projectRows" :project-name="item.projectName" :subdomain-name="item.subdomainName"/>
     </ProjectTableWrapper>
   </div>
 </template>
