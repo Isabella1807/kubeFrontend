@@ -13,13 +13,25 @@ const props = defineProps({
   }
 })
 
-const isOnline = ref(false);
+const isOnline = ref(true);
 
 const statusText = computed(() => isOnline.value ? 'Online' : 'Offline');
 
 const statusClass = computed(() => {
   return isOnline.value ? 'green' : 'red'
 })
+
+const statusIcon = computed(() =>{
+  return isOnline.value ? 'stopIcon' : 'playIcon'
+})
+
+const toggleServer = () => {
+  if (isOnline.value) {
+    console.log("stop server")
+    return
+  }
+  console.log("start server")
+};
 </script>
 
 <template>
@@ -35,7 +47,7 @@ const statusClass = computed(() => {
     </div>
     <div class="table-actions" :class="statusClass">
       <p>{{statusText}}</p>
-      <IconButton icon="playIcon"/>
+      <IconButton :icon="statusIcon" @click="toggleServer"/>
     </div>
   </div>
 </template>

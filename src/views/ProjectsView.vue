@@ -27,12 +27,9 @@ const projectRows = [
 
 <template>
   <h2>Tester:)</h2>
+  <IconButton icon="addIcon" large primary/>
+  <IconButton icon="stopIcon"/>
   <IconButton icon="playIcon"/>
-  <IconButton icon="playIcon" primary/>
-  <IconButton icon="playIcon" large/>
-  <IconButton icon="playIcon" large primary/>
-  <IconButton icon="playIcon" ghost @click="() => console.log('ARGH')"/>
-  <IconButton icon="playIcon" large ghost/>
   <div>
     <ProjectTableWrapper>
       <ProjectRows v-for="item in projectRows" :project-name="item.projectName" :subdomain-name="item.subdomainName"/>
