@@ -22,6 +22,14 @@
                 <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
                 <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
                 <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+                    <label class="switch">
+                        <input type="checkbox" @click="toggleDark()">
+                        <span class="slider round">
+                            <i class="fa-solid fa-moon moon-icon"></i>
+                            <i class="fa-solid fa-sun sun-icon"></i>
+                        </span>
+                    </label>
+
                 <i class="fa-solid fa-gear"></i>
             </ul>
 
@@ -33,9 +41,10 @@
             <!-- Mobile Dropdown Navigation -->
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="dropdown-nav">
-                    <RouterLink class="link" to="">Project</RouterLink>
-                    <RouterLink class="link" to="">Templates</RouterLink>
-                    <RouterLink class="link" to="">Groups</RouterLink>
+                    <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
+                    <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
+                    <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+                    <i class="fa-solid fa-gear"></i>
                 </ul>
             </transition>
         </nav>
@@ -45,6 +54,16 @@
   
   <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useDark, useToggle } from '@vueuse/core';
+
+const isDark = useDark({
+    selector: "header",
+    attribute: "color-scheme",
+    valueDark: 'dark',
+    valueLight: 'light',
+})
+
+const toggleDark = useToggle(isDark)
 
 const scrolledNav = ref(false);
 const mobile = ref(false);
@@ -123,6 +142,89 @@ $max-width-mobile: 320px;
 }
 
 // Styling
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 35px;
+
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #eee;
+  border-radius: 4px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 0px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+/* Ikoner for måne og sol */
+.moon-icon, .sun-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f0e68c; /* Startfarve for sol og måne */
+  font-size: 16px;
+  transition: color 0.4s;
+}
+
+/* Placér måne til venstre og sol til højre */
+.moon-icon {
+  left: 10px;
+}
+
+.sun-icon {
+  right: 10px;
+}
+
+/* Skift farve og position ved toggle */
+
+
+
+input:checked + .slider .sun-icon {
+  color: #fff; /* Guld farve til sol i light mode */
+}
+
+
+[color-scheme= 'dark'] {
+    background-color: #180020;
+}
+
+[color-scheme= 'light'] {
+    background-color: #fff;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 
 .soge-felt {
     margin-left: 20px;
