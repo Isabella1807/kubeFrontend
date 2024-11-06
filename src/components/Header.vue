@@ -149,7 +149,6 @@ $max-width-mobile: 320px;
   display: inline-block;
   width: 80px;
   height: 35px;
-
 }
 
 .switch input {
@@ -166,7 +165,7 @@ $max-width-mobile: 320px;
   right: 0;
   bottom: 0;
   background-color: #eee;
-  border-radius: 4px;
+  border-radius: 34px;
   transition: 0.4s;
 }
 
@@ -175,9 +174,10 @@ $max-width-mobile: 320px;
   content: "";
   height: 26px;
   width: 26px;
-  left: 0px;
+  right: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color:$primary-color;
+  border-radius: 50%;
   transition: 0.4s;
 }
 
@@ -186,8 +186,7 @@ $max-width-mobile: 320px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  color: #f0e68c; /* Startfarve for sol og måne */
-  font-size: 16px;
+  font-size: 15px;
   transition: color 0.4s;
 }
 
@@ -198,17 +197,22 @@ $max-width-mobile: 320px;
 
 .sun-icon {
   right: 10px;
+  color: #fff;
 }
 
-/* Skift farve og position ved toggle */
+input:checked + .slider:before {
+  transform: translateX(-40px); /* Justeret position til slider-knappen */
+}
 
-
+input:checked + .slider .moon-icon {
+  color: #fff;
+}
 
 input:checked + .slider .sun-icon {
   color: #fff; /* Guld farve til sol i light mode */
 }
 
-
+/* Farveskema */
 [color-scheme= 'dark'] {
     background-color: #180020;
 }
@@ -217,14 +221,6 @@ input:checked + .slider .sun-icon {
     background-color: #fff;
 }
 
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
 
 .soge-felt {
     margin-left: 20px;
