@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import NewTemplate from '@/views/NewTemplate.vue'
+import ListTemplates from '@/views/ListTemplates.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,6 +10,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path:'/templates',
+      name:'templates',
+      component: ListTemplates
     },
     {
       path:'/templates/new',
