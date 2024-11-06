@@ -11,7 +11,7 @@ import Icon from "@/components/Icon.vue";
         <div class="tableHeaderItemsContainer">
           <p>Project</p>
           <div>
-            <img src="/icons/caretDown.svg" alt="Sort alphabetically">
+            <icon name="caretDown" class="tableItemsCaretDown"/>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@ import Icon from "@/components/Icon.vue";
         <div class="tableHeaderItemsContainer">
           <p>Domain</p>
           <div>
-            <img src="/icons/caretDown.svg" alt="Sort alphabetically">
+            <icon name="caretDown" class="tableItemsCaretDown"/>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@ import Icon from "@/components/Icon.vue";
         <div class="tableHeaderItemsContainer">
           <p>Group</p>
           <div>
-            <img src="/icons/caretDown.svg" alt="Sort alphabetically">
+            <icon name="caretDown" class="tableItemsCaretDown"/>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ import Icon from "@/components/Icon.vue";
         <div class="tableHeaderItemsContainer">
           <p>Status</p>
           <div>
-            <img src="/icons/caretDown.svg" alt="Sort alphabetically">
+            <icon name="caretDown" class="tableItemsCaretDown"/>
           </div>
         </div>
       </div>
@@ -49,8 +49,9 @@ import Icon from "@/components/Icon.vue";
   background-color: cornsilk;
 
   .table-header {
-    background-color: orange;
+    background-color: dodgerblue;
     display: flex;
+    border-bottom: 2px solid $lightGrey;
 
     .table-cell {
       flex: 1;
@@ -67,8 +68,13 @@ import Icon from "@/components/Icon.vue";
 
   .tableHeaderItemsContainer{
     display: inline-flex;
-    border: 2px solid pink;
     cursor: pointer;
+    gap: 10px;
+    align-items: center;
+
+    .tableItemsCaretDown{
+      color: $primaryPurple;
+    }
   }
 }
 </style>

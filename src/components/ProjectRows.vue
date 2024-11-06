@@ -1,6 +1,7 @@
 <script setup>
 import {computed, ref} from "vue";
 import IconButton from "@/components/IconButton.vue";
+import Icon from "@/components/Icon.vue";
 
 const props = defineProps({
   projectName: {
@@ -8,6 +9,10 @@ const props = defineProps({
     required: true
   },
   subdomainName: {
+    type: String,
+    required: true
+  },
+  groupName: {
     type: String,
     required: true
   }
@@ -21,7 +26,7 @@ const statusClass = computed(() => {
   return isOnline.value ? 'green' : 'red'
 })
 
-const statusIcon = computed(() =>{
+const statusIcon = computed(() => {
   return isOnline.value ? 'stopIcon' : 'playIcon'
 })
 
@@ -37,16 +42,19 @@ const toggleServer = () => {
 <template>
   <div class="table-row">
     <div class="table-cell">
-      <p>{{ props.projectName }}</p>
+      <div class="projectNameContainer">
+        <Icon name="caretDown" class="projectCaretDownIcon"/>
+        <p class="projectName">{{ props.projectName }}</p>
+      </div>
     </div>
     <div class="table-cell wide">
       <p>{{ props.subdomainName }}</p>
     </div>
     <div class="table-cell">
-      <p>Bla bla bla</p>
+      <p>{{ props.groupName }}</p>
     </div>
     <div class="table-actions" :class="statusClass">
-      <p>{{statusText}}</p>
+      <p>{{ statusText }}</p>
       <IconButton :icon="statusIcon" @click="toggleServer"/>
     </div>
   </div>
@@ -54,14 +62,29 @@ const toggleServer = () => {
 
 <style scoped lang="scss">
 .table-row {
-  background-color: orange;
+  background-color: cadetblue;
   display: flex;
+  align-items: end;
+  border-bottom: 2px solid $lightGrey;
+  padding: 1rem 0 0.5rem 0;
 
   .table-cell {
     flex: 1;
 
     &.wide {
       flex: 2;
+    }
+
+    .projectNameContainer{
+      display: flex;
+
+      .projectCaretDownIcon{
+        color: $primaryPurple;
+      }
+
+      .projectName{
+        font-weight: $boldFont;
+      }
     }
   }
 
@@ -71,11 +94,11 @@ const toggleServer = () => {
     justify-content: space-between;
     width: 6.5rem;
 
-    &.green {
+    &.green p {
       color: lightgreen;
     }
 
-    &.red {
+    &.red p {
       color: red;
     }
   }

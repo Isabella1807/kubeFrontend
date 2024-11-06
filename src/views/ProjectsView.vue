@@ -12,16 +12,22 @@ const projectRows = [
   },
   {
     projectName: "Portfolie2",
-    subdomainName: "portfolie.kubelab.dk",
-    groupName: "QUOE24",
+    subdomainName: "womp.kubelab.dk",
+    groupName: "MUOE25",
     status: true
   },
   {
     projectName: "Portfolie3",
-    subdomainName: "portfolie.kubelab.dk",
-    groupName: "QUOE24",
+    subdomainName: "whooo.kubelab.dk",
+    groupName: "WUOE26",
     status: true
   },
+  {
+    projectName: "Portfolie4",
+    subdomainName: "hvaaaad.kubelab.dk",
+    groupName: "muuhgruppen",
+    status: true
+  }
 ]
 </script>
 
@@ -32,7 +38,7 @@ const projectRows = [
   </div>
   <div>
     <ProjectTableWrapper>
-      <ProjectRows v-for="item in projectRows" :project-name="item.projectName" :subdomain-name="item.subdomainName"/>
+      <ProjectRows v-for="item in projectRows" :projectName="item.projectName" :subdomainName="item.subdomainName" :groupName="item.groupName"/>
     </ProjectTableWrapper>
   </div>
 </template>
