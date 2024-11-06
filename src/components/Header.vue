@@ -218,15 +218,13 @@ input:checked + .slider .moon-icon {
 }
 
 input:checked + .slider .sun-icon {
-  color: #333; /* Guld farve til sol i light mode */
+  color: #333; 
 }
 
-/* Farveskema Darkmode*/
 
 /* Farveskema Darkmode */
-[color-scheme="dark"], body {
+[color-scheme='dark'] {
   background-color: #c58ad8; /* Baggrundsfarve for dark mode */
-  color: $color-darkmode;
 
   .link {
     color: $color-darkmode;
