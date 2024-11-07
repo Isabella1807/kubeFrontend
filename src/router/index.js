@@ -13,6 +13,21 @@ const router = createRouter({
             name: 'templates',
             component: () => import('../views/Templates.vue')
         },
+       {
+      path:'/templates',
+      name:'templates',
+      component: ListTemplates
+    },
+    {
+      path:'/templates/new',
+      name: 'create template', 
+      component: NewTemplate
+    },
+    {
+      path:'/members',
+      name:'members',
+      component: ListMembers
+    }
         {
             path: '/forgot-password',
             name: 'ForgotPassword',
@@ -26,15 +41,6 @@ const router = createRouter({
             // which is lazy-loaded when the route is visited.
             component: () => import('../views/ProjectsView.vue')
         },
-
-        /*{
-          path: '/about',
-          name: 'about',
-          // route level code-splitting
-          // this generates a separate chunk (About.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import('../views/AboutView.vue')
-        }*/
     ]
 })
 
