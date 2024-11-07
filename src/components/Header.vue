@@ -128,6 +128,7 @@ $secondary-color: #333;
 $white-color: #fff;
 $bacgroundgrey: #F6F6F6;
 $color-darkmode: #fff;
+$darkmode-bg: #2D003E;
 $header-height: 100%;
 $font-size-desktop: 15px;
 $font-weight: 700;
@@ -226,7 +227,7 @@ input:checked + .slider .sun-icon {
 [color-scheme='dark'] {
   
   header {
-    background-color: #c58ad8; /* Baggrundsfarve for dark mode */
+    background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
   }
 
   .link {
