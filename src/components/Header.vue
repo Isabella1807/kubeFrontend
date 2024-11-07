@@ -224,7 +224,10 @@ input:checked + .slider .sun-icon {
 
 /* Farveskema Darkmode */
 [color-scheme='dark'] {
-  background-color: #c58ad8; /* Baggrundsfarve for dark mode */
+  
+  header {
+    background-color: #c58ad8; /* Baggrundsfarve for dark mode */
+  }
 
   .link {
     color: $color-darkmode;
