@@ -89,6 +89,7 @@
   .remember-me {
     display: flex;
     align-items: center;
+    accent-color: #5C007E;
   }
   
   .remember-me-label {
