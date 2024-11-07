@@ -18,7 +18,7 @@
               <label for="remember-me" class="remember-me-label">Remember me</label>
             </div>
             <!-- Forgot Password Link -->
-            <router-link to="/forgot-password" class="forgot-password">Forgot password?</router-link>
+            <router-link to="/forgot-password" class="forgot-password">Forgot password</router-link>
           </div>
   
           <!-- Login Button -->
@@ -96,6 +96,7 @@
     font-size: 14px;
     font-weight: 500; 
     cursor: pointer;
+    margin-left: 5px;
   }
   
   /* Forgot Password Link */
