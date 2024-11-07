@@ -11,30 +11,25 @@ const router = createRouter({
         {
             path: '/templates',
             name: 'templates',
-            component: () => import('../views/Templates.vue')
+            component: () => import('../views/ListTemplates.vue')
         },
-       {
-      path:'/templates',
-      name:'templates',
-      component: ListTemplates
-    },
-    {
-      path:'/templates/new',
-      name: 'create template', 
-      component: NewTemplate
-    },
-    {
-      path:'/members',
-      name:'members',
-      component: ListMembers
-    }
+        {
+            path: '/templates/edit',
+            name: 'create template',
+            component: () => import('../views/NewTemplate.vue')
+        },
+        {
+            path: '/members',
+            name: 'members',
+            component: () => import('../views/ListMembers.vue')
+        },
         {
             path: '/forgot-password',
             name: 'ForgotPassword',
             component: () => import('../views/ForgotPassword.vue')
         },
-      {
-          path: '/projects',
+        {
+            path: '/projects',
             name: 'projects',
             // route level code-splitting
             // this generates a separate chunk (About.[hash].js) for this route
