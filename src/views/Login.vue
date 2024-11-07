@@ -81,7 +81,7 @@
   .bottom-links {
     display: flex;
     justify-content: space-between; /* Space between the items */
-    width: 109%;
+    width: 100%;
     margin-bottom: 10px;
   }
   
