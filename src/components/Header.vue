@@ -239,6 +239,19 @@ input:checked + .slider .sun-icon {
     background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
   }
 
+  .navigation1{
+
+     .settings {
+    color: $color-darkmode;
+    @include transition();
+
+        &:hover {
+            color: $darkmode-lilla;
+        }
+    }
+  }
+   
+
   .active-link {
             border-bottom: 3px solid $color-darkmode;
         }
@@ -287,6 +300,7 @@ header {
     background-color: $white-color;
     z-index: 2;
     padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     @include transition();
 
     nav {
