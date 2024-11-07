@@ -44,7 +44,15 @@
                     <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
                     <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
                     <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
-                    <i class="fa-solid fa-gear"></i>
+                    <label class="switch">
+                    <input type="checkbox" v-model="isDark" @click="toggleDark()">
+                        <span class="slider round">
+                            <i class="fa-solid fa-moon moon-icon"></i>
+                            <i class="fa-solid fa-sun sun-icon"></i>
+                        </span>
+                    </label>
+
+                <i class="fa-solid fa-gear settings"></i>
                 </ul>
             </transition>
         </nav>
@@ -129,6 +137,7 @@ $white-color: #fff;
 $bacgroundgrey: #F6F6F6;
 $color-darkmode: #fff;
 $darkmode-bg: #2D003E;
+$darkmode-lilla:#e8aaff;
 $header-height: 100%;
 $font-size-desktop: 15px;
 $font-weight: 700;
@@ -230,12 +239,16 @@ input:checked + .slider .sun-icon {
     background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
   }
 
+  .active-link {
+            border-bottom: 3px solid $color-darkmode;
+        }
+
   .link {
     color: $color-darkmode;
     @include transition();
 
     &:hover {
-      color: $primary-color;
+      color: $darkmode-lilla;
     }
   }
 }
