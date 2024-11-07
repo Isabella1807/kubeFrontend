@@ -1,4 +1,4 @@
-import './main.css'
+import './assets/main.scss'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -15,6 +15,7 @@ library.add(faPlus)
 library.add(faPenSquare)
 library.add(faTrashCan)
 library.add(faSortDown)
+
 
 const app = createApp(App)
 
