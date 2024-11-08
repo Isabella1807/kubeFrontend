@@ -16,14 +16,14 @@ import Icon from "@/components/Icon.vue";
         </div>
       </div>
       <div class="table-cell wide">
-        <div class="tableHeaderItemsContainer">
-          <p>Domain</p>
+        <div class="tableHeaderItemsContainer projectSubdomainColumn">
+          <p>Subdomain name</p>
           <div>
             <icon name="caretDown" class="tableItemsCaretDown"/>
           </div>
         </div>
       </div>
-      <div class="table-cell">
+      <div class="table-cell projectGroupColumn">
         <div class="tableHeaderItemsContainer">
           <p>Group</p>
           <div>
@@ -40,13 +40,15 @@ import Icon from "@/components/Icon.vue";
         </div>
       </div>
     </div>
-    <slot/> <!--    Rows ligger her-->
+    <slot/> <!--Rows ligger her-->
   </div>
 </template>
 
 <style scoped lang="scss">
 .table-wrapper {
   background-color: cornsilk;
+  width: 100%;
+  overflow: hidden;
 
   .table-header {
     background-color: dodgerblue;
@@ -66,15 +68,40 @@ import Icon from "@/components/Icon.vue";
     }
   }
 
-  .tableHeaderItemsContainer{
+  .tableHeaderItemsContainer {
     display: inline-flex;
     cursor: pointer;
     gap: 10px;
     align-items: center;
 
-    .tableItemsCaretDown{
+    .tableItemsCaretDown {
       color: $primaryPurple;
     }
   }
 }
+
+@include smallScreen {
+  .table-wrapper {
+    .table-header {
+      .projectGroupColumn {
+        display: none;
+      }
+
+      .projectSubdomainColumn {
+        display: none;
+      }
+    }
+  }
+}
+
+@include mediumScreen {
+  .table-wrapper {
+    .table-header {
+      .projectGroupColumn {
+        display: none;
+      }
+    }
+  }
+}
+
 </style>

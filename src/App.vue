@@ -28,11 +28,43 @@ import Header from './components/Header.vue';
     justify-content: space-around;
 
     main {
-      max-width: 1350px;
+      max-width: min(1350px, 100%);
       background-color: green;
       flex: 1;
       padding: 4rem 0;
     }
   }
 }
+@include largeScreen {
+  .body_container {
+    .main_container {
+      main {
+        margin: 0 2.5rem;
+        background-color: deeppink;
+      }
+    }
+  }
+}
+@include mediumScreen {
+  .body_container {
+    .main_container {
+      main {
+        background-color: yellow;
+        padding: 0 2.5rem;
+      }
+    }
+  }
+}
+@include smallScreen {
+  .body_container {
+    .main_container {
+      main {
+        background-color: indianred;
+      }
+    }
+  }
+}
+
+
+
 </style>

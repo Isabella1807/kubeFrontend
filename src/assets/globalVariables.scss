@@ -4,6 +4,29 @@ $lightGrey: #EEEEEE;
 
 $boldFont: 700;
 
-/*MEDIA QUERIES
-MIXINS?*/
+//Media Breakpoints
+$screen-lg-min: 950px;
+
+$large: 1350px;
+$medium: 700px;
+$small: 400px;
+
+//Media queries
+@mixin smallScreen {
+  @media only screen and (max-width: #{$small}) {
+    @content;
+  }
+}
+
+@mixin mediumScreen{
+  @media only screen and (max-width: #{$medium}) and (min-width: #{$small}) {
+    @content;
+  }
+}
+
+@mixin largeScreen {
+  @media only screen and (max-width: #{$large}) and (min-width: #{$medium}){
+    @content;
+  }
+}
 
