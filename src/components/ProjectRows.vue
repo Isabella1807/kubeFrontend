@@ -47,10 +47,10 @@ const toggleServer = () => {
         <p class="projectName">{{ props.projectName }}</p>
       </div>
     </div>
-    <div class="table-cell wide">
+    <div class="table-cell wide projectTableDomainColumn">
       <p>{{ props.subdomainName }}</p>
     </div>
-    <div class="table-cell">
+    <div class="table-cell projectTableGroupColumn">
       <p>{{ props.groupName }}</p>
     </div>
     <div class="table-actions" :class="statusClass">
@@ -70,21 +70,29 @@ const toggleServer = () => {
 
   .table-cell {
     flex: 1;
+    overflow: hidden;
 
     &.wide {
       flex: 2;
     }
 
-    .projectNameContainer{
+    .projectNameContainer {
       display: flex;
 
-      .projectCaretDownIcon{
+      .projectCaretDownIcon {
         color: $primaryPurple;
       }
 
-      .projectName{
+      .projectName {
         font-weight: $boldFont;
       }
+    }
+
+    p {
+      padding: 0.25rem 0.5rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 
@@ -100,6 +108,30 @@ const toggleServer = () => {
 
     &.red p {
       color: red;
+    }
+  }
+}
+
+@include mediumScreenOrSmaller {
+  .table-row {
+    .table-cell {
+      &.wide {
+        flex: 1;
+      }
+
+      &.projectTableGroupColumn {
+        display: none;
+      }
+    }
+  }
+}
+
+@include smallScreen {
+  .table-row {
+    .table-cell {
+      &.projectTableDomainColumn {
+        display: none;
+      }
     }
   }
 }

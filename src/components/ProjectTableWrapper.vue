@@ -15,7 +15,7 @@ import Icon from "@/components/Icon.vue";
           </div>
         </div>
       </div>
-      <div class="table-cell wide">
+      <div class="table-cell wide projectTableDomainColumn">
         <div class="tableHeaderItemsContainer">
           <p>Domain</p>
           <div>
@@ -23,8 +23,8 @@ import Icon from "@/components/Icon.vue";
           </div>
         </div>
       </div>
-      <div class="table-cell">
-        <div class="tableHeaderItemsContainer">
+      <div class="table-cell projectTableGroupColumn">
+        <div class="tableHeaderItemsContainer ">
           <p>Group</p>
           <div>
             <icon name="caretDown" class="tableItemsCaretDown"/>
@@ -66,14 +66,44 @@ import Icon from "@/components/Icon.vue";
     }
   }
 
-  .tableHeaderItemsContainer{
+  .tableHeaderItemsContainer {
     display: inline-flex;
     cursor: pointer;
     gap: 10px;
     align-items: center;
 
-    .tableItemsCaretDown{
+    .tableItemsCaretDown {
       color: $primaryPurple;
+    }
+  }
+}
+
+@include mediumScreenOrSmaller {
+  .table-wrapper {
+    .table-header {
+      .table-cell {
+        &.wide {
+          flex: 1;
+        }
+
+        &.projectTableGroupColumn {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+
+@include smallScreen {
+  .table-wrapper {
+    .table-header {
+      .table-cell {
+        &.projectTableDomainColumn {
+          display: none;
+        }
+      }
+
     }
   }
 }

@@ -28,7 +28,7 @@ import Header from './components/Header.vue';
     justify-content: space-around;
 
     main {
-      max-width: 1350px;
+      max-width: min(1350px, 100%);
       background-color: green;
       flex: 1;
       padding: 4rem 0;

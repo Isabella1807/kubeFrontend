@@ -23,9 +23,9 @@ const projectRows = [
     status: true
   },
   {
-    projectName: "Portfolie4",
-    subdomainName: "hvaaaad.kubelab.dk",
-    groupName: "muuhgruppen",
+    projectName: "Portfolie4 sumtin sumtin",
+    subdomainName: "hvaaaad.kubelab.dk eller noget hihi",
+    groupName: "muuhgruppen som jeg har navngivet her WOW!",
     status: true
   }
 ]

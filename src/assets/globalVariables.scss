@@ -7,3 +7,25 @@ $boldFont: 700;
 /*MEDIA QUERIES
 MIXINS?*/
 
+$largeBreakPoint: 1350px;
+$mediumBreakPoint: 700px;
+$smallBreakPoint: 400px;
+
+//Media queries
+@mixin smallScreen {
+  @media only screen and (max-width: #{$smallBreakPoint}) {
+    @content;
+  }
+}
+
+@mixin mediumScreenOrSmaller {
+  @media only screen and (max-width: #{$mediumBreakPoint}) {
+    @content;
+  }
+}
+
+@mixin largeScreenOrSmaller {
+  @media only screen and (max-width: #{$largeBreakPoint}) {
+    @content;
+  }
+}
