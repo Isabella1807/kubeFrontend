@@ -32,26 +32,54 @@ const projectRows = [
 </script>
 
 <template>
-  <div class="createNewProjectButtonContainer">
-    <IconButton icon="addIcon" large primary/>
-    <h1 class="createProjectText">Create new project</h1>
-  </div>
-  <div>
-    <ProjectTableWrapper>
-      <ProjectRows v-for="item in projectRows" :projectName="item.projectName" :subdomainName="item.subdomainName" :groupName="item.groupName"/>
-    </ProjectTableWrapper>
+  <div class="projectItemsContainer">
+    <div class="createNewProjectButtonContainer">
+      <IconButton icon="addIcon" large primary/>
+      <h1 class="createProjectText">Create new project</h1>
+    </div>
+    <div>
+      <ProjectTableWrapper>
+        <ProjectRows v-for="item in projectRows" :projectName="item.projectName" :subdomainName="item.subdomainName"
+                     :groupName="item.groupName"/>
+      </ProjectTableWrapper>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.createNewProjectButtonContainer{
+.projectItemsContainer {
   display: flex;
-  align-items: center;
-  border: 2px solid red;
-  margin-bottom: 4rem;
+  flex-direction: column;
+  gap: 4rem;
+  background-color: yellow;
+  height: 100%;
 
-  .createProjectText{
-    margin-left: 10px;
+  .createNewProjectButtonContainer {
+    display: flex;
+    align-items: center;
+    border: 2px solid red;
+
+    .createProjectText {
+      margin-left: 10px;
+    }
+  }
+}
+
+@include smallScreen {
+  .projectItemsContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    border: 2px solid blue;
+    justify-content: space-between;
+    .createNewProjectButtonContainer {
+      border: 2px solid red;
+      display: flex;
+      justify-content: center;
+
+      .createProjectText {
+        display: none;
+      }
+    }
   }
 }
 </style>

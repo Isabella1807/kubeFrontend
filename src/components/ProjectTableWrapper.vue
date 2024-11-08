@@ -103,7 +103,6 @@ import Icon from "@/components/Icon.vue";
           display: none;
         }
       }
-
     }
   }
 }

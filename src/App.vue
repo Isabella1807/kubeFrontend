@@ -28,10 +28,20 @@ import Header from './components/Header.vue';
     justify-content: space-around;
 
     main {
-      max-width: min(1350px, 100%);
+      max-width: min(1350px, calc(100% - 3rem));
       background-color: green;
       flex: 1;
       padding: 4rem 0;
+    }
+  }
+}
+
+@include largeScreenOrSmaller {
+  .body_container {
+    .main_container {
+      main {
+        //padding: 0 1.5rem;
+      }
     }
   }
 }
