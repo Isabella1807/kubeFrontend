@@ -22,7 +22,7 @@ const props = defineProps({
 </script>
 
 <template>
-<div class="buttonContainer">
+<div class="iconButtonContainer">
   <div class="buttonShape" :class="{'large': props.large, 'ghost': props.ghost, 'primary': props.primary}">
     <Icon :name="props.icon" :huge="props.large"/>
   </div>

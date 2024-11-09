@@ -2,6 +2,7 @@
 import {computed, ref} from "vue";
 import IconButton from "@/components/IconButton.vue";
 import Icon from "@/components/Icon.vue";
+import Button from "@/components/Button.vue";
 
 const props = defineProps({
   projectName: {

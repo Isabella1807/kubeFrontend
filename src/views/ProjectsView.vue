@@ -2,6 +2,7 @@
 import IconButton from "@/components/IconButton.vue";
 import ProjectRows from "@/components/ProjectRows.vue";
 import ProjectTableWrapper from "@/components/ProjectTableWrapper.vue";
+import Button from "@/components/Button.vue";
 
 const projectRows = [
   {
@@ -43,6 +44,9 @@ const projectRows = [
                      :groupName="item.groupName"/>
       </ProjectTableWrapper>
     </div>
+    <Button text="Restart" icon="restart"/>
+    <Button text="Cancel" icon="circleXmark" hollow/>
+    <Button text="Delete Project" icon="trashcan" danger/>
   </div>
 </template>
 
@@ -71,6 +75,7 @@ const projectRows = [
     flex-direction: column-reverse;
     border: 2px solid blue;
     justify-content: space-between;
+
     .createNewProjectButtonContainer {
       border: 2px solid red;
       display: flex;
