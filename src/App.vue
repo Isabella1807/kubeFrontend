@@ -17,19 +17,16 @@ import Header from './components/Header.vue';
 <style lang="scss" scoped>
 .body_container {
   min-height: 100vh;
-  background-color: deeppink;
   display: flex;
   flex-direction: column;
 
   .main_container {
-    background-color: orange;
     flex: 1;
     display: flex;
     justify-content: space-around;
 
     main {
       max-width: min(1350px, calc(100% - 3rem));
-      background-color: green;
       flex: 1;
       padding: 4rem 0;
     }

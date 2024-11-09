@@ -25,7 +25,9 @@ const props = defineProps({
 <template>
   <div class="buttonContainer">
     <div class="buttonShape" :class="{'hollow': props.hollow, 'danger': props.danger}">
-      <Icon v-if="props.icon" :name="props.icon"/>
+      <div class="iconContainer">
+        <Icon v-if="props.icon" :name="props.icon"/>
+      </div>
       <p>{{ props.text }}</p>
     </div>
   </div>
@@ -42,6 +44,12 @@ const props = defineProps({
   color: white;
   gap: 0.6rem;
   font-weight: 500;
+  border: 3px solid $primaryPurple;
+  cursor: pointer;
+
+  .iconContainer {
+    display: flex;
+  }
 
   p {
     color: white;

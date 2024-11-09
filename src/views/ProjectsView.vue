@@ -9,25 +9,45 @@ const projectRows = [
     projectName: "Portfolie",
     subdomainName: "portfolie.kubelab.dk",
     groupName: "QUOE24",
-    status: true
+    status: true,
+    id: 1,
+    owner: "hund",
+    mail: "mail@mail.dk",
+    createdAt: "04-05-2022",
+    lastChange: "07-06-2024"
   },
   {
     projectName: "Portfolie2",
     subdomainName: "womp.kubelab.dk",
     groupName: "MUOE25",
-    status: true
+    status: true,
+    id: 4,
+    owner: "jens",
+    mail: "hejsa@mail.com",
+    createdAt: "04-05-2005",
+    lastChange: "07-06-2010"
   },
   {
     projectName: "Portfolie3",
     subdomainName: "whooo.kubelab.dk",
     groupName: "WUOE26",
-    status: true
+    status: false,
+    id: 2,
+    owner: "and",
+    mail: "1234234@mail.dk",
+    createdAt: "02-05-1998",
+    lastChange: "07-06-2000"
   },
   {
     projectName: "Portfolie4 sumtin sumtin",
     subdomainName: "hvaaaad.kubelab.dk eller noget hihi",
     groupName: "muuhgruppen som jeg har navngivet her WOW!",
-    status: true
+    status: true,
+    id: 3,
+    owner: "gås??",
+    mail: "womp@womp.dk",
+    createdAt: "03-05-2028",
+    lastChange: "07-04-2020"
   }
 ]
 </script>
@@ -40,13 +60,9 @@ const projectRows = [
     </div>
     <div>
       <ProjectTableWrapper>
-        <ProjectRows v-for="item in projectRows" :projectName="item.projectName" :subdomainName="item.subdomainName"
-                     :groupName="item.groupName"/>
+        <ProjectRows v-for="item in projectRows" :key="item.id" :projectData="item"/>
       </ProjectTableWrapper>
     </div>
-    <Button text="Restart" icon="restart"/>
-    <Button text="Cancel" icon="circleXmark" hollow/>
-    <Button text="Delete Project" icon="trashcan" danger/>
   </div>
 </template>
 
@@ -55,13 +71,11 @@ const projectRows = [
   display: flex;
   flex-direction: column;
   gap: 4rem;
-  background-color: yellow;
   height: 100%;
 
   .createNewProjectButtonContainer {
     display: flex;
     align-items: center;
-    border: 2px solid red;
 
     .createProjectText {
       margin-left: 10px;
@@ -73,11 +87,9 @@ const projectRows = [
   .projectItemsContainer {
     display: flex;
     flex-direction: column-reverse;
-    border: 2px solid blue;
     justify-content: space-between;
 
     .createNewProjectButtonContainer {
-      border: 2px solid red;
       display: flex;
       justify-content: center;
 
