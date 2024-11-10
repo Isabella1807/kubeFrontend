@@ -27,16 +27,33 @@ $darkmode-lilla:#e8aaff;
       .dropdown {
         background-color: $darkmode-bg;
         
+
+
         button {
             color:$white-color;
 
-            &:last-child {
+            &:hover {
+                color: $white-color;
+                background-color: darken($primaryPurple, 10%);
+            }
+
+            &:nth-child(2) {
 
                 &:hover {
-                    color: $darkmode-bg;
+                    color: $white-color;
                 }
         }
       }
+
+      .logout-btn {
+        color: $offline;
+
+      &:hover {
+        color: $offline;
+        background-color: darken($primaryPurple, 10%);
+        
+      }
+    }
     }
 }
      

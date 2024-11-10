@@ -45,8 +45,15 @@ Kopier kode
           ></i>
           <transition name="dropdown-fade">
             <div v-if="dropdownOpen" class="dropdown">
+
+                <button class="changepass-btn">Change password</button>
+
                 <button @click="changeFontSize('large')">Bigger font size</button>
                 <button @click="changeFontSize('default')">Default font size</button>
+
+                <button class="logout-btn"> Log ud
+                     <i class="fa-solid fa-right-from-bracket logout-icon"></i>
+                </button>
             </div>
           </transition>
         </div>
@@ -212,18 +219,28 @@ $max-width-mobile: 320px;
         border-radius: 5px;
       }
 
-      &:first-child {
+      &:nth-child(2) {
         background-color: $primary-color; // Brug variablen for lilla farve, hvis den er defineret
         color: $white-color; // Sørg for, at teksten også er synlig
         border-radius: 5px;
 
         &:hover {
-          background-color: darken($primary-color, 10%); // Mørkere lilla ved hover, hvis ønsket
+          background-color: darken($primaryPurple, 10%); // Mørkere lilla ved hover, hvis ønsket
         }
     }
   }
 }
 }
+
+    .logout-btn {
+        color: $offline;
+
+      &:hover {
+        opacity: 80%;
+        
+      }
+    }
+
 
 /* Animation for dropdown */
 .dropdown-fade-enter-active, .dropdown-fade-leave-active {
@@ -417,15 +434,14 @@ header {
             display: flex;
             flex-direction: column;
             position: fixed;
-            align-items: center;
-            width: 100%;
-            max-width: 300px;
+            top: 0;
+            right: 0; /* Juster til at være til højre */
+            width: 250px;
             height: 100%;
-            z-index: 99;
             background-color: $white-color;
-            top: 10px;
-            left: 0;
-
+            box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2); /* Skab en skygge på venstre side for at indikere sidepanel */
+            padding-top: 20px;
+            z-index: 100;
             .link {
                 margin-left: 45px;
                 margin-top: 20px;
