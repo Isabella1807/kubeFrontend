@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="flex">
-      <button class="create-btn">
-        <font-awesome-icon :icon="['fas', 'plus']" />
-      </button>
+      <RouterLink to="/templates/edit" class="create-btn">
+          <font-awesome-icon :icon="['fas', 'plus']" />
+        </RouterLink>
       <h3>Create new template</h3>
     </div>
 
@@ -23,9 +23,9 @@
         <td>WordPress, Database</td>
         <td>
             <div class="flex flex-end">
-            <button class="edit-btn">
+            <RouterLink to="/templates/edit" class="edit-btn">
               <font-awesome-icon :icon="['far', 'pen-to-square']" />
-            </button>
+            </RouterLink>
 
             <button class="delete-btn">
               <font-awesome-icon :icon="['far', 'trash-can']" />
@@ -39,9 +39,9 @@
         <td>Drupal, Database</td>
         <td>
           <div class="flex flex-end">
-            <button class="edit-btn">
+            <RouterLink to="/templates/edit" class="edit-btn">
               <font-awesome-icon :icon="['far', 'pen-to-square']" />
-            </button>
+            </RouterLink>
 
             <button class="delete-btn">
               <font-awesome-icon :icon="['far', 'trash-can']" />
