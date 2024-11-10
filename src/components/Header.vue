@@ -45,8 +45,8 @@ Kopier kode
           ></i>
           <transition name="dropdown-fade">
             <div v-if="dropdownOpen" class="dropdown">
-              <button @click="changeFontSize('large')">Forstør tekst</button>
-              <button @click="changeFontSize('default')">Standard tekst</button>
+                <button @click="changeFontSize('large')">Bigger font size</button>
+                <button @click="changeFontSize('default')">Default font size</button>
             </div>
           </transition>
         </div>
@@ -60,7 +60,7 @@ Kopier kode
       <!-- Mobile Dropdown Navigation -->
       <transition name="mobile-nav">
         <ul v-show="mobileNav" class="dropdown-nav">
-          <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
+          <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
           <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
           <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
           <label class="switch">
@@ -70,6 +70,19 @@ Kopier kode
               <i class="fa-solid fa-sun sun-icon"></i>
             </span>
           </label>
+          <div class="settings-container">
+          <i
+            :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
+            class="settings"
+            @click="toggleDropdown"
+          ></i>
+          <transition name="dropdown-fade">
+            <div v-if="dropdownOpen" class="dropdown">
+              <button @click="changeFontSize('large')">Bigger font size</button>
+              <button @click="changeFontSize('default')">Default font size</button>
+            </div>
+          </transition>
+        </div>
         </ul>
       </transition>
     </nav>
@@ -141,7 +154,7 @@ onUnmounted(() => {
   <style lang="scss">
 
 // Variabler
-$primary-color: #5C007E;
+$primary-color: #5C007E; 
 $secondary-color: #333;
 $white-color: #fff;
 $bacgroundgrey: #F6F6F6;
@@ -173,24 +186,16 @@ $max-width-mobile: 320px;
   position: relative;
   display: inline-block;
 
-  .settings {
-    font-size: 25px;
-    margin-left: 20px;
-    cursor: pointer;
-    &:hover {
-      color: $primary-color;
-    }
-  }
-
   .dropdown {
     position: absolute;
-    top: 30px; /* Just over the settings icon */
+    top: 50px; /* Just over the settings icon */
     right: 0;
     background-color: $white-color;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 15px;
     z-index: 10;
+    width: 200px; 
 
     button {
       display: block;
@@ -204,9 +209,20 @@ $max-width-mobile: 320px;
 
       &:hover {
         background-color: #f0f0f0;
+        border-radius: 5px;
       }
+
+      &:first-child {
+        background-color: $primary-color; // Brug variablen for lilla farve, hvis den er defineret
+        color: $white-color; // Sørg for, at teksten også er synlig
+        border-radius: 5px;
+
+        &:hover {
+          background-color: darken($primary-color, 10%); // Mørkere lilla ved hover, hvis ønsket
+        }
     }
   }
+}
 }
 
 /* Animation for dropdown */
@@ -250,7 +266,7 @@ $max-width-mobile: 320px;
   width: 45px;
   right: 0px;
   bottom: 0px;
-  background-color:$primary-color;
+  background-color:$primaryPurple;
   border-radius: 50%;
   transition: 0.4s;
 }
@@ -299,7 +315,7 @@ input:checked + .slider .sun-icon {
         width: 349px;
 
         &:focus {
-            border-color: #5C007E; /* Juster farve efter behov */
+            border-color: $primaryPurple; /* Juster farve efter behov */
             outline: none;
         }
     }

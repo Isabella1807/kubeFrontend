@@ -10,7 +10,7 @@ $darkmode-lilla:#e8aaff;
       background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
     }
   
-    h1,h2, p, th, td {
+    h1,h2, p, th, td{
         color: $white-color;
     }
 
@@ -23,7 +23,22 @@ $darkmode-lilla:#e8aaff;
               color: $darkmode-lilla;
           }
       }
+
+      .dropdown {
+        background-color: $darkmode-bg;
+        
+        button {
+            color:$white-color;
+
+            &:last-child {
+
+                &:hover {
+                    color: $darkmode-bg;
+                }
+        }
+      }
     }
+}
      
   
     .active-link {
