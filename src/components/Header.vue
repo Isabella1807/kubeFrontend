@@ -19,7 +19,7 @@
             
             <!-- Desktop Navigation -->
             <ul v-show="!mobile" class="navigation1">
-                <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
+                <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
                 <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
                 <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
                     <label class="switch">
@@ -128,7 +128,7 @@ onUnmounted(() => {
 });
 </script>
 
-  <style lang="scss" scoped>
+  <style lang="scss">
 
 // Variabler
 $primary-color: #5C007E;

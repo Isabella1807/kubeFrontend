@@ -1,0 +1,48 @@
+$primary-color: #5C007E;
+$secondary-color: #333;
+$white-color: #fff;
+$bacgroundgrey: #F6F6F6;
+$color-darkmode: #fff;
+$darkmode-bg: #2D003E;
+$darkmode-lilla:#e8aaff;
+$header-height: 100%;
+$font-size-desktop: 15px;
+$font-weight: 700;
+$font-size-mobile: 14px;
+$transition-duration: 0.5s;
+$header-padding: 10px 0;
+$max-width-desktop: 1350px;
+$max-width-tablet: 700px;
+$max-width-mobile: 320px;
+
+
+[color-scheme='dark'] {
+  
+    header, body {
+      background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
+    }
+  
+    .navigation1{
+  
+       .settings {
+      color: $color-darkmode;
+  
+          &:hover {
+              color: $darkmode-lilla;
+          }
+      }
+    }
+     
+  
+    .active-link {
+              border-bottom: 3px solid $color-darkmode;
+          }
+  
+    .link {
+      color: $color-darkmode;
+  
+      &:hover {
+        color: $darkmode-lilla;
+      }
+    }
+  }
