@@ -41,15 +41,15 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #fff; /* White background for the page */
+    background-color: #fff; 
   }
   
   /*logo*/
   
   .logo {
-    width: 180px;  /* Adjust this to your desired width */
-    height: auto;  /* Keep the aspect ratio of the logo */
-    margin-bottom: 20px;  /* Optional: adjust space below the logo */
+    width: 180px;  
+    height: auto;  
+    margin-bottom: 20px;  
     align-items: center;
   }
   
@@ -60,7 +60,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 400px; /* Limit form width */
+    max-width: 400px; 
     padding: 20px;
     border-radius: 10px;
   }
@@ -80,7 +80,7 @@
   /* Bottom Links (Remember Me & Forgot Password) */
   .bottom-links {
     display: flex;
-    justify-content: space-between; /* Space between the items */
+    justify-content: space-between; 
     width: 100%;
     margin-bottom: 10px;
   }

@@ -25,22 +25,22 @@
   </script>
   
   <style>
-  /* Same styling as the login page but simplified for the Forgot Password page */
+
   
-  /* Center the container */
+  /* Center container */
   .forgot-password-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #fff; /* White background for the page */
+    background-color: #fff; 
   }
   
   /*logo*/
   .logo {
-  width: 180px;  /* Adjust this to your desired width */
-  height: auto;  /* Keep the aspect ratio of the logo */
-  margin-bottom: 20px;  /* Optional: adjust space below the logo */
+  width: 180px;  
+  height: auto;  
+  margin-bottom: 20px;  
   align-items: center;
 }
 
@@ -51,7 +51,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 400px; /* Limit form width */
+    max-width: 400px; 
     padding: 20px;
     border-radius: 10px;
   }
@@ -68,7 +68,7 @@
     font-style: italic;
   }
   
-  /* Message below the input field */
+  /* Message under input field */
   .message {
     font-size: 14px;
     color: #333333;
