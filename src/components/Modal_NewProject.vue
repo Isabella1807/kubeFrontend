@@ -35,3 +35,45 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    props: {
+        show: {
+            type: Boolean
+            required: true, 
+        }, 
+    },
+    emits: ["close", "save"], 
+    data() {
+        return {
+            projectName: "",
+            subdomainName: "",
+            selectedTemplate: "",
+        };
+    },
+    methods: {
+        close() {
+            this.$emit("close");
+        },
+        saveProject() {
+            this.$emit("save", {
+                projectName: this.projectName,
+                subdomainName: this-this.subdomainName,
+                selectedTemplate: this.selectedTemplate,
+            });
+            this.close();
+        },
+    },
+    watch: {
+        show(value) {
+            if(value) {
+                document.body.style.overflow ="hidden";
+            } else {
+                document.body.style.overflow ="";
+            }
+        },
+    },
+};
+</script>
+
