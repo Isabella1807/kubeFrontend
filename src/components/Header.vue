@@ -1,130 +1,140 @@
+
+Jeg har lavet nogle justeringer, så dropdownen vises korrekt lige over indstillingsikonet, og bliver til et kryds, når den er åben. Her er den opdaterede kode:
+
+html
+Kopier kode
 <template>
-    <header :class="{ 'scrolled-nav': scrolledNav }">
-        <nav>
-            <div class="branding">
-                <RouterLink to="/">
-                    <img src="../img/kubelab.png" alt="Kubelab logo" />
-                </RouterLink>
-                <!-- Søgefelt -->
-                <div class="soge-felt">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input 
-                        type="text" 
-                        v-model="searchQuery" 
-                        placeholder="Seach..." 
-                        @input="searchItems"
-                         />
-                </div>
+  <header :class="{ 'scrolled-nav': scrolledNav }">
+    <nav>
+      <div class="branding">
+        <RouterLink to="/">
+          <img src="../img/kubelab.png" alt="Kubelab logo" />
+        </RouterLink>
+        <!-- Søgefelt -->
+        <div class="soge-felt">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Seach..."
+            @input="searchItems"
+          />
+        </div>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <ul v-show="!mobile" class="navigation1">
+        <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
+        <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
+        <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+        
+        <label class="switch">
+          <input type="checkbox" v-model="isDark" @click="toggleDark()" />
+          <span class="slider round">
+            <i class="fa-solid fa-moon moon-icon"></i>
+            <i class="fa-solid fa-sun sun-icon"></i>
+          </span>
+        </label>
+
+        <!-- Settings Icon and Dropdown -->
+        <div class="settings-container">
+          <i
+            :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
+            class="settings"
+            @click="toggleDropdown"
+          ></i>
+          <transition name="dropdown-fade">
+            <div v-if="dropdownOpen" class="dropdown">
+              <button @click="changeFontSize('large')">Forstør tekst</button>
+              <button @click="changeFontSize('default')">Standard tekst</button>
             </div>
-            
-            <!-- Desktop Navigation -->
-            <ul v-show="!mobile" class="navigation1">
-                <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
-                <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-                <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
-                    <label class="switch">
-                        <input type="checkbox" v-model="isDark" @click="toggleDark()">
-                        <span class="slider round">
-                            <i class="fa-solid fa-moon moon-icon"></i>
-                            <i class="fa-solid fa-sun sun-icon"></i>
-                        </span>
-                    </label>
+          </transition>
+        </div>
+      </ul>
 
-                <i class="fa-solid fa-gear settings"></i>
-            </ul>
+      <!-- Mobile Navigation Icon -->
+      <div class="icon">
+        <i @click="toggleMobileNav" v-show="mobile" class="fa-solid fa-bars" :class="{ 'icon-active': mobileNav }"></i>
+      </div>
 
-            <!-- Mobile Navigation Icon -->
-            <div class="icon">
-                <i @click="toggleMobileNav" v-show="mobile" class="fa-solid fa-bars" :class="{ 'icon-active': mobileNav }"></i>
-            </div>
-
-            <!-- Mobile Dropdown Navigation -->
-            <transition name="mobile-nav">
-                <ul v-show="mobileNav" class="dropdown-nav">
-                    <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
-                    <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-                    <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
-                    <label class="switch">
-                    <input type="checkbox" v-model="isDark" @click="toggleDark()">
-                        <span class="slider round">
-                            <i class="fa-solid fa-moon moon-icon"></i>
-                            <i class="fa-solid fa-sun sun-icon"></i>
-                        </span>
-                    </label>
-
-                <i class="fa-solid fa-gear settings"></i>
-                </ul>
-            </transition>
-        </nav>
-    </header>
+      <!-- Mobile Dropdown Navigation -->
+      <transition name="mobile-nav">
+        <ul v-show="mobileNav" class="dropdown-nav">
+          <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
+          <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
+          <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+          <label class="switch">
+            <input type="checkbox" v-model="isDark" @click="toggleDark()" />
+            <span class="slider round">
+              <i class="fa-solid fa-moon moon-icon"></i>
+              <i class="fa-solid fa-sun sun-icon"></i>
+            </span>
+          </label>
+        </ul>
+      </transition>
+    </nav>
+  </header>
 </template>
 
-  
-  <script setup>
+<script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 
-// Læs dark mode-præference fra localStorage
 const isDark = ref(localStorage.getItem('isDarkMode') === 'true');
-
-// Funktion til at skifte dark mode og gemme indstillingen i localStorage
 const toggleDark = () => {
   isDark.value = !isDark.value;
   localStorage.setItem('isDarkMode', isDark.value);
   document.documentElement.setAttribute('color-scheme', isDark.value ? 'dark' : 'light');
 };
-
-// Genindlæs farveskema ved sideindlæsning
 onMounted(() => {
   document.documentElement.setAttribute('color-scheme', isDark.value ? 'dark' : 'light');
 });
-
-
 
 const scrolledNav = ref(false);
 const mobile = ref(false);
 const mobileNav = ref(false);
 const searchQuery = ref('');
 const windowWidth = ref(window.innerWidth);
+const dropdownOpen = ref(false);
 
-// Funktion til at tjekke skærmbredden
 const checkScreen = () => {
-    windowWidth.value = window.innerWidth;
-    if (windowWidth.value <= 768) {
-        mobile.value = true;
-    } else {
-        mobile.value = false;
-        mobileNav.value = false; // Luk mobile navigation, når skærmen er bredere end 768px
-    }
+  windowWidth.value = window.innerWidth;
+  mobile.value = windowWidth.value <= 768;
+  if (!mobile.value) mobileNav.value = false;
 };
 
-// Funktion til at opdatere scroll-status
 const updateScroll = () => {
-    const scrollPosition = window.scrollY;
-    scrolledNav.value = scrollPosition > 50;
+  scrolledNav.value = window.scrollY > 50;
 };
 
-// Funktion til at skifte mobile navigation
 const toggleMobileNav = () => {
-    mobileNav.value = !mobileNav.value;
+  mobileNav.value = !mobileNav.value;
 };
 
-// Søgefunktion
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+};
+
+const changeFontSize = (size) => {
+  document.documentElement.style.fontSize = size === 'large' ? '1.2em' : '1em';
+  localStorage.setItem('fontSize', size);
+};
+
 const searchItems = () => {
-    console.log('Søger efter: ', searchQuery.value);
-    // Her kan du implementere søgning via API eller filtrering af lokale data
+  console.log('Søger efter: ', searchQuery.value);
 };
 
-// Setup event listeners
 onMounted(() => {
-    window.addEventListener('resize', checkScreen);
-    window.addEventListener('scroll', updateScroll);
-    checkScreen();
+  window.addEventListener('resize', checkScreen);
+  window.addEventListener('scroll', updateScroll);
+  checkScreen();
+  const savedFontSize = localStorage.getItem('fontSize');
+  if (savedFontSize) changeFontSize(savedFontSize);
 });
 
 onUnmounted(() => {
-    window.removeEventListener('resize', checkScreen);
-    window.removeEventListener('scroll', updateScroll);
+  window.removeEventListener('resize', checkScreen);
+  window.removeEventListener('scroll', updateScroll);
 });
 </script>
 
@@ -135,9 +145,6 @@ $primary-color: #5C007E;
 $secondary-color: #333;
 $white-color: #fff;
 $bacgroundgrey: #F6F6F6;
-$color-darkmode: #fff;
-$darkmode-bg: #2D003E;
-$darkmode-lilla:#e8aaff;
 $header-height: 100%;
 $font-size-desktop: 15px;
 $font-weight: 700;
@@ -161,6 +168,54 @@ $max-width-mobile: 320px;
 }
 
 // Styling
+
+.settings-container {
+  position: relative;
+  display: inline-block;
+
+  .settings {
+    font-size: 25px;
+    margin-left: 20px;
+    cursor: pointer;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  .dropdown {
+    position: absolute;
+    top: 30px; /* Just over the settings icon */
+    right: 0;
+    background-color: $white-color;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 10;
+
+    button {
+      display: block;
+      background: none;
+      border: none;
+      padding: 5px 10px;
+      font-size: inherit;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+}
+
+/* Animation for dropdown */
+.dropdown-fade-enter-active, .dropdown-fade-leave-active {
+  transition: opacity 0.3s;
+}
+.dropdown-fade-enter-from, .dropdown-fade-leave-to {
+  opacity: 0;
+}
 
 /* The switch - the box around the slider */
 .switch {
@@ -230,44 +285,6 @@ input:checked + .slider .moon-icon {
 input:checked + .slider .sun-icon {
   color: #333; 
 }
-
-
-/* Farveskema Darkmode */
-[color-scheme='dark'] {
-  
-  header {
-    background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
-  }
-
-  .navigation1{
-
-     .settings {
-    color: $color-darkmode;
-    @include transition();
-
-        &:hover {
-            color: $darkmode-lilla;
-        }
-    }
-  }
-   
-
-  .active-link {
-            border-bottom: 3px solid $color-darkmode;
-        }
-
-  .link {
-    color: $color-darkmode;
-    @include transition();
-
-    &:hover {
-      color: $darkmode-lilla;
-    }
-  }
-}
-
-
-
 
 .soge-felt {
     margin-left: 20px;

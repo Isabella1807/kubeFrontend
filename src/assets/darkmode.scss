@@ -1,19 +1,7 @@
-$primary-color: #5C007E;
-$secondary-color: #333;
 $white-color: #fff;
 $bacgroundgrey: #F6F6F6;
-$color-darkmode: #fff;
-$darkmode-bg: #2D003E;
+$darkmode-bg: #180020;
 $darkmode-lilla:#e8aaff;
-$header-height: 100%;
-$font-size-desktop: 15px;
-$font-weight: 700;
-$font-size-mobile: 14px;
-$transition-duration: 0.5s;
-$header-padding: 10px 0;
-$max-width-desktop: 1350px;
-$max-width-tablet: 700px;
-$max-width-mobile: 320px;
 
 
 [color-scheme='dark'] {
@@ -22,10 +10,14 @@ $max-width-mobile: 320px;
       background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
     }
   
+    h1,h2, p, th, td {
+        color: $white-color;
+    }
+
     .navigation1{
   
        .settings {
-      color: $color-darkmode;
+      color: $white-color;
   
           &:hover {
               color: $darkmode-lilla;
@@ -35,11 +27,11 @@ $max-width-mobile: 320px;
      
   
     .active-link {
-              border-bottom: 3px solid $color-darkmode;
+              border-bottom: 3px solid $white-color;
           }
   
     .link {
-      color: $color-darkmode;
+      color: $white-color;
   
       &:hover {
         color: $darkmode-lilla;

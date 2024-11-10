@@ -4,7 +4,7 @@
       <button class="create-btn">
         <font-awesome-icon :icon="['fas', 'plus']" />
       </button>
-      <h3>Create new template</h3>
+      <h2>Create new template</h2>
     </div>
 
     <table>
