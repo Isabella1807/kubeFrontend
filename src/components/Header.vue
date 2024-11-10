@@ -1,75 +1,28 @@
-
-Jeg har lavet nogle justeringer, så dropdownen vises korrekt lige over indstillingsikonet, og bliver til et kryds, når den er åben. Her er den opdaterede kode:
-
-html
-Kopier kode
 <template>
-  <header :class="{ 'scrolled-nav': scrolledNav }">
-    <nav>
-      <div class="branding">
-        <RouterLink to="/">
-          <img src="../img/kubelab.png" alt="Kubelab logo" />
-        </RouterLink>
-        <!-- Søgefelt -->
-        <div class="soge-felt">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            v-model="searchQuery"
-            placeholder="Seach..."
-            @input="searchItems"
-          />
+    <header :class="{ 'scrolled-nav': scrolledNav, 'dark-mode': isDark }">
+      <nav>
+        <div class="branding">
+          <RouterLink to="/">
+            <img src="../img/kubelab.png" alt="Kubelab logo" />
+          </RouterLink>
+          <!-- Søgefelt -->
+          <div class="soge-felt">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              v-model="searchQuery"
+              placeholder="Search..."
+              @input="searchItems"
+            />
+          </div>
         </div>
-      </div>
-
-      <!-- Desktop Navigation -->
-      <ul v-show="!mobile" class="navigation1">
-        <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
-        <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-        <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
-        
-        <label class="switch">
-          <input type="checkbox" v-model="isDark" @click="toggleDark()" />
-          <span class="slider round">
-            <i class="fa-solid fa-moon moon-icon"></i>
-            <i class="fa-solid fa-sun sun-icon"></i>
-          </span>
-        </label>
-
-        <!-- Settings Icon and Dropdown -->
-        <div class="settings-container">
-          <i
-            :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
-            class="settings"
-            @click="toggleDropdown"
-          ></i>
-          <transition name="dropdown-fade">
-            <div v-if="dropdownOpen" class="dropdown">
-
-                <button class="changepass-btn">Change password</button>
-
-                <button @click="changeFontSize('large')">Bigger font size</button>
-                <button @click="changeFontSize('default')">Default font size</button>
-
-                <button class="logout-btn"> Log ud
-                     <i class="fa-solid fa-right-from-bracket logout-icon"></i>
-                </button>
-            </div>
-          </transition>
-        </div>
-      </ul>
-
-      <!-- Mobile Navigation Icon -->
-      <div class="icon">
-        <i @click="toggleMobileNav" v-show="mobile" class="fa-solid fa-bars" :class="{ 'icon-active': mobileNav }"></i>
-      </div>
-
-      <!-- Mobile Dropdown Navigation -->
-      <transition name="mobile-nav">
-        <ul v-show="mobileNav" class="dropdown-nav">
+  
+        <!-- Desktop Navigation -->
+        <ul v-show="!mobile" class="navigation1">
           <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
           <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
           <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+          
           <label class="switch">
             <input type="checkbox" v-model="isDark" @click="toggleDark()" />
             <span class="slider round">
@@ -77,25 +30,65 @@ Kopier kode
               <i class="fa-solid fa-sun sun-icon"></i>
             </span>
           </label>
+  
+          <!-- Settings Icon and Dropdown -->
           <div class="settings-container">
-          <i
-            :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
-            class="settings"
-            @click="toggleDropdown"
-          ></i>
-          <transition name="dropdown-fade">
-            <div v-if="dropdownOpen" class="dropdown">
-              <button @click="changeFontSize('large')">Bigger font size</button>
-              <button @click="changeFontSize('default')">Default font size</button>
-            </div>
-          </transition>
-        </div>
+            <i
+              :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
+              class="settings"
+              @click="toggleDropdown"
+            ></i>
+            <transition name="dropdown-fade">
+              <div v-if="dropdownOpen" class="dropdown">
+                <button class="changepass-btn">Change password</button>
+                <button @click="changeFontSize('large')">Bigger font size</button>
+                <button @click="changeFontSize('default')">Default font size</button>
+                <button class="logout-btn">
+                  Log out
+                  <i class="fa-solid fa-right-from-bracket logout-icon"></i>
+                </button>
+              </div>
+            </transition>
+          </div>
         </ul>
-      </transition>
-    </nav>
-  </header>
-</template>
-
+  
+        <!-- Mobile Navigation Icon -->
+        <div class="icon">
+          <i @click="toggleMobileNav" v-show="mobile" class="fa-solid fa-bars" :class="{ 'icon-active': mobileNav }"></i>
+        </div>
+  
+        <!-- Mobile Dropdown Navigation -->
+        <transition name="mobile-nav">
+          <ul v-show="mobileNav" class="dropdown-nav">
+            <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
+            <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
+            <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+            <label class="switch">
+              <input type="checkbox" v-model="isDark" @click="toggleDark()" />
+              <span class="slider round">
+                <i class="fa-solid fa-moon moon-icon"></i>
+                <i class="fa-solid fa-sun sun-icon"></i>
+              </span>
+            </label>
+            <div class="settings-container">
+              <i
+                :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
+                class="settings"
+                @click="toggleDropdown"
+              ></i>
+              <transition name="dropdown-fade">
+                <div v-if="dropdownOpen" class="dropdown">
+                  <button @click="changeFontSize('large')">Bigger font size</button>
+                  <button @click="changeFontSize('default')">Default font size</button>
+                </div>
+              </transition>
+            </div>
+          </ul>
+        </transition>
+      </nav>
+    </header>
+  </template>
+  
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
@@ -141,7 +134,7 @@ const changeFontSize = (size) => {
 };
 
 const searchItems = () => {
-  console.log('Søger efter: ', searchQuery.value);
+  console.log('Searching for: ', searchQuery.value);
 };
 
 onMounted(() => {
@@ -158,8 +151,10 @@ onUnmounted(() => {
 });
 </script>
 
+
   <style lang="scss">
 
+// Variabler
 // Variabler
 $primary-color: #5C007E; 
 $secondary-color: #333;
@@ -174,7 +169,6 @@ $header-padding: 10px 0;
 $max-width-desktop: 1350px;
 $max-width-tablet: 700px;
 $max-width-mobile: 320px;
-
 
 // Mixins
 @mixin transition($duration: $transition-duration) {
@@ -227,19 +221,18 @@ $max-width-mobile: 320px;
         &:hover {
           background-color: darken($primaryPurple, 10%); // Mørkere lilla ved hover, hvis ønsket
         }
+      }
     }
   }
 }
+
+.logout-btn {
+    color: $offline;
+
+  &:hover {
+    opacity: 80%;
+  }
 }
-
-    .logout-btn {
-        color: $offline;
-
-      &:hover {
-        opacity: 80%;
-        
-      }
-    }
 
 
 /* Animation for dropdown */
@@ -346,6 +339,7 @@ input:checked + .slider .sun-icon {
         pointer-events: none; 
     }
 }
+
 header {
     background-color: $white-color;
     z-index: 2;
@@ -370,7 +364,6 @@ header {
             img {
                 width: 50px;
             }
-
         }
 
         .navigation1 {
@@ -387,8 +380,7 @@ header {
                 &:hover {
                 color: $primary-color;
             }
-            
-            }
+        }
         }
 
         .link {
@@ -409,7 +401,6 @@ header {
             color: $primary-color;
             border-bottom: 3px solid $primary-color;
         }
-
 
         .icon {
             display: flex;
@@ -442,13 +433,22 @@ header {
             box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2); /* Skab en skygge på venstre side for at indikere sidepanel */
             padding-top: 20px;
             z-index: 100;
+
             .link {
-                margin-left: 45px;
-                margin-top: 20px;
+                font-size: $font-size-mobile;
                 color: $secondary-color;
-                border-color: $primary-color;
+                text-align: left;
+                margin: 15px 0;
+                padding-left: 20px;
+
+                &:hover {
+                background-color: #f0f0f0;
+                }
             }
         }
+
+
+  
     }
 
     .mobile-nav-enter-active,

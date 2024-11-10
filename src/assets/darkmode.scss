@@ -6,11 +6,11 @@ $darkmode-lilla:#e8aaff;
 
 [color-scheme='dark'] {
   
-    header, body {
+    header, body, .dropdown-nav {
       background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
     }
   
-    h1,h2, p, th, td{
+    h1,h2, p, th, td, .link{
         color: $white-color;
     }
 
