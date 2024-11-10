@@ -1,84 +1,101 @@
 <template>
-    <div v-if="show" class="modal-overlay">
-      <div class="modal-content">
-        <button class="modal-close" @click="close">✕</button>
-        <h1>New Project</h1>
-        <form @submit.prevent="saveProject">
-          <label>
-            Project name
-            <input type="text" v-model="projectName" placeholder="Write name..." />
-          </label>
-          <label>
-            Subdomain name
-            <input type="text" v-model="subdomainName" placeholder="Write subdomain name..." />
-          </label>
-          <label>
-            Pick template
-            <div class="select-container">
-              <select v-model="selectedTemplate" class="custom-select">
-                <option value="" disabled>Pick template...</option>
-                <option value="Template 1">Template 1</option>
-                <option value="Template 2">Template 2</option>
-              </select>
-              <i class="fas fa-chevron-down dropdown-icon"></i>
-            </div>
-          </label>
-          <div class="buttons">
-            <button type="button" @click="close" class="cancel-button">
-              <i class="fas fa-times"></i> Cancel
-            </button>
-            <button type="submit" class="save-button">
-              <i class="fas fa-save"></i> Save project
-            </button>
+  <div v-if="show" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" @click="close">✕</button>
+      <h1>New Project</h1>
+      <form @submit.prevent="saveProject">
+        <label>
+          Project name
+          <input type="text" v-model="projectName" placeholder="Write name..." />
+        </label>
+        <label>
+          Subdomain name
+          <input type="text" v-model="subdomainName" placeholder="Write subdomain name..." />
+        </label>
+        <label>
+          Pick template
+          <div class="select-container">
+            <select v-model="selectedTemplate" class="custom-select">
+              <option value="" disabled>Pick template...</option>
+              <option value="Template 1">Template 1</option>
+              <option value="Template 2">Template 2</option>
+            </select>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
           </div>
-        </form>
-      </div>
+        </label>
+        <!-- fejl besked kommer frem -->
+        <p v-if="error" class="error-message">{{ error }}</p>
+        <div class="buttons">
+          <button type="button" @click="close" class="cancel-button">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+          <button type="submit" class="save-button">
+            <i class="fas fa-save"></i> Save project
+          </button>
+        </div>
+      </form>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      show: {
-        type: Boolean,
-        required: true,
-      },
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    show: {
+      type: Boolean,
+      required: true,
     },
-    emits: ["close", "save"],
-    data() {
-      return {
-        projectName: "",
-        subdomainName: "",
-        selectedTemplate: "",
-      };
+  },
+  emits: ["close", "save"],
+  data() {
+    return {
+      projectName: "",
+      subdomainName: "",
+      selectedTemplate: "",
+      error: "",  // fejl besked
+    };
+  },
+  methods: {
+    close() {
+      this.$emit("close");
     },
-    methods: {
-      close() {
-        this.$emit("close");
-      },
-      saveProject() {
-        this.$emit("save", {
-          projectName: this.projectName,
-          subdomainName: this.subdomainName,
-          selectedTemplate: this.selectedTemplate,
-        });
-        this.close();
-      },
+    saveProject() {
+      // ser om alle felterne er udfyldt
+      if (!this.projectName || !this.subdomainName || !this.selectedTemplate) {
+        this.error = "Please fill out all fields before saving.";  // viser fejl besked
+        return;
+      }
+
+      // gemmer projektet med data
+      this.$emit("save", {
+        projectName: this.projectName,
+        subdomainName: this.subdomainName,
+        selectedTemplate: this.selectedTemplate,
+      });
+
+      // reset input felter
+      this.projectName = "";
+      this.subdomainName = "";
+      this.selectedTemplate = "";
+      this.error = "";
+      this.close();
     },
-    watch: {
-      show(value) {
-        if (value) {
-          document.body.style.overflow = "hidden";
-        } else {
-          document.body.style.overflow = "";
-        }
-      },
-    },
-  };
-  </script>
-  
+  },
+};
+</script>
+
+
   
   <style modal>
+  
+  .error-message {
+    color: red;
+    font-size: 15px;
+    margin-top: 10px;
+    text-align: left;
+    font-family: 'Poppins';
+  }
+ 
   .modal-overlay {
     position: fixed;
     top: 0;
