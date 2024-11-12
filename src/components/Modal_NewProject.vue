@@ -131,7 +131,7 @@ export default {
     color: #5C007E;
   }
   
-  h1 {
+  .modal-content h1 {   
     font-size: 35px;
     margin-bottom: 25px;
     font-weight: 700;
@@ -139,7 +139,7 @@ export default {
     text-align: left;
   }
   
-  label {
+  form label {
     display: block;
     font-size: 15px;
     margin-bottom: 10px;
@@ -148,7 +148,7 @@ export default {
     font-family: 'Poppins';
   }
   
-  input, .custom-select {
+  .modal-overlay input, .custom-select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
