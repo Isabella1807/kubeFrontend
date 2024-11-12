@@ -42,17 +42,13 @@
     <div v-if="dropdownOpen" class="dropdown">
       <button class="changepass-btn">Change password</button>
 
-      <label class="switch">
+      <label class="font-size-toggle">
         <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
-            <span class="slider round">
-              <i class="fa-solid fa-a moon-icon"></i>
-              <i class="fa-solid fa-a sun-icon"></i>
+            <span class="slider-font">
+              <i class="fa-solid fa-a aa-icon"></i>
+              <i class="fa-solid fa-a a-icon"></i>
             </span>
           </label>
-
-      <!-- Additional Buttons for Font Size -->
-      <button @click="changeFontSize('large')">Bigger font size</button>
-      <button @click="changeFontSize('default')">Default font size</button>
 
       <button class="logout-btn">
         Log out
@@ -172,10 +168,7 @@ onUnmounted(() => {
   window.removeEventListener('resize', checkScreen);
   window.removeEventListener('scroll', updateScroll);
 });
-
-
 </script>
-
 
 <style lang="scss">
 
@@ -190,9 +183,6 @@ $max-width-desktop: 1350px;
 }
 
 // Styling
-
-
-
 .settings-container {
   position: relative;
   display: inline-block;
@@ -244,7 +234,6 @@ $max-width-desktop: 1350px;
   }
 }
 
-
 /* Animation for dropdown */
 .dropdown-fade-enter-active, .dropdown-fade-leave-active {
   transition: opacity 0.3s;
@@ -259,12 +248,13 @@ $max-width-desktop: 1350px;
   display: inline-block;
   width: 80px;
   height: 35px;
-}
 
-.switch input {
+  input {
   opacity: 0;
   width: 0;
   height: 0;
+}
+
 }
 
 .slider {
@@ -321,6 +311,92 @@ input:checked + .slider .moon-icon {
 input:checked + .slider .sun-icon {
   color: $darkGrey; 
 }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 35px;
+
+  input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+}
+
+// Nr 2 font-size
+
+.font-size-toggle {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 35px;
+  margin: 10px;
+
+  input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+}
+
+.slider-font {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #eee;
+  border-radius: 34px;
+  transition: 0.4s;
+}
+
+.slider-font:before {
+  position: absolute;
+  content: "";
+  height: 35px;
+  width: 45px;
+  right: 0px;
+  bottom: 0px;
+  background-color:#444;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+/* Ikoner for måne og sol */
+.aa-icon, .a-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  transition: color 0.4s;
+}
+
+.aa-icon {
+  left: 12px;
+}
+
+.a-icon {
+  right: 12px;
+  color: $white-color;
+}
+
+input:checked + .slider-font:before {
+  transform: translateX(-40px); /* Justeret position til slider-knappen */
+}
+
+input:checked + .slider-font .aa-icon {
+  color:$white-color;
+}
+
+input:checked + .slider-font .a-icon {
+  color: $darkGrey; 
+}
+
 
 .soge-felt {
     margin-left: 20px;
