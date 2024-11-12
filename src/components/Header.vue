@@ -41,6 +41,16 @@
             <transition name="dropdown-fade">
               <div v-if="dropdownOpen" class="dropdown">
                 <button class="changepass-btn">Change password</button>
+
+                <label class="switch">
+            <input type="checkbox" v-model="isDark" @click="toggleDark()" />
+            <span class="slider round">
+              <i class="fa-solid fa-moon moon-icon"></i>
+              <i class="fa-solid fa-sun sun-icon"></i>
+            </span>
+          </label>
+  
+
                 <button @click="changeFontSize('large')">Bigger font size</button>
                 <button @click="changeFontSize('default')">Default font size</button>
                 <button class="logout-btn">
@@ -158,7 +168,6 @@ onUnmounted(() => {
 // Variabler
 $primary-color: #5C007E; 
 $secondary-color: #333;
-$white-color: #fff;
 $bacgroundgrey: #F6F6F6;
 $header-height: 100%;
 $font-size-desktop: 15px;
@@ -297,7 +306,7 @@ $max-width-mobile: 320px;
 
 .sun-icon {
   right: 12px;
-  color: #fff;
+  color: $white-color;
 }
 
 input:checked + .slider:before {
@@ -305,11 +314,11 @@ input:checked + .slider:before {
 }
 
 input:checked + .slider .moon-icon {
-  color: #fff;
+  color:$white-color;
 }
 
 input:checked + .slider .sun-icon {
-  color: #333; 
+  color: $darkGrey; 
 }
 
 .soge-felt {
@@ -335,7 +344,7 @@ input:checked + .slider .sun-icon {
         padding: 10px 0px;
         position: absolute; 
         left: 10px; 
-        color: #333; 
+        color: $darkGrey; 
         pointer-events: none; 
     }
 }

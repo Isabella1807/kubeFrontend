@@ -1,13 +1,34 @@
+/*GLOBAL COLORS*/
 $primaryPurple: #5C007E;
 $darkGrey: #333333;
-$lightGrey: #EEEEEE;
-$white-color: #fff;
+$lightGrey: #DADADA;
 $offline: #E04040;
-
-
+$online: #079E34;
+$white-color: #fff;
 
 $boldFont: 700;
 
-/*MEDIA QUERIES
-MIXINS?*/
 
+/*MEDIA QUERIES*/
+$largeBreakPoint: 1350px;
+$mediumBreakPoint: 700px;
+$smallBreakPoint: 430px;
+
+//Media queries
+@mixin smallScreen {
+  @media only screen and (max-width: #{$smallBreakPoint}) {
+    @content;
+  }
+}
+
+@mixin mediumScreenOrSmaller {
+  @media only screen and (max-width: #{$mediumBreakPoint}) {
+    @content;
+  }
+}
+
+@mixin largeScreenOrSmaller {
+  @media only screen and (max-width: #{$largeBreakPoint}) {
+    @content;
+  }
+}
