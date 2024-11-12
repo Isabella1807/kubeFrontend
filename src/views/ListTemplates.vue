@@ -52,7 +52,17 @@
       <tr>
         <td class="font-bold">Another template</td>
         <td>Another, Database</td>
-        <td></td>
+        <td>
+          <div class="flex flex-end">
+            <RouterLink to="/templates/edit" class="edit-btn">
+              <font-awesome-icon :icon="['far', 'pen-to-square']" />
+            </RouterLink>
+
+            <button class="delete-btn">
+              <font-awesome-icon :icon="['far', 'trash-can']" />
+            </button>
+          </div>
+        </td>
       </tr>
     </table>
   </div>
@@ -78,6 +88,12 @@
   background-color: purple;
   color: white;
   border: none;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+  align-content: center;
 }
 
 .create-btn svg {
@@ -88,7 +104,7 @@
   border: none;
   font-size: large;
   color: purple;
-  background-color: white;
+  background: none;
 }
 
 table {
@@ -98,14 +114,15 @@ table {
 .edit-btn {
   border: none;
   font-size: large;
-  background-color: white;
+  background: none;
+  color: #333333;
 }
 
 .delete-btn {
   border: none;
   color: red;
   font-size: large;
-  background-color: white;
+  background: none;
   margin-right: 10px;
 }
 
@@ -128,6 +145,25 @@ font-weight: 400;
 
 table tr th:first-child, table tr td:first-child {
   width: 400px;
+}
+
+/* mobile version */
+@media (max-width: 1200px) {
+  .create-btn{
+      position: fixed;
+      bottom: 0px;
+      left:50%;
+      transform: translate(-50%,-0%);
+    }
+    .flex h3{
+      display: none;
+    }
+    table{
+     padding: 0 10px; 
+    }
+  table tr th:first-child, table tr td:first-child{
+  width: auto;
+}
 }
 </style>
 

@@ -88,10 +88,15 @@
   }
   .create-btn {
     border-radius: 50%;
-    padding: 10px;
     background-color: purple;
     color: white;
     border: none;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    align-content: center;
   }
   
   .create-btn svg {
@@ -102,7 +107,7 @@
     border: none;
     font-size: large;
     color: purple;
-    background-color: white;
+    background: none;
   }
   
   table {
@@ -112,14 +117,14 @@
   .edit-btn {
     border: none;
     font-size: large;
-    background-color: white;
+    background: none;
   }
   
   .delete-btn {
     border: none;
     color: red;
     font-size: large;
-    background-color: white;
+    background: none;
     margin-right: 10px;
   }
   
@@ -147,6 +152,23 @@
   .checkbox-btn{
     height: 20px;
     width: 20px;
+  }
+
+
+  /* mobile version */
+  @media (max-width: 1200px) {
+    .create-btn{
+      position: fixed;
+      bottom: 0px;
+      left:50%;
+      transform: translate(-50%,-0%);
+    }
+    .flex h3{
+      display: none;
+    }
+    table{
+     padding: 0 10px; 
+    }
   }
   </style>
   
