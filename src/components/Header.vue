@@ -83,12 +83,14 @@
                 class="settings"
                 @click="toggleDropdown"
               ></i>
-              <transition name="dropdown-fade">
-                <div v-if="dropdownOpen" class="dropdown">
-                  <button @click="changeFontSize('large')">Bigger font size</button>
-                  <button @click="changeFontSize('default')">Default font size</button>
-                </div>
-              </transition>
+                  <label class="font-size-toggle">
+            <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
+                <span class="slider-font">
+                  <i class="fa-solid fa-a aa-icon"></i>
+                  <i class="fa-solid fa-a a-icon"></i>
+                </span>
+              </label>
+
             </div>
           </ul>
         </transition>
