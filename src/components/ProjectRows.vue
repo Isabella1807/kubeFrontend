@@ -61,6 +61,10 @@ const toggleAccordion = () => {
     <div class="projectAccordion" v-if="accordionToggle">
       <div class="projectAccordionText">
         <p><span class="accordionTitle">Owner:</span> {{ props.projectData.owner }}</p>
+
+        <p class="accordionResponsiveItems no1"><span class="accordionTitle">Subdomain name:</span> {{ props.projectData.subdomainName }}</p>
+        <p class="accordionResponsiveItems no2"><span class="accordionTitle">Group name:</span> {{ props.projectData.groupName}}</p>
+
         <p><span class="accordionTitle">UCL mail:</span> {{ props.projectData.mail }}</p>
         <p><span class="accordionTitle">Created:</span> {{ props.projectData.createdAt }}</p>
         <p><span class="accordionTitle">Last change:</span> {{ props.projectData.lastChange }}</p>
@@ -144,6 +148,9 @@ const toggleAccordion = () => {
       .accordionTitle {
         font-weight: 700;
       }
+      .accordionResponsiveItems{
+        display: none;
+      }
     }
 
     .projectButtonsContainer {
@@ -156,13 +163,22 @@ const toggleAccordion = () => {
 
 @include mediumScreenOrSmaller {
   .table-row {
-    .table-cell {
-      &.wide {
-        flex: 1;
-      }
+    .tableRowItemsContainer {
+      .table-cell {
+        &.wide {
+          flex: 1;
+        }
 
-      &.projectTableGroupColumn {
-        display: none;
+        &.projectTableGroupColumn {
+          display: none;
+        }
+      }
+    }
+    .projectAccordion{
+      .projectAccordionText{
+        .accordionResponsiveItems.no2{
+          display: block;
+        }
       }
     }
   }
@@ -173,6 +189,13 @@ const toggleAccordion = () => {
     .table-cell {
       &.projectTableDomainColumn {
         display: none;
+      }
+    }
+    .projectAccordion{
+      .projectAccordionText{
+        .accordionResponsiveItems.no1{
+          display: block;
+        }
       }
     }
   }

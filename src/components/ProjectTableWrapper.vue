@@ -66,6 +66,7 @@ import Icon from "@/components/Icon.vue";
     cursor: pointer;
     gap: 5px;
     align-items: center;
+    white-space: nowrap;
 
     .firstProjectP {
       padding: 0.25rem 0.5rem 0.25rem 0;

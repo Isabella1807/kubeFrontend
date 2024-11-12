@@ -28,7 +28,7 @@ const props = defineProps({
       <div class="iconContainer">
         <Icon v-if="props.icon" :name="props.icon"/>
       </div>
-      <p>{{ props.text }}</p>
+      <p class="buttonText">{{ props.text }}</p>
     </div>
   </div>
 </template>
@@ -46,6 +46,7 @@ const props = defineProps({
   font-weight: 500;
   border: 3px solid $primaryPurple;
   cursor: pointer;
+  white-space: nowrap;
 
   .iconContainer {
     display: flex;
@@ -76,6 +77,29 @@ const props = defineProps({
       color: $dangerRed;
 
     }
+  }
+}
+
+@include mediumScreenOrSmaller {
+  .buttonShape {
+    padding: 0.3rem 1.3rem 0.3rem 1rem;
+  }
+  .buttonText {
+    font-size: 14px;
+  }
+}
+
+@include smallScreen {
+  .buttonShape {
+    padding: 0.3rem 1rem 0.3rem 1rem;
+
+    &.danger {
+      padding: 0.3rem 1rem 0.3rem 1rem;
+    }
+  }
+
+  .buttonText {
+    display: none;
   }
 }
 </style>
