@@ -166,28 +166,13 @@ onUnmounted(() => {
 
 // Variabler
 // Variabler
-$primary-color: #5C007E; 
-$secondary-color: #333;
-$bacgroundgrey: #F6F6F6;
-$header-height: 100%;
-$font-size-desktop: 15px;
-$font-weight: 700;
-$font-size-mobile: 14px;
 $transition-duration: 0.5s;
 $header-padding: 10px 0;
 $max-width-desktop: 1350px;
-$max-width-tablet: 700px;
-$max-width-mobile: 320px;
 
 // Mixins
 @mixin transition($duration: $transition-duration) {
     transition: $duration ease all;
-}
-
-@mixin responsive($breakpoint) {
-    @media (max-width: $breakpoint) {
-        @content;
-    }
 }
 
 // Styling
@@ -223,7 +208,7 @@ $max-width-mobile: 320px;
       }
 
       &:nth-child(2) {
-        background-color: $primary-color; // Brug variablen for lilla farve, hvis den er defineret
+        background-color: $primaryPurple; // Brug variablen for lilla farve, hvis den er defineret
         color: $white-color; // Sørg for, at teksten også er synlig
         border-radius: 5px;
 
@@ -273,7 +258,7 @@ $max-width-mobile: 320px;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #eee;
+  background-color: $lightGrey;
   border-radius: 34px;
   transition: 0.4s;
 }
@@ -387,7 +372,7 @@ header {
                 margin-left: 20px;
 
                 &:hover {
-                color: $primary-color;
+                color: $primaryPurple;
             }
         }
         }
@@ -395,20 +380,20 @@ header {
         .link {
             font-size: $font-size-desktop;
             font-weight: $font-weight;
-            color: $secondary-color;
+            color: $darkGrey;
             list-style: none;
             text-decoration: none;
             margin-right: 30px;
             @include transition();
 
             &:hover {
-                color: $primary-color;
+                color: $primaryPurple;
             }
         }
 
         .active-link {
-            color: $primary-color;
-            border-bottom: 3px solid $primary-color;
+            color: $primaryPurple;
+            border-bottom: 3px solid $primaryPurple;
         }
 
         .icon {
@@ -417,17 +402,13 @@ header {
             position: absolute;
             top: 0;
             right: 20px;
-            color: $secondary-color;
+            color: $darkGrey;
 
             i {
                 cursor: pointer;
                 font-size: 20px;
                 @include transition(0.8s);
             }
-        }
-
-        .icon-active {
-            transform: rotate(180deg);
         }
 
         .dropdown-nav {
@@ -445,7 +426,7 @@ header {
 
             .link {
                 font-size: $font-size-mobile;
-                color: $secondary-color;
+                color: $darkGrey;
                 text-align: left;
                 margin: 15px 0;
                 padding-left: 20px;
@@ -462,7 +443,7 @@ header {
 
     .mobile-nav-enter-active,
     .mobile-nav-leave-active {
-        @include transition(1s);
+        @include transition(0.5s);
     }
 
     .mobile-nav-enter-from,
@@ -472,63 +453,6 @@ header {
 
     .mobile-nav-enter-to {
         transform: translateX(0);
-    }
-}
-
-// Responsiv styling
-
-// Desktop (min-width: 1350px)
-@include responsive(1350px) {
-    nav {
-        max-width: $max-width-desktop;
-    }
-
-    .link {
-        font-size: $font-size-desktop;
-    }
-}
-
-// Tablet (max-width: 700px)
-@include responsive($max-width-tablet) {
-    nav {
-        max-width: $max-width-tablet;
-        flex-direction: column;
-        padding: 20px;
-    }
-
-    .navigation1 {
-        display: none; // Skjuler desktop navigation på tablet og mindre
-    }
-
-    .icon {
-        right: 20px;
-    }
-
-    .dropdown-nav {
-        max-width: 100%;
-        position: absolute;
-    }
-}
-
-// Mobil (max-width: 320px)
-@include responsive($max-width-mobile) {
-    nav {
-        max-width: $max-width-mobile;
-        padding: 15px;
-    }
-
-    .link {
-        font-size: $font-size-mobile;
-        margin-right: 20px;
-    }
-
-    .dropdown-nav {
-        max-width: 100%;
-        font-size: $font-size-mobile;
-    }
-
-    .icon {
-        right: 10px;
     }
 }
 
