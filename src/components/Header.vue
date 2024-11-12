@@ -45,8 +45,8 @@
       <label class="switch">
         <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
             <span class="slider round">
-              <i class="fa-solid fa-moon moon-icon"></i>
-              <i class="fa-solid fa-sun sun-icon"></i>
+              <i class="fa-solid fa-a moon-icon"></i>
+              <i class="fa-solid fa-a sun-icon"></i>
             </span>
           </label>
 
@@ -154,8 +154,6 @@ const changeFontSize = (size) => {
   localStorage.setItem('fontSize', size); // Gemmer valget i localStorage
   fontSize.value = size; // Opdaterer den interne state
 };
-
-// Påmontér event: Anvender den gemte fontstørrelse, når komponenten er indlæst
 
 
 const searchItems = () => {
