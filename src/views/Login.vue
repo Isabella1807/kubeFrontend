@@ -21,8 +21,10 @@
             <router-link to="/forgot-password" class="forgot-password">Forgot password</router-link>
           </div>
   
-          <!-- Login Button -->
-          <button type="submit" class="login-button">Login</button>
+            <!-- Login Button -->
+        <router-link to="/projects">
+          <button type="button" class="login-button">Login</button>
+        </router-link>
         </form>
       </div>
     </div>
