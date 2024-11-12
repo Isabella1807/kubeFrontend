@@ -39,26 +39,27 @@
               @click="toggleDropdown"
             ></i>
             <transition name="dropdown-fade">
-              <div v-if="dropdownOpen" class="dropdown">
-                <button class="changepass-btn">Change password</button>
+    <div v-if="dropdownOpen" class="dropdown">
+      <button class="changepass-btn">Change password</button>
 
-                <label class="switch">
-            <input type="checkbox" v-model="isDark" @click="toggleDark()" />
+      <label class="switch">
+        <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
             <span class="slider round">
               <i class="fa-solid fa-moon moon-icon"></i>
               <i class="fa-solid fa-sun sun-icon"></i>
             </span>
           </label>
-  
 
-                <button @click="changeFontSize('large')">Bigger font size</button>
-                <button @click="changeFontSize('default')">Default font size</button>
-                <button class="logout-btn">
-                  Log out
-                  <i class="fa-solid fa-right-from-bracket logout-icon"></i>
-                </button>
-              </div>
-            </transition>
+      <!-- Additional Buttons for Font Size -->
+      <button @click="changeFontSize('large')">Bigger font size</button>
+      <button @click="changeFontSize('default')">Default font size</button>
+
+      <button class="logout-btn">
+        Log out
+        <i class="fa-solid fa-right-from-bracket logout-icon"></i>
+      </button>
+    </div>
+  </transition>
           </div>
         </ul>
   
@@ -120,9 +121,10 @@ const searchQuery = ref('');
 const windowWidth = ref(window.innerWidth);
 const dropdownOpen = ref(false);
 
+
 const checkScreen = () => {
   windowWidth.value = window.innerWidth;
-  mobile.value = windowWidth.value <= 768;
+  mobile.value = windowWidth.value <= 700;
   if (!mobile.value) mobileNav.value = false;
 };
 
@@ -138,10 +140,23 @@ const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value;
 };
 
-const changeFontSize = (size) => {
-  document.documentElement.style.fontSize = size === 'large' ? '1.2em' : '1em';
-  localStorage.setItem('fontSize', size);
+const fontSize = ref(localStorage.getItem('fontSize') || 'default');
+
+// Funktion til at skifte fontstørrelse
+const toggleFontSize = () => {
+  const newFontSize = fontSize.value === 'default' ? 'large' : 'default';
+  changeFontSize(newFontSize); // Ændrer fontstørrelse med det samme
 };
+
+// Funktion til at ændre fontstørrelse
+const changeFontSize = (size) => {
+  document.documentElement.style.fontSize = size === 'large' ? '1.2rem' : '1rem'; // Skifter mellem stor og normal størrelse
+  localStorage.setItem('fontSize', size); // Gemmer valget i localStorage
+  fontSize.value = size; // Opdaterer den interne state
+};
+
+// Påmontér event: Anvender den gemte fontstørrelse, når komponenten er indlæst
+
 
 const searchItems = () => {
   console.log('Searching for: ', searchQuery.value);
@@ -159,12 +174,13 @@ onUnmounted(() => {
   window.removeEventListener('resize', checkScreen);
   window.removeEventListener('scroll', updateScroll);
 });
+
+
 </script>
 
 
-  <style lang="scss">
+<style lang="scss">
 
-// Variabler
 // Variabler
 $transition-duration: 0.5s;
 $header-padding: 10px 0;
@@ -176,6 +192,8 @@ $max-width-desktop: 1350px;
 }
 
 // Styling
+
+
 
 .settings-container {
   position: relative;
