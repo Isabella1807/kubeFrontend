@@ -1,6 +1,4 @@
 <script setup>
-
-import ProjectTableHeader from "@/components/ProjectTableHeader.vue";
 import Icon from "@/components/Icon.vue";
 </script>
 
@@ -9,22 +7,22 @@ import Icon from "@/components/Icon.vue";
     <div class="table-header">
       <div class="table-cell">
         <div class="tableHeaderItemsContainer">
-          <p>Project</p>
+          <p class="firstProjectP">Project name</p>
           <div>
             <icon name="caretDown" class="tableItemsCaretDown"/>
           </div>
         </div>
       </div>
-      <div class="table-cell wide">
+      <div class="table-cell wide projectTableDomainColumn">
         <div class="tableHeaderItemsContainer">
-          <p>Domain</p>
+          <p>Subdomain name</p>
           <div>
             <icon name="caretDown" class="tableItemsCaretDown"/>
           </div>
         </div>
       </div>
-      <div class="table-cell">
-        <div class="tableHeaderItemsContainer">
+      <div class="table-cell projectTableGroupColumn">
+        <div class="tableHeaderItemsContainer ">
           <p>Group</p>
           <div>
             <icon name="caretDown" class="tableItemsCaretDown"/>
@@ -46,10 +44,7 @@ import Icon from "@/components/Icon.vue";
 
 <style scoped lang="scss">
 .table-wrapper {
-  background-color: cornsilk;
-
   .table-header {
-    background-color: dodgerblue;
     display: flex;
     border-bottom: 2px solid $lightGrey;
 
@@ -62,18 +57,56 @@ import Icon from "@/components/Icon.vue";
     }
 
     .table-actions {
-      width: 6.5rem;
+      width: 7rem;
     }
   }
 
-  .tableHeaderItemsContainer{
+  .tableHeaderItemsContainer {
     display: inline-flex;
     cursor: pointer;
-    gap: 10px;
+    gap: 5px;
     align-items: center;
+    white-space: nowrap;
 
-    .tableItemsCaretDown{
+    .firstProjectP {
+      padding: 0.25rem 0.5rem 0.25rem 0;
+    }
+
+    p {
+      padding: 0.25rem 0.5rem;
+    }
+
+    .tableItemsCaretDown {
       color: $primaryPurple;
+    }
+  }
+}
+
+@include mediumScreenOrSmaller {
+  .table-wrapper {
+    .table-header {
+      .table-cell {
+        &.wide {
+          flex: 1;
+        }
+
+        &.projectTableGroupColumn {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+
+@include smallScreen {
+  .table-wrapper {
+    .table-header {
+      .table-cell {
+        &.projectTableDomainColumn {
+          display: none;
+        }
+      }
     }
   }
 }

@@ -17,21 +17,28 @@ import Header from './components/Header.vue';
 <style lang="scss" scoped>
 .body_container {
   min-height: 100vh;
-  background-color: deeppink;
   display: flex;
   flex-direction: column;
 
   .main_container {
-    background-color: orange;
     flex: 1;
     display: flex;
     justify-content: space-around;
 
     main {
-      max-width: 1350px;
-      background-color: green;
+      max-width: min(1350px, calc(100% - 3rem));
       flex: 1;
       padding: 4rem 0;
+    }
+  }
+}
+
+@include largeScreenOrSmaller {
+  .body_container {
+    .main_container {
+      main {
+        //padding: 0 1.5rem;
+      }
     }
   }
 }
