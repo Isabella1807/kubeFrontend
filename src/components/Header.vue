@@ -19,7 +19,7 @@
             
             <!-- Desktop Navigation -->
             <ul v-show="!mobile" class="navigation1">
-                <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
+                <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
                 <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
                 <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
                     <label class="switch">
@@ -41,7 +41,7 @@
             <!-- Mobile Dropdown Navigation -->
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="dropdown-nav">
-                    <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
+                    <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
                     <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
                     <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
                     <label class="switch">
