@@ -1,0 +1,72 @@
+$white-color: #fff;
+$bacgroundgrey: #F6F6F6;
+$darkmode-bg: #180020;
+$darkmode-lilla:#e8aaff;
+
+
+[color-scheme='dark'] {
+  
+    header, body, .dropdown-nav {
+      background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
+    }
+  
+    h1,h2, p, th, td, .link{
+        color: $white-color;
+    }
+
+    .navigation1{
+  
+       .settings {
+      color: $white-color;
+  
+          &:hover {
+              color: $darkmode-lilla;
+          }
+      }
+
+      .dropdown {
+        background-color: $darkmode-bg;
+        
+
+
+        button {
+            color:$white-color;
+
+            &:hover {
+                color: $white-color;
+                background-color: darken($primaryPurple, 10%);
+            }
+
+            &:nth-child(2) {
+
+                &:hover {
+                    color: $white-color;
+                }
+        }
+      }
+
+      .logout-btn {
+        color: $offline;
+
+      &:hover {
+        color: $offline;
+        background-color: darken($primaryPurple, 10%);
+        
+      }
+    }
+    }
+}
+     
+  
+    .active-link {
+              border-bottom: 3px solid $white-color;
+          }
+  
+    .link {
+      color: $white-color;
+  
+      &:hover {
+        color: $darkmode-lilla;
+      }
+    }
+  }
