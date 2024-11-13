@@ -36,7 +36,7 @@
   };
   </script>
   
-  <style>
+  <style lang="scss">
   /* Center the container */
   .login-container {
     display: flex;
