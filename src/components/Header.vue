@@ -1,166 +1,248 @@
 <template>
-    <header :class="{ 'scrolled-nav': scrolledNav }">
-        <nav>
-            <div class="branding">
-                <RouterLink to="/">
-                    <img src="../img/kubelab.png" alt="Kubelab logo" />
-                </RouterLink>
-                <!-- Søgefelt -->
-                <div class="soge-felt">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input 
-                        type="text" 
-                        v-model="searchQuery" 
-                        placeholder="Seach..." 
-                        @input="searchItems"
-                         />
-                </div>
-            </div>
-            
-            <!-- Desktop Navigation -->
-            <ul v-show="!mobile" class="navigation1">
-                <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
-                <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-                <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
-                    <label class="switch">
-                        <input type="checkbox" v-model="isDark" @click="toggleDark()">
-                        <span class="slider round">
-                            <i class="fa-solid fa-moon moon-icon"></i>
-                            <i class="fa-solid fa-sun sun-icon"></i>
-                        </span>
-                    </label>
-
-                <i class="fa-solid fa-gear settings"></i>
-            </ul>
-
-            <!-- Mobile Navigation Icon -->
-            <div class="icon">
-                <i @click="toggleMobileNav" v-show="mobile" class="fa-solid fa-bars" :class="{ 'icon-active': mobileNav }"></i>
-            </div>
-
-            <!-- Mobile Dropdown Navigation -->
-            <transition name="mobile-nav">
-                <ul v-show="mobileNav" class="dropdown-nav">
-                    <RouterLink class="link" to="/" active-class="active-link">Project</RouterLink>
-                    <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-                    <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
-                    <label class="switch">
-                    <input type="checkbox" v-model="isDark" @click="toggleDark()">
-                        <span class="slider round">
-                            <i class="fa-solid fa-moon moon-icon"></i>
-                            <i class="fa-solid fa-sun sun-icon"></i>
-                        </span>
-                    </label>
-
-                <i class="fa-solid fa-gear settings"></i>
-                </ul>
-            </transition>
-        </nav>
-    </header>
-</template>
-
+    <header :class="{ 'scrolled-nav': scrolledNav, 'dark-mode': isDark }">
+      <nav>
+        <div class="branding">
+          <RouterLink to="/">
+            <img src="../img/kubelab.png" alt="Kubelab logo" />
+          </RouterLink>
+          <!-- Søgefelt -->
+          <div class="soge-felt">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              v-model="searchQuery"
+              placeholder="Search..."
+              @input="searchItems"
+            />
+          </div>
+        </div>
   
-  <script setup>
+        <!-- Desktop Navigation -->
+        <ul v-show="!mobile" class="navigation1">
+          <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
+          <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
+          <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+          
+          <label class="switch">
+            <input type="checkbox" v-model="isDark" @click="toggleDark()" />
+            <span class="slider round">
+              <i class="fa-solid fa-moon moon-icon"></i>
+              <i class="fa-solid fa-sun sun-icon"></i>
+            </span>
+          </label>
+  
+          <!-- Settings Icon and Dropdown -->
+          <div class="settings-container">
+            <i
+              :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
+              class="settings"
+              @click="toggleDropdown"
+            ></i>
+            <transition name="dropdown-fade">
+    <div v-if="dropdownOpen" class="dropdown">
+      <button class="changepass-btn">Change password</button>
+
+      <label class="font-size-toggle">
+        <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
+            <span class="slider-font">
+              <i class="fa-solid fa-a aa-icon"></i>
+              <i class="fa-solid fa-a a-icon"></i>
+            </span>
+          </label>
+
+      <button class="logout-btn">
+        Log out
+        <i class="fa-solid fa-right-from-bracket logout-icon"></i>
+      </button>
+    </div>
+  </transition>
+          </div>
+        </ul>
+  
+        <!-- Mobile Navigation Icon -->
+        <div class="icon">
+          <i @click="toggleMobileNav" v-show="mobile" class="fa-solid fa-bars" :class="{ 'icon-active': mobileNav }"></i>
+        </div>
+  
+        <!-- Mobile Dropdown Navigation -->
+        <transition name="mobile-nav">
+          <ul v-show="mobileNav" class="dropdown-nav">
+            <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
+            <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
+            <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+            <label class="switch">
+              <input type="checkbox" v-model="isDark" @click="toggleDark()" />
+              <span class="slider round">
+                <i class="fa-solid fa-moon moon-icon"></i>
+                <i class="fa-solid fa-sun sun-icon"></i>
+              </span>
+            </label>
+            <div class="settings-container">
+              <i
+                :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
+                class="settings"
+                @click="toggleDropdown"
+              ></i>
+                  <label class="font-size-toggle">
+            <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
+                <span class="slider-font">
+                  <i class="fa-solid fa-a aa-icon"></i>
+                  <i class="fa-solid fa-a a-icon"></i>
+                </span>
+              </label>
+
+            </div>
+          </ul>
+        </transition>
+      </nav>
+    </header>
+  </template>
+  
+<script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 
-// Læs dark mode-præference fra localStorage
 const isDark = ref(localStorage.getItem('isDarkMode') === 'true');
-
-// Funktion til at skifte dark mode og gemme indstillingen i localStorage
 const toggleDark = () => {
   isDark.value = !isDark.value;
   localStorage.setItem('isDarkMode', isDark.value);
   document.documentElement.setAttribute('color-scheme', isDark.value ? 'dark' : 'light');
 };
-
-// Genindlæs farveskema ved sideindlæsning
 onMounted(() => {
   document.documentElement.setAttribute('color-scheme', isDark.value ? 'dark' : 'light');
 });
-
-
 
 const scrolledNav = ref(false);
 const mobile = ref(false);
 const mobileNav = ref(false);
 const searchQuery = ref('');
 const windowWidth = ref(window.innerWidth);
+const dropdownOpen = ref(false);
 
-// Funktion til at tjekke skærmbredden
+
 const checkScreen = () => {
-    windowWidth.value = window.innerWidth;
-    if (windowWidth.value <= 768) {
-        mobile.value = true;
-    } else {
-        mobile.value = false;
-        mobileNav.value = false; // Luk mobile navigation, når skærmen er bredere end 768px
-    }
+  windowWidth.value = window.innerWidth;
+  mobile.value = windowWidth.value <= 700;
+  if (!mobile.value) mobileNav.value = false;
 };
 
-// Funktion til at opdatere scroll-status
 const updateScroll = () => {
-    const scrollPosition = window.scrollY;
-    scrolledNav.value = scrollPosition > 50;
+  scrolledNav.value = window.scrollY > 50;
 };
 
-// Funktion til at skifte mobile navigation
 const toggleMobileNav = () => {
-    mobileNav.value = !mobileNav.value;
+  mobileNav.value = !mobileNav.value;
 };
 
-// Søgefunktion
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+};
+
+const fontSize = ref(localStorage.getItem('fontSize') || 'default');
+
+// Funktion til at skifte fontstørrelse
+const toggleFontSize = () => {
+  const newFontSize = fontSize.value === 'default' ? 'large' : 'default';
+  changeFontSize(newFontSize); // Ændrer fontstørrelse med det samme
+};
+
+// Funktion til at ændre fontstørrelse
+const changeFontSize = (size) => {
+  document.documentElement.style.fontSize = size === 'large' ? '1.2rem' : '1rem'; // Skifter mellem stor og normal størrelse
+  localStorage.setItem('fontSize', size); // Gemmer valget i localStorage
+  fontSize.value = size; // Opdaterer den interne state
+};
+
+
 const searchItems = () => {
-    console.log('Søger efter: ', searchQuery.value);
-    // Her kan du implementere søgning via API eller filtrering af lokale data
+  console.log('Searching for: ', searchQuery.value);
 };
 
-// Setup event listeners
 onMounted(() => {
-    window.addEventListener('resize', checkScreen);
-    window.addEventListener('scroll', updateScroll);
-    checkScreen();
+  window.addEventListener('resize', checkScreen);
+  window.addEventListener('scroll', updateScroll);
+  checkScreen();
+  const savedFontSize = localStorage.getItem('fontSize');
+  if (savedFontSize) changeFontSize(savedFontSize);
 });
 
 onUnmounted(() => {
-    window.removeEventListener('resize', checkScreen);
-    window.removeEventListener('scroll', updateScroll);
+  window.removeEventListener('resize', checkScreen);
+  window.removeEventListener('scroll', updateScroll);
 });
 </script>
 
-  <style lang="scss" scoped>
+<style lang="scss">
 
 // Variabler
-$primary-color: #5C007E;
-$secondary-color: #333;
-$white-color: #fff;
-$bacgroundgrey: #F6F6F6;
-$color-darkmode: #fff;
-$darkmode-bg: #2D003E;
-$darkmode-lilla:#e8aaff;
-$header-height: 100%;
-$font-size-desktop: 15px;
-$font-weight: 700;
-$font-size-mobile: 14px;
 $transition-duration: 0.5s;
 $header-padding: 10px 0;
 $max-width-desktop: 1350px;
-$max-width-tablet: 700px;
-$max-width-mobile: 320px;
-
 
 // Mixins
 @mixin transition($duration: $transition-duration) {
     transition: $duration ease all;
 }
 
-@mixin responsive($breakpoint) {
-    @media (max-width: $breakpoint) {
-        @content;
+// Styling
+.settings-container {
+  position: relative;
+  display: inline-block;
+
+  .dropdown {
+    position: absolute;
+    top: 50px; /* Just over the settings icon */
+    right: 0;
+    background-color: $white-color;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 15px;
+    z-index: 10;
+    width: 200px; 
+
+    button {
+      display: block;
+      background: none;
+      border: none;
+      padding: 5px 10px;
+      font-size: inherit;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+
+      &:hover {
+        background-color: #f0f0f0;
+        border-radius: 5px;
+      }
+
+      &:nth-child(2) {
+        background-color: $primaryPurple; // Brug variablen for lilla farve, hvis den er defineret
+        color: $white-color; // Sørg for, at teksten også er synlig
+        border-radius: 5px;
+
+        &:hover {
+          background-color: darken($primaryPurple, 10%); // Mørkere lilla ved hover, hvis ønsket
+        }
+      }
     }
+  }
 }
 
-// Styling
+.logout-btn {
+    color: $offline;
+
+  &:hover {
+    opacity: 80%;
+  }
+}
+
+/* Animation for dropdown */
+.dropdown-fade-enter-active, .dropdown-fade-leave-active {
+  transition: opacity 0.3s;
+}
+.dropdown-fade-enter-from, .dropdown-fade-leave-to {
+  opacity: 0;
+}
 
 /* The switch - the box around the slider */
 .switch {
@@ -168,12 +250,13 @@ $max-width-mobile: 320px;
   display: inline-block;
   width: 80px;
   height: 35px;
-}
 
-.switch input {
+  input {
   opacity: 0;
   width: 0;
   height: 0;
+}
+
 }
 
 .slider {
@@ -183,7 +266,7 @@ $max-width-mobile: 320px;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #eee;
+  background-color: $lightGrey;
   border-radius: 34px;
   transition: 0.4s;
 }
@@ -195,7 +278,7 @@ $max-width-mobile: 320px;
   width: 45px;
   right: 0px;
   bottom: 0px;
-  background-color:$primary-color;
+  background-color:$primaryPurple;
   border-radius: 50%;
   transition: 0.4s;
 }
@@ -216,7 +299,7 @@ $max-width-mobile: 320px;
 
 .sun-icon {
   right: 12px;
-  color: #fff;
+  color: $white-color;
 }
 
 input:checked + .slider:before {
@@ -224,49 +307,97 @@ input:checked + .slider:before {
 }
 
 input:checked + .slider .moon-icon {
-  color: #fff;
+  color:$white-color;
 }
 
 input:checked + .slider .sun-icon {
-  color: #333; 
+  color: $darkGrey; 
 }
 
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 35px;
 
-/* Farveskema Darkmode */
-[color-scheme='dark'] {
-  
-  header {
-    background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
-  }
-
-  .navigation1{
-
-     .settings {
-    color: $color-darkmode;
-    @include transition();
-
-        &:hover {
-            color: $darkmode-lilla;
-        }
-    }
-  }
-   
-
-  .active-link {
-            border-bottom: 3px solid $color-darkmode;
-        }
-
-  .link {
-    color: $color-darkmode;
-    @include transition();
-
-    &:hover {
-      color: $darkmode-lilla;
-    }
-  }
+  input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
+}
 
+// Nr 2 font-size
+
+.font-size-toggle {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 35px;
+  margin: 10px;
+
+  input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+}
+
+.slider-font {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #eee;
+  border-radius: 34px;
+  transition: 0.4s;
+}
+
+.slider-font:before {
+  position: absolute;
+  content: "";
+  height: 35px;
+  width: 45px;
+  right: 0px;
+  bottom: 0px;
+  background-color:#444;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+/* Ikoner for måne og sol */
+.aa-icon, .a-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  transition: color 0.4s;
+}
+
+.aa-icon {
+  left: 12px;
+}
+
+.a-icon {
+  right: 12px;
+  color: $white-color;
+}
+
+input:checked + .slider-font:before {
+  transform: translateX(-40px); /* Justeret position til slider-knappen */
+}
+
+input:checked + .slider-font .aa-icon {
+  color:$white-color;
+}
+
+input:checked + .slider-font .a-icon {
+  color: $darkGrey; 
+}
 
 
 .soge-felt {
@@ -282,7 +413,7 @@ input:checked + .slider .sun-icon {
         width: 349px;
 
         &:focus {
-            border-color: #5C007E; /* Juster farve efter behov */
+            border-color: $primaryPurple; /* Juster farve efter behov */
             outline: none;
         }
     }
@@ -292,10 +423,11 @@ input:checked + .slider .sun-icon {
         padding: 10px 0px;
         position: absolute; 
         left: 10px; 
-        color: #333; 
+        color: $darkGrey; 
         pointer-events: none; 
     }
 }
+
 header {
     background-color: $white-color;
     z-index: 2;
@@ -320,7 +452,6 @@ header {
             img {
                 width: 50px;
             }
-
         }
 
         .navigation1 {
@@ -335,31 +466,29 @@ header {
                 margin-left: 20px;
 
                 &:hover {
-                color: $primary-color;
+                color: $primaryPurple;
             }
-            
-            }
+        }
         }
 
         .link {
             font-size: $font-size-desktop;
             font-weight: $font-weight;
-            color: $secondary-color;
+            color: $darkGrey;
             list-style: none;
             text-decoration: none;
             margin-right: 30px;
             @include transition();
 
             &:hover {
-                color: $primary-color;
+                color: $primaryPurple;
             }
         }
 
         .active-link {
-            color: $primary-color;
-            border-bottom: 3px solid $primary-color;
+            color: $primaryPurple;
+            border-bottom: 3px solid $primaryPurple;
         }
-
 
         .icon {
             display: flex;
@@ -367,7 +496,7 @@ header {
             position: absolute;
             top: 0;
             right: 20px;
-            color: $secondary-color;
+            color: $darkGrey;
 
             i {
                 cursor: pointer;
@@ -376,35 +505,39 @@ header {
             }
         }
 
-        .icon-active {
-            transform: rotate(180deg);
-        }
-
         .dropdown-nav {
             display: flex;
             flex-direction: column;
             position: fixed;
-            align-items: center;
-            width: 100%;
-            max-width: 300px;
+            top: 0;
+            right: 0; /* Juster til at være til højre */
+            width: 250px;
             height: 100%;
-            z-index: 99;
             background-color: $white-color;
-            top: 10px;
-            left: 0;
+            box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2); /* Skab en skygge på venstre side for at indikere sidepanel */
+            padding-top: 20px;
+            z-index: 100;
 
             .link {
-                margin-left: 45px;
-                margin-top: 20px;
-                color: $secondary-color;
-                border-color: $primary-color;
+                font-size: $font-size-mobile;
+                color: $darkGrey;
+                text-align: left;
+                margin: 15px 0;
+                padding-left: 20px;
+
+                &:hover {
+                background-color: #f0f0f0;
+                }
             }
         }
+
+
+  
     }
 
     .mobile-nav-enter-active,
     .mobile-nav-leave-active {
-        @include transition(1s);
+        @include transition(0.5s);
     }
 
     .mobile-nav-enter-from,
@@ -414,63 +547,6 @@ header {
 
     .mobile-nav-enter-to {
         transform: translateX(0);
-    }
-}
-
-// Responsiv styling
-
-// Desktop (min-width: 1350px)
-@include responsive(1350px) {
-    nav {
-        max-width: $max-width-desktop;
-    }
-
-    .link {
-        font-size: $font-size-desktop;
-    }
-}
-
-// Tablet (max-width: 700px)
-@include responsive($max-width-tablet) {
-    nav {
-        max-width: $max-width-tablet;
-        flex-direction: column;
-        padding: 20px;
-    }
-
-    .navigation1 {
-        display: none; // Skjuler desktop navigation på tablet og mindre
-    }
-
-    .icon {
-        right: 20px;
-    }
-
-    .dropdown-nav {
-        max-width: 100%;
-        position: absolute;
-    }
-}
-
-// Mobil (max-width: 320px)
-@include responsive($max-width-mobile) {
-    nav {
-        max-width: $max-width-mobile;
-        padding: 15px;
-    }
-
-    .link {
-        font-size: $font-size-mobile;
-        margin-right: 20px;
-    }
-
-    .dropdown-nav {
-        max-width: 100%;
-        font-size: $font-size-mobile;
-    }
-
-    .icon {
-        right: 10px;
     }
 }
 

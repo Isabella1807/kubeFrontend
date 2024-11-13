@@ -1,11 +1,13 @@
 <script setup>
 import {RouterView} from 'vue-router'
 import Header from './components/Header.vue';
+
+
 </script>
 
 <template>
   <div class="body_container">
-    <Header/>
+    <Header></Header>
     <div class="main_container">
       <main>
         <RouterView/>
@@ -26,9 +28,19 @@ import Header from './components/Header.vue';
     justify-content: space-around;
 
     main {
-      max-width: 1350px;
+      max-width: min(1350px, calc(100% - 3rem));
       flex: 1;
       padding: 4rem 0;
+    }
+  }
+}
+
+@include largeScreenOrSmaller {
+  .body_container {
+    .main_container {
+      main {
+        //padding: 0 1.5rem;
+      }
     }
   }
 }

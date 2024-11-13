@@ -1,9 +1,46 @@
+/*GLOBAL COLORS*/
 $primaryPurple: #5C007E;
 $darkGrey: #333333;
-$lightGrey: #EEEEEE;
+$lightGrey: #DADADA;
+$dangerRed: #E04040;
+$offline: #E04040;
+$online: #079E34;
+$white-color: #fff;
+$bacgroundgrey: #F6F6F6;
+
+$font-size-desktop: 15px;
+$font-weight: 700;
+$font-size-mobile: 14px;
+
+$transition-duration: 0.5s;
+$header-padding: 10px 0;
+$max-width-desktop: 1350px;
 
 $boldFont: 700;
 
-/*MEDIA QUERIES
-MIXINS?*/
+
+/*MEDIA QUERIES*/
+$largeBreakPoint: 1350px;
+$mediumBreakPoint: 700px;
+$smallBreakPoint: 430px;
+$smallBreakPoint: 550px;
+
+//Media queries
+@mixin smallScreen {
+  @media only screen and (max-width: #{$smallBreakPoint}) {
+    @content;
+  }
+}
+
+@mixin mediumScreenOrSmaller {
+  @media only screen and (max-width: #{$mediumBreakPoint}) {
+    @content;
+  }
+}
+
+@mixin largeScreenOrSmaller {
+  @media only screen and (max-width: #{$largeBreakPoint}) {
+    @content;
+  }
+}
 

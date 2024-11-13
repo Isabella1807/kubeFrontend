@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
@@ -25,7 +26,7 @@
     "@babel/plugin-transform-runtime": "^7.25.9",
     "@babel/preset-typescript": "^7.26.0",
     "@vitejs/plugin-vue": "^5.1.4",
-    "sass": "^1.80.6",
+    "sass": "^1.80.7",
     "vite": "^5.4.10"
   }
 }
