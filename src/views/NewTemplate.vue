@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="template_form">
     <h2>New template</h2>
     <form action="X">
       <label for="tname">Template name</label>
@@ -68,7 +68,7 @@ textarea {
 
 .cancel-btn {
   padding: 5px 25px 5px 10px;
-  background-color: white;
+  background: none;
   border: 4px solid purple;
   border-radius: 10px;
   color: purple;
@@ -87,6 +87,14 @@ textarea {
 }
 .save-btn svg {
   margin-right: 5px;
+}
+
+/* mobile version*/
+@media (max-width: 1200px) {
+#template_form{
+  padding: 20px;
+}
+
 }
 </style>
 

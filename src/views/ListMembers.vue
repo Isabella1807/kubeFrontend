@@ -1,14 +1,15 @@
 <template>
     <div>
       <div class="flex">
-        <button class="create-btn">
+        <RouterLink to="/members/edit" class="create-btn">
           <font-awesome-icon :icon="['fas', 'plus']" />
-        </button>
-        <h3>Create new template</h3>
+        </RouterLink>
+        <h3>Create new user</h3>
       </div>
   
       <table>
         <tr>
+          <th><input class="checkbox-btn" type="checkbox"></th>
           <th>Groups
               <button class="sort-btn">
             <font-awesome-icon :icon="['fas', 'sort-down']" />
@@ -19,6 +20,7 @@
         </tr>
        
         <tr>
+          <td><input class="checkbox-btn" type="checkbox"></td>
           <td class="font-bold">DCD24</td>
           <td>35</td>
           <td>
@@ -35,6 +37,7 @@
         </tr>
         
         <tr>
+          <td><input class="checkbox-btn" type="checkbox"></td>
           <td class="font-bold">WUOE24</td>
           <td>20</td>
           <td>
@@ -50,6 +53,7 @@
           </td>
         </tr>
         <tr>
+          <td><input class="checkbox-btn" type="checkbox"></td>
           <td class="font-bold">MMD24</td>
           <td>34</td>
           <td>
@@ -84,10 +88,15 @@
   }
   .create-btn {
     border-radius: 50%;
-    padding: 10px;
     background-color: purple;
     color: white;
     border: none;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    align-content: center;
   }
   
   .create-btn svg {
@@ -98,7 +107,7 @@
     border: none;
     font-size: large;
     color: purple;
-    background-color: white;
+    background: none;
   }
   
   table {
@@ -108,14 +117,14 @@
   .edit-btn {
     border: none;
     font-size: large;
-    background-color: white;
+    background: none;
   }
   
   .delete-btn {
     border: none;
     color: red;
     font-size: large;
-    background-color: white;
+    background: none;
     margin-right: 10px;
   }
   
@@ -125,7 +134,7 @@
   }
   table tr td {
     border-bottom: 1px solid #ddd;
-    padding: 10px 0;
+    padding: 10px 0 0 0;
   }
   .font-bold{
       font-weight: 600;
@@ -137,7 +146,29 @@
   }
   
   table tr th:first-child, table tr td:first-child {
-    width: 400px;
+    width: 40px;
+  }
+
+  .checkbox-btn{
+    height: 20px;
+    width: 20px;
+  }
+
+
+  /* mobile version */
+  @media (max-width: 1200px) {
+    .create-btn{
+      position: fixed;
+      bottom: 0px;
+      left:50%;
+      transform: translate(-50%,-0%);
+    }
+    .flex h3{
+      display: none;
+    }
+    table{
+     padding: 0 10px; 
+    }
   }
   </style>
   
