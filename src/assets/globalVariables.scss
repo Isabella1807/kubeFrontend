@@ -22,6 +22,7 @@ $boldFont: 700;
 $largeBreakPoint: 1350px;
 $mediumBreakPoint: 700px;
 $smallBreakPoint: 430px;
+$smallBreakPoint: 550px;
 
 //Media queries
 @mixin smallScreen {
@@ -41,3 +42,4 @@ $smallBreakPoint: 430px;
     @content;
   }
 }
+
