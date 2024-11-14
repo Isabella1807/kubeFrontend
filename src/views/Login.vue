@@ -74,7 +74,7 @@
     width: 100%;
     border-radius: 10px;
     border: none;
-    background-color: #f4f4f4;
+    background-color: #DADADA;
     font-size: 14px;
     font-style: italic;
   }
@@ -91,7 +91,7 @@
   .remember-me {
     display: flex;
     align-items: center;
-    accent-color: #5C007E;
+    accent-color: $primaryPurple;
   }
   
   .remember-me-label {
@@ -106,7 +106,7 @@
   .forgot-password {
     font-size: 14px;
     font-weight: 500;
-    color: #5C007E;
+    color: $primaryPurple;
     text-decoration: none;
     
   }
@@ -119,8 +119,8 @@
   /* Login Button */
   .login-button {
     padding: 0.9rem 2rem;
-    background-color: #5C007E;
-    color: #fff;
+    background-color: $primaryPurple;
+    color: $white-color;
     border: none;
     border-radius: 10px;
     font-weight: 700;
