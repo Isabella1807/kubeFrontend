@@ -74,7 +74,7 @@
     width: 100%;
     border-radius: 10px;
     border: none;
-    background-color: #DADADA;
+    background-color: $lightGrey;
     font-size: 14px;
     font-style: italic;
   }
