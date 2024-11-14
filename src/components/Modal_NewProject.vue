@@ -86,10 +86,10 @@ export default {
 
 
   
-  <style modal>
+<style lang="scss">
   
   .error-message {
-    color: red;
+    color: $offline;
     font-size: 15px;
     margin-top: 10px;
     text-align: left;
@@ -110,7 +110,7 @@ export default {
   }
   
   .modal-content {
-    background-color: white;
+    background-color: $white-color;
     padding: 30px;
     width: 500px;
     max-width: 90%;
@@ -128,7 +128,7 @@ export default {
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: #5C007E;
+    color: $primaryPurple;
   }
   
   .modal-content h1 {   
@@ -157,7 +157,7 @@ export default {
     border: 1px solid #EEEEEE;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #333;
+    color: $darkGrey;
   }
   
   .select-container {
@@ -167,8 +167,8 @@ export default {
   .custom-select {
     appearance: none;
     padding-right: 30px;
-    color: #333;
-    background-color: white;
+    color: $darkGrey;
+    background-color: $white-color;
   }
   
   .dropdown-icon {
@@ -177,7 +177,7 @@ export default {
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: #5C007E;
+    color: $primaryPurple;
   }
   
   .buttons {
@@ -197,15 +197,15 @@ export default {
   }
   
   .cancel-button {
-    background-color: white;
-    color: #5C007E;
-    border: 1px solid #5C007E;
+    background-color: $white-color;
+    color: $primaryPurple;
+    border: 1px solid $primaryPurple;
     cursor: pointer
   }
   
   .save-button {
-    background-color: #5C007E;
-    color: white;
+    background-color: $primaryPurple;
+    color: $white-color;
     border: none;
     cursor: pointer;
   }
@@ -213,13 +213,13 @@ export default {
   /* Hover effects */
   .cancel-button:hover {
     background-color: #eee;  
-    color: #333;  
+    color: $darkGrey;  
     border-color: #eee;  
   }
   
   .save-button:hover {
     background-color: #3700b3;  
-    color: white;  
+    color: $white-color;  
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);  
   }
   
