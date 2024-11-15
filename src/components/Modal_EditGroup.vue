@@ -4,7 +4,7 @@
         <button class="edit-close-button" @click="closeModal">
           <i class="fas fa-times"></i>
         </button>
-        <h2>Edit {{ groupName }}</h2>
+        <h1 class="edit-title">Edit {{ groupName }}</h1>
         
         <div class="edit-member-list-header">
           <div class="edit-select-all">
@@ -95,6 +95,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .edit-modal-overlay {
     position: fixed;
     top: 0;
@@ -130,7 +131,7 @@ export default {
     color: $primaryPurple;
 }
 
-.edit-title h1 {
+.edit-title  {
     font-size: 35px;
     margin-bottom: 25px;
     font-weight: 700;
@@ -171,7 +172,7 @@ export default {
 
 .edit-divider {
     border: none;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid $lightGrey;
     margin: 10px 0;
 }
 
