@@ -5,7 +5,7 @@
         <button @click="$emit('close')" class="deleteclose-button">
           <i class="fas fa-times modal-icon"></i> <!-- Using Font Awesome icon for close button -->
         </button>
-        <h1 class="deletemodal-title">Are you sure you want to delete this project?</h1>
+        <h1 class="modal-title">Are you sure you want to delete <span class="highlight">{{ projectName }}</span> project?</h1>
         
         <!-- Modal Actions with Icons in Buttons -->
         <div class="deletemodal-action">
@@ -75,6 +75,10 @@
     font-weight: 700;
     font-family: 'Poppins';
     text-align: left;
+  }
+
+  .highlight {
+    color: $primaryPurple;;
   }
   
   .deletemodal-action {
