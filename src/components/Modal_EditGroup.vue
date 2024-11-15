@@ -1,42 +1,50 @@
 <template>
-    <div class="editmodal-overlay" v-if="showModal">
-        <div class="editmodal-content">
-            <button class="editclose-button" @click="closeModal">
-                <i class="fas fa-times"></i>
+    <div class="edit-modal-overlay" v-if="showModal">
+      <div class="edit-modal-content">
+        <button class="edit-close-button" @click="closeModal">
+          <i class="fas fa-times"></i>
+        </button>
+        <h2>Edit {{ groupName }}</h2>
+        
+        <div class="edit-member-list-header">
+          <div class="edit-select-all">
+            <input type="checkbox" v-model="selectAll" @change="toggleAll" /> All
+          </div>
+          <div class="edit-icons">
+            <button @click="addMember" class="edit-icon-button-add">
+              <i class="fas fa-plus"></i>
             </button>
-            <h1 class="edit-title">Edit {{ groupName }}</h1>
-            <div class="edit-member-list-header">
-                <div class="edit-select-all">
-                    <input type="checkbox" v-model="selectAll" @change="toggleAll" /> All
-                </div>
-                <div class="edit-icons">
-                    <button @click="addMember" class="edit-icon-button">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                    <button @click="SelectedMembers" class="icon-button">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div>
-            <hr class="edit-divider" />
-            <div class="edit-member-list">
-                <ui>
-                    <li v-for="(member, index) in members" :key="member.id" class="edit-member-item">
-                        <input type="checkbox" :value="member.id" v-model="selectedMembers" />
-                    </li>
-                </ui>
-            </div>
-            <div class="edit-footer">
-                <button class="edit-cancel-button" @click="closeModal">
-                    <i class="fas fa-times-circle"></i> Cancel
-                </button>
-                <button class="edit-save-button" @click="saveChanges">
-                    <i class="fas fa-save"></i> Save Changes
-                </button>
-            </div>
+            <button @click="deleteSelectedMembers" class="edit-icon-button-delete">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
+        <hr class="edit-divider" />
+        
+        <div class="edit-member-list">
+          <ul>
+            <li v-for="(member, index) in members" :key="member.id" class="edit-member-item">
+              <input
+                type="checkbox"
+                :value="member.id"
+                v-model="selectedMembers"
+              />
+              {{ member.name }}
+            </li>
+          </ul>
+        </div>
+  
+        <div class="edit-footer">
+          <button class="edit-cancel-button" @click="closeModal">
+            <i class="fas fa-times-circle"></i> Cancel
+          </button>
+          <button class="edit-save-button" @click="saveChanges">
+            <i class="fas fa-save"></i> Save changes
+          </button>
+        </div>
+      </div>
     </div>
-</template>
+  </template>
 
 <script>
 export default {
@@ -87,7 +95,7 @@ export default {
 </script>
 
 <style lang="scss">
-.editmodal-overlay {
+.edit-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -100,7 +108,7 @@ export default {
     z-index: 1000;
 }
 
-.editmodal-content {
+.edit-modal-content {
     background-color: $white-color;
     padding: 30px;
     width: 500px;
@@ -111,7 +119,7 @@ export default {
     text-align: center;
 }
 
-.editclose-button {
+.edit-close-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -145,10 +153,18 @@ export default {
     gap: 10px;
 }
 
-.edit-icon-button {
+.edit-icon-button-delete{
     background: none;
     border: none;
-    color: $primaryPurple;
+    color: $offline;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.edit-icon-button-add {
+    background: none;
+    border: none;
+    color: $online;
     font-size: 18px;
     cursor: pointer;
 }
@@ -173,8 +189,9 @@ export default {
 
 .edit-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content:  flex-start;
     margin-top: 20px;
+    gap: 10px;
 }
 
 .edit-cancel-button {
@@ -193,10 +210,10 @@ export default {
 
 .edit-cancel-button,
 .edit-save-button {
-    padding: 6px 12px;
-    font-size: 15px;
-    border-radius: 10px;
-    width: auto;
+    padding: 6px 12px; 
+    font-size: 15px;   
+    border-radius: 10px; 
+    width: auto;      
     font-family: 'Poppins';
     font-weight: 700;
 }
