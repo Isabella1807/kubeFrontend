@@ -1,4 +1,4 @@
- <template>
+<template>
     <div class="editmodal-overlay" v-if="showModal">
         <div class="editmodal-content">
             <button class="editclose-button" @click="closeModal">
@@ -9,24 +9,24 @@
                 <div class="edit-select-all">
                     <input type="checkbox" v-model="selectAll" @change="toggleAll" /> All
                 </div>
-                <div class="icons">
-                    <button @click="addMember" class="icon-button">
+                <div class="edit-icons">
+                    <button @click="addMember" class="edit-icon-button">
                         <i class="fas fa-plus"></i>
                     </button>
-                    <button @click="deleteSelectedMembers" class="icon-button">
+                    <button @click="SelectedMembers" class="icon-button">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
             </div>
-            <hr class="divider" />
+            <hr class="edit-divider" />
             <div class="edit-member-list">
                 <ui>
                     <li v-for="(member, index) in members" :key="member.id" class="edit-member-item">
-                       <input type="checkbox" :value="member.id" v-model="selectedMembers" /> 
+                        <input type="checkbox" :value="member.id" v-model="selectedMembers" />
                     </li>
                 </ui>
             </div>
-            <div class="footer">
+            <div class="edit-footer">
                 <button class="edit-cancel-button" @click="closeModal">
                     <i class="fas fa-times-circle"></i> Cancel
                 </button>
@@ -36,7 +36,168 @@
             </div>
         </div>
     </div>
- </template>
- 
- <script></script>
- <style lang="scss"></style>
+</template>
+
+<script>
+export default {
+    name: "EditGroupModal",
+    props: {
+        showModal: Boolean,
+        groupName: String,
+        initialMembers: Array,
+    },
+    data() {
+        return {
+            members: [...this.initialMembers],
+            selectedMembers: [],
+            selectAll: false,
+        };
+    },
+    methods: {
+        closeModal() {
+            this.$emit("close");
+        },
+        toggleAll() {
+            this.selectedMembers = this.selectAll
+                ? this.members.map(member => member.id)
+                : [];
+        },
+        deleteSelectedMembers() {
+            this.members = this.members.filter(
+                member => !this.selectedMembers.includes(member.id)
+            );
+            this.selectedMembers = [];
+            this.selectAll = false;
+        },
+        saveChanges() {
+            this.$emit("save", this.members);
+            this.closeModal();
+        },
+        addMember() {
+
+        }
+    },
+    watch: {
+        selectedMembers() {
+            this.selectAll = this.selectedMembers.length === this.members.length;
+        }
+    }
+};
+
+</script>
+
+<style lang="scss">
+.editmodal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.editmodal-content {
+    background-color: $white-color;
+    padding: 30px;
+    width: 500px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    text-align: center;
+}
+
+.editclose-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: $primaryPurple;
+}
+
+.edit-title h1 {
+    font-size: 35px;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-family: 'Poppins';
+    text-align: left;
+}
+
+.edit-member-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-select-all {
+    font-weight: bold;
+}
+
+.edit-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-icon-button {
+    background: none;
+    border: none;
+    color: $primaryPurple;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.edit-divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.edit-member-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.edit-member-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.edit-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.edit-cancel-button {
+    background-color: $white-color;
+    color: $primaryPurple;
+    border: 1px solid $primaryPurple;
+    cursor: pointer
+}
+
+.edit-save-button {
+    background-color: $primaryPurple;
+    color: $white-color;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-cancel-button,
+.edit-save-button {
+    padding: 6px 12px;
+    font-size: 15px;
+    border-radius: 10px;
+    width: auto;
+    font-family: 'Poppins';
+    font-weight: 700;
+}
+</style>
