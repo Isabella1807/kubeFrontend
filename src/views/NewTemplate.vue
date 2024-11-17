@@ -22,7 +22,9 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import '../assets/globalVariables.scss';
+
 h2 {
   font-weight: 700;
   margin: 25px 0px;
@@ -36,7 +38,7 @@ input {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  background-color: rgb(244, 244, 244);
+  background-color: $bacgroundgrey;
   border: none;
   width: 100%;
   font-style: italic;
@@ -50,7 +52,7 @@ textarea {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  background-color: rgb(244, 244, 244);
+  background-color: $bacgroundgrey;
   border: none;
   width: 100%;
   height: 500px;
@@ -69,25 +71,26 @@ textarea {
 .cancel-btn {
   padding: 5px 25px 5px 10px;
   background: none;
-  border: 4px solid purple;
+  border: 4px solid $primaryPurple;
   border-radius: 10px;
-  color: purple;
+  color: $primaryPurple;
   font-weight: 600;
-}
-.cancel-btn svg {
-  margin-right: 5px;
+  svg{
+    margin-right: 5px;
+  }
 }
 
 .save-btn {
   padding: 5px 25px 5px 10px;
-  background-color: purple;
-  color: white;
+  background-color: $primaryPurple;
+  color: $white-color;
   border-radius: 10px;
   font-weight: 600;
+  svg{
+    margin-right: 5px;
+  }
 }
-.save-btn svg {
-  margin-right: 5px;
-}
+
 
 /* mobile version*/
 @media (max-width: 1200px) {
