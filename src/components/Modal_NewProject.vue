@@ -218,9 +218,9 @@ export default {
   }
   
   .save-button:hover {
-    background-color: #3700b3;  
-    color: $white-color;  
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);  
+    background-color: #eee;  
+    color: $darkGrey;  
+    border-color: #eee;  
   }
   
   
