@@ -150,6 +150,7 @@ table {
   border: none;
   font-size: large;
   background: none;
+  cursor: pointer;
 }
 
 .delete-btn {
@@ -158,6 +159,7 @@ table {
   font-size: large;
   background: none;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 table tr th {

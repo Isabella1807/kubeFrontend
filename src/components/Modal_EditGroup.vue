@@ -36,7 +36,7 @@
   
         <div class="edit-footer">
           <button class="edit-cancel-button" @click="closeModal">
-            <i class="fas fa-times-circle"></i> Cancel
+            <i class="fas fa-times"></i> Cancel
           </button>
           <button class="edit-save-button" @click="saveChanges">
             <i class="fas fa-save"></i> Save changes
@@ -147,6 +147,7 @@ export default {
 
 .edit-select-all {
     font-weight: bold;
+    accent-color: $primaryPurple;
 }
 
 .edit-icons {
@@ -186,6 +187,7 @@ export default {
     display: flex;
     align-items: center;
     padding: 5px 0;
+    accent-color: $primaryPurple;
 }
 
 .edit-footer {
