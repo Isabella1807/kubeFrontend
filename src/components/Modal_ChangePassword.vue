@@ -143,7 +143,7 @@
     margin-top: 5px;
     font-size: 14px;
     font-style: italic;
-    border: 1px solid #EEEEEE;
+    border: 1px solid $lightGrey;
     border-radius: 5px;
     box-sizing: border-box;
     color: $darkGrey;
@@ -181,15 +181,15 @@
   }
   
   .changepasswordcancel-button:hover {
-    background-color: #eee;
-    color: $darkGrey;
-    border-color: #eee;
+    background-color: #eee;  
+    color: $darkGrey;  
+    border-color: #eee;  
   }
   
   .changepasswordsave-button:hover {
-    background-color: #3700b3;
-    color: $white-color;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    background-color: #eee;  
+    color: $darkGrey;  
+    border-color: #eee;  
   }
   
   @media (max-width: 768px) {
