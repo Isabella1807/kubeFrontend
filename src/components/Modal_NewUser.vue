@@ -40,5 +40,153 @@
     </div>
 </template>
 
-<script></script>
-<style lang="scss"></style>
+<script>
+export default {
+  data() {
+    return {
+      fileName: "", // Name of the uploaded CSV file
+      isStudent: false, // Indicates if "Students" is selected
+      isTeacher: false, // Indicates if "Teachers" is selected
+      groupName: "", // Name of the student group
+    };
+  },
+  computed: {
+    canSave() {
+      // Ensure conditions to enable "Save Group" button
+      return this.fileName && (this.isTeacher || (this.isStudent && this.groupName));
+    },
+  },
+  methods: {
+    handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file && file.type === "text/csv") {
+        this.fileName = file.name; // Store the uploaded file's name
+        console.log("Dummy: File uploaded", file.name); // Dummy log
+      } else {
+        alert("Please upload a valid .CSV file.");
+      }
+    },
+    clearFile() {
+      // Clear the uploaded file
+      this.fileName = "";
+      console.log("Dummy: File cleared");
+    },
+    resetFields() {
+      // Uncheck the other option and clear group name when toggling
+      if (this.isStudent) this.isTeacher = false;
+      if (this.isTeacher) {
+        this.isStudent = false;
+        this.groupName = "";
+      }
+    },
+    emitClose() {
+      // Emit close event to parent
+      this.$emit("close");
+    },
+    saveGroup() {
+      // Dummy save logic; simply log the input data
+      console.log("Dummy Save:", {
+        fileName: this.fileName,
+        isStudent: this.isStudent,
+        isTeacher: this.isTeacher,
+        groupName: this.groupName,
+      });
+      this.emitClose(); // Close the modal after saving
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.newuser-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.newuser-modal-content {
+    background-color: $white-color;
+    padding: 30px;
+    width: 500px;
+    max-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    text-align: center;
+}
+.newuser-modal-content h1 {
+    font-size: 35px;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-family: 'Poppins';
+    text-align: left;
+}
+.newuser-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: $primaryPurple;
+}
+.newuser-upload-button {
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.newuser-upload-text {
+    font-size: 15px;
+    font-family: 'Poppins';
+}
+.newuser-checkbox-item {
+    display: block;
+}
+.newuser-group-input-section {
+    margin-top: 20px;
+}
+.newuser-group-input {
+    width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+.newuser-button-section {
+    display: flex;
+    justify-content: flex-start; 
+    gap: 10px; 
+    margin-top: 25px;
+}
+.newuser-cancel-btn, .newuser-save-btn {
+    padding: 6px 12px; 
+    font-size: 15px;   
+    border-radius: 10px; 
+    width: auto;      
+    font-family: 'Poppins';
+    font-weight: 700;
+}
+.newuser-save.btn:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+.newuser-save-btn {
+      background-color: $primaryPurple;
+    color: $white-color;
+    border: none;
+    cursor: pointer;
+}
+.newuser-cancel-btn {
+    background-color: $white-color;
+    color: $primaryPurple;
+    border: 1px solid $primaryPurple;
+    cursor: pointer
+}
+</style> 
