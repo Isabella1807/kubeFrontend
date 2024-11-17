@@ -187,6 +187,7 @@ table tr td:first-child {
 .checkbox-btn {
   height: 20px;
   width: 20px;
+  accent-color: $primaryPurple;
 }
 
 
