@@ -2,9 +2,14 @@ $white-color: #fff;
 $bacgroundgrey: #F6F6F6;
 $darkmode-bg: #180020;
 $darkmode-lilla:#e8aaff;
+$backgroundShilde: #bcbcbc;
 
 
 [color-scheme='dark'] {
+
+  .slider-font, .slider  {
+    background-color: $backgroundShilde;
+  }
   
     header, body, .dropdown-nav {
       background-color: $darkmode-bg /* Baggrundsfarve for dark mode */

@@ -352,7 +352,7 @@ input:checked + .slider .sun-icon {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #eee;
+  background-color: $lightGrey;
   border-radius: 34px;
   transition: 0.4s;
 }
@@ -364,7 +364,7 @@ input:checked + .slider .sun-icon {
   width: 45px;
   right: 0px;
   bottom: 0px;
-  background-color:#444;
+  background-color:$darkGrey;
   border-radius: 50%;
   transition: 0.4s;
 }
