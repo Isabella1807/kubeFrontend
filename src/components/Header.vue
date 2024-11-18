@@ -2,7 +2,7 @@
     <header :class="{ 'scrolled-nav': scrolledNav, 'dark-mode': isDark }">
       <nav>
         <div class="branding">
-          <RouterLink to="/">
+          <RouterLink to="/projects">
             <img src="../img/kubelab.png" alt="Kubelab logo" />
           </RouterLink>
           <!-- Søgefelt -->
@@ -45,8 +45,8 @@
       <label class="font-size-toggle">
         <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
             <span class="slider-font">
-              <i class="fa-solid fa-a aa-icon"></i>
-              <i class="fa-solid fa-a a-icon"></i>
+              <i class="fa-solid fa-text-height aa-icon"></i>
+              <i class="fa-solid fa-text-height a-icon"></i>
             </span>
           </label>
 
@@ -374,17 +374,18 @@ input:checked + .slider .sun-icon {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 20px;
   transition: color 0.4s;
 }
 
 .aa-icon {
-  left: 12px;
+  left: 9px;
+  font-size: 20px;
 }
 
 .a-icon {
   right: 12px;
   color: $white-color;
+  font-size: 15px;
 }
 
 input:checked + .slider-font:before {
