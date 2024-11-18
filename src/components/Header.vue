@@ -39,8 +39,8 @@
               @click="toggleDropdown"
             ></i>
             <transition name="dropdown-fade">
-    <div v-if="dropdownOpen" class="dropdown">
-      <button class="changepass-btn">Change password</button>
+             <div v-if="dropdownOpen" class="dropdown">
+      <button class="changepass-btn">Change-Password</button>
 
       <label class="font-size-toggle">
         <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
@@ -66,34 +66,36 @@
   
         <!-- Mobile Dropdown Navigation -->
         <transition name="mobile-nav">
-          <ul v-show="mobileNav" class="dropdown-nav">
-            <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
-            <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-            <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
-            <label class="switch">
-              <input type="checkbox" v-model="isDark" @click="toggleDark()" />
-              <span class="slider round">
-                <i class="fa-solid fa-moon moon-icon"></i>
-                <i class="fa-solid fa-sun sun-icon"></i>
-              </span>
-            </label>
-            <div class="settings-container">
-              <i
-                :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
-                class="settings"
-                @click="toggleDropdown"
-              ></i>
-                  <label class="font-size-toggle">
-            <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
-                <span class="slider-font">
-                  <i class="fa-solid fa-a aa-icon"></i>
-                  <i class="fa-solid fa-a a-icon"></i>
-                </span>
-              </label>
+  <ul v-show="mobileNav" class="dropdown-nav">
+    <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
+    <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
+    <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+    <label class="switch">
+      <input type="checkbox" v-model="isDark" @click="toggleDark()" />
+      <span class="slider round">
+        <i class="fa-solid fa-moon moon-icon"></i>
+        <i class="fa-solid fa-sun sun-icon"></i>
+      </span>
+    </label>
 
-            </div>
-          </ul>
-        </transition>
+    <!-- Settings Icon - Placér den i bunden -->
+    <div class="settings-footer">
+      <i
+        :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
+        class="settings-icon"
+        @click="toggleDropdown"
+      ></i>
+    </div>
+  </ul>
+</transition>
+
+<!-- Top-slider til Change Password -->
+<transition name="top-slider">
+  <div v-if="dropdownOpen" class="top-slider">
+    <button class="changepass-btn">Change Password</button>
+  </div>
+</transition>
+
       </nav>
     </header>
   </template>
@@ -140,6 +142,7 @@ const updateScroll = () => {
 const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value;
 };
+
 
 const fontSize = ref(localStorage.getItem('fontSize') || 'default');
 
@@ -522,11 +525,11 @@ header {
             position: fixed;
             top: 0;
             right: 0; /* Juster til at være til højre */
-            width: 250px;
+            width: 200px;
             height: 100%;
             background-color: $white-color;
             box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2); /* Skab en skygge på venstre side for at indikere sidepanel */
-            padding-top: 20px;
+            padding-top: 50px;
             z-index: 100;
 
             .link {
@@ -535,16 +538,75 @@ header {
                 text-align: left;
                 margin: 15px 0;
                 padding-left: 20px;
+                width: auto;
+                border: none;
 
                 &:hover {
                 background-color: $bacgroundgrey;
                 }
             }
         }
-
-
-  
     }
+
+    // Placering af settings-ikonet
+.settings-footer {
+  position: absolute;
+  bottom: 20px; /* Flytter det til bunden */
+  width: 100%;
+  text-align: center;
+
+  .settings-icon {
+    font-size: 30px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    color: $darkGrey;
+
+    &:hover {
+      color: $primaryPurple;
+    }
+  }
+}
+
+// Styling til top-slideren
+.top-slider {
+  position: fixed;
+  top: 780px; /* Skjult til at starte med */
+  right: 0; /* Juster til at være til højre */
+  width: 200px;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .changepass-btn {
+    background-color: $primaryPurple;
+    color: $white-color;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($primaryPurple, 10%);
+    }
+  }
+}
+
+// Animation til top-slideren
+.top-slider-enter-active,
+.top-slider-leave-active {
+  transition: transform 0.3s ease-in-out;
+}
+.top-slider-enter-from {
+  transform: translateX(250px);
+}
+.top-slider-enter-to {
+  transform: translateY(0);
+}
+.top-slider-leave-to {
+  transform: translateX(250px);
+}
+
 
     .mobile-nav-enter-active,
     .mobile-nav-leave-active {
