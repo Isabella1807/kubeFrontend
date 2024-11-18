@@ -78,6 +78,14 @@
             </span>
           </label>
 
+          <label class="font-size-toggle">
+                <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
+                <span class="slider-font">
+                  <i class="fa-solid fa-text-height aa-icon"></i>
+                  <i class="fa-solid fa-text-height a-icon"></i>
+                </span>
+              </label>
+
           <transition name="top-slider">
         <div v-if="dropdownOpen" class="top-slider">
           <button class="changepass-btn">Change Password</button>
@@ -93,10 +101,6 @@
           </div>
         </ul>
       </transition>
-
-      <!-- Top-slider til Change Password -->
-
-
     </nav>
   </header>
 </template>
@@ -258,6 +262,7 @@ $max-width-desktop: 1350px;
   display: inline-block;
   width: 80px;
   height: 35px;
+  margin: 10px;
 
   input {
   opacity: 0;
@@ -322,19 +327,7 @@ input:checked + .slider .sun-icon {
   color: $darkGrey; 
 }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 80px;
-  height: 35px;
 
-  input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-}
 
 // Nr 2 font-size
 
@@ -504,8 +497,7 @@ header {
           top: 20px;       /* Justér afstand fra toppen */
           right: 20px;     /* Justér afstand fra højre */
           z-index: 105;    /* Sørg for, at den er over dropdown-menuen */
-          color: $darkGrey;
-
+        
           i {
             font-size: 25px;
             cursor: pointer;
@@ -533,10 +525,9 @@ header {
             box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2); /* Skab en skygge på venstre side for at indikere sidepanel */
             padding-top: 50px;
             z-index: 100;
-
+            
             .link {
                 font-size: $font-size-mobile;
-                color: $darkGrey;
                 text-align: left;
                 margin: 15px 0;
                 padding-left: 20px;

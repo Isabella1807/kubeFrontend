@@ -1,77 +1,78 @@
 $white-color: #fff;
-$bacgroundgrey: #F6F6F6;
 $darkmode-bg: #180020;
-$darkmode-lilla:#e8aaff;
-$backgroundShilde: #bcbcbc;
-
+$darkmode-lilla: #e8aaff;
+$background-shield: #bcbcbc;
 
 [color-scheme='dark'] {
-
-  .slider-font, .slider  {
-    background-color: $backgroundShilde;
+  // Baggrundsfarver
+  header, body, .dropdown-nav {
+    background-color: $darkmode-bg;
   }
-  
-    header, body, .dropdown-nav {
-      background-color: $darkmode-bg /* Baggrundsfarve for dark mode */
-    }
-  
-    h1,h2, p, th, td, .link{
-        color: $white-color;
-    }
 
-    .navigation1{
-  
-       .settings {
+  .slider-font, .slider {
+    background-color: $background-shield;
+  }
+
+  // Tekstfarver
+  h1, h2, p, th, td, .link {
+    color: $white-color;
+  }
+
+  // Dropdown-menu
+  .dropdown-nav {
+    .link, .settings-icon {
       color: $white-color;
-  
-          &:hover {
-              color: $darkmode-lilla;
-          }
-      }
-
-      .dropdown {
-        background-color: $darkmode-bg;
-        
-
-
-        button {
-            color:$white-color;
-
-            &:hover {
-                color: $white-color;
-                background-color: darken($primaryPurple, 10%);
-            }
-
-            &:nth-child(2) {
-
-                &:hover {
-                    color: $white-color;
-                }
-        }
-      }
-
-      .logout-btn {
-        color: $offline;
 
       &:hover {
-        color: $offline;
-        background-color: darken($primaryPurple, 10%);
-        
+        color: $darkmode-lilla;
+        background-color: $darkmode-bg;
       }
     }
-    }
-}
-     
-  
-    .active-link {
-              border-bottom: 3px solid $white-color;
-          }
-  
-    .link {
+  }
+
+  // Navigation og indstillinger
+  .navigation1 {
+    .settings {
       color: $white-color;
-  
+
       &:hover {
         color: $darkmode-lilla;
       }
     }
+
+    .dropdown {
+      background-color: $darkmode-bg;
+
+      button {
+        color: $white-color;
+
+        &:hover {
+          color: $white-color;
+          background-color: darken($darkmode-bg, 10%);
+        }
+      }
+    }
+
+    .logout-btn {
+      color: $white-color;
+
+      &:hover {
+        background-color: darken($darkmode-bg, 10%);
+      }
+    }
   }
+
+  // Aktive links
+  .active-link {
+    border-bottom: 3px solid $white-color;
+  }
+
+  // Links generelt
+  .link {
+    color: $white-color;
+
+    &:hover {
+      color: $darkmode-lilla;
+    }
+  }
+}
