@@ -1,28 +1,75 @@
 <template>
-    <header :class="{ 'scrolled-nav': scrolledNav, 'dark-mode': isDark }">
-      <nav>
-        <div class="branding">
-          <RouterLink to="/projects">
-            <img src="../img/kubelab.png" alt="Kubelab logo" />
-          </RouterLink>
-          <!-- Søgefelt -->
-          <div class="soge-felt">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input
-              type="text"
-              v-model="searchQuery"
-              placeholder="Search..."
-              @input="searchItems"
-            />
-          </div>
+  <header :class="{ 'scrolled-nav': scrolledNav, 'dark-mode': isDark }">
+    <nav>
+      <div class="branding">
+        <RouterLink to="/projects">
+          <img src="../img/kubelab.png" alt="Kubelab logo" />
+        </RouterLink>
+        <!-- Søgefelt -->
+        <div class="soge-felt">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Search..."
+            @input="searchItems"
+          />
         </div>
-  
-        <!-- Desktop Navigation -->
-        <ul v-show="!mobile" class="navigation1">
+      </div>
+
+      <!-- Desktop Navigation -->
+      <ul v-show="!mobile" class="navigation1">
+        <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
+        <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
+        <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+
+        <label class="switch">
+          <input type="checkbox" v-model="isDark" @click="toggleDark()" />
+          <span class="slider round">
+            <i class="fa-solid fa-moon moon-icon"></i>
+            <i class="fa-solid fa-sun sun-icon"></i>
+          </span>
+        </label>
+
+        <!-- Settings Icon and Dropdown -->
+        <div class="settings-container">
+          <i
+            :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
+            class="settings"
+            @click="toggleDropdown"
+          ></i>
+          <transition name="dropdown-fade">
+            <div v-if="dropdownOpen" class="dropdown">
+              <button class="changepass-btn">Change-Password</button>
+
+              <label class="font-size-toggle">
+                <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
+                <span class="slider-font">
+                  <i class="fa-solid fa-text-height aa-icon"></i>
+                  <i class="fa-solid fa-text-height a-icon"></i>
+                </span>
+              </label>
+
+              <button class="logout-btn">
+                Log out
+                <i class="fa-solid fa-right-from-bracket logout-icon"></i>
+              </button>
+            </div>
+          </transition>
+        </div>
+      </ul>
+
+      <!-- Mobile Navigation Icon -->
+      <div class="icon">
+        <i @click="toggleMobileNav" v-show="mobile" :class="mobileNav ? 'fa-solid fa-times' : 'fa-solid fa-bars'"></i>
+      </div>
+
+      <!-- Mobile Dropdown Navigation -->
+      <transition name="mobile-nav">
+        <ul v-show="mobileNav" class="dropdown-nav">
           <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
           <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
           <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
-          
           <label class="switch">
             <input type="checkbox" v-model="isDark" @click="toggleDark()" />
             <span class="slider round">
@@ -30,75 +77,30 @@
               <i class="fa-solid fa-sun sun-icon"></i>
             </span>
           </label>
-  
-          <!-- Settings Icon and Dropdown -->
-          <div class="settings-container">
+
+          <transition name="top-slider">
+        <div v-if="dropdownOpen" class="top-slider">
+          <button class="changepass-btn">Change Password</button>
+        </div>
+      </transition>
+          <!-- Settings Icon - Placér den i bunden -->
+          <div class="settings-footer">
             <i
               :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
-              class="settings"
+              class="settings-icon"
               @click="toggleDropdown"
             ></i>
-            <transition name="dropdown-fade">
-             <div v-if="dropdownOpen" class="dropdown">
-      <button class="changepass-btn">Change-Password</button>
-
-      <label class="font-size-toggle">
-        <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
-            <span class="slider-font">
-              <i class="fa-solid fa-text-height aa-icon"></i>
-              <i class="fa-solid fa-text-height a-icon"></i>
-            </span>
-          </label>
-
-      <button class="logout-btn">
-        Log out
-        <i class="fa-solid fa-right-from-bracket logout-icon"></i>
-      </button>
-    </div>
-  </transition>
           </div>
         </ul>
-  
-        <!-- Mobile Navigation Icon -->
-        <div class="icon">
-          <i @click="toggleMobileNav" v-show="mobile" :class="mobileNav ? 'fa-solid fa-times' : 'fa-solid fa-bars'"></i>
-        </div>
-  
-        <!-- Mobile Dropdown Navigation -->
-        <transition name="mobile-nav">
-  <ul v-show="mobileNav" class="dropdown-nav">
-    <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
-    <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-    <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
-    <label class="switch">
-      <input type="checkbox" v-model="isDark" @click="toggleDark()" />
-      <span class="slider round">
-        <i class="fa-solid fa-moon moon-icon"></i>
-        <i class="fa-solid fa-sun sun-icon"></i>
-      </span>
-    </label>
+      </transition>
 
-    <!-- Settings Icon - Placér den i bunden -->
-    <div class="settings-footer">
-      <i
-        :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
-        class="settings-icon"
-        @click="toggleDropdown"
-      ></i>
-    </div>
-  </ul>
-</transition>
+      <!-- Top-slider til Change Password -->
 
-<!-- Top-slider til Change Password -->
-<transition name="top-slider">
-  <div v-if="dropdownOpen" class="top-slider">
-    <button class="changepass-btn">Change Password</button>
-  </div>
-</transition>
 
-      </nav>
-    </header>
-  </template>
+    </nav>
+  </header>
+</template>
+
   
 <script setup>
 
