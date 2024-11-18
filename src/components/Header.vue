@@ -61,7 +61,7 @@
   
         <!-- Mobile Navigation Icon -->
         <div class="icon">
-          <i @click="toggleMobileNav" v-show="mobile" class="fa-solid fa-bars" :class="{ 'icon-active': mobileNav }"></i>
+          <i @click="toggleMobileNav" v-show="mobile" :class="mobileNav ? 'fa-solid fa-times' : 'fa-solid fa-bars'"></i>
         </div>
   
         <!-- Mobile Dropdown Navigation -->
@@ -99,6 +99,8 @@
   </template>
   
 <script setup>
+
+
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 
@@ -122,17 +124,18 @@ const dropdownOpen = ref(false);
 
 const checkScreen = () => {
   windowWidth.value = window.innerWidth;
-  mobile.value = windowWidth.value <= 700;
+  mobile.value = windowWidth.value <= 768;
   if (!mobile.value) mobileNav.value = false;
+};
+
+const toggleMobileNav = () => {
+  mobileNav.value = !mobileNav.value;
 };
 
 const updateScroll = () => {
   scrolledNav.value = window.scrollY > 50;
 };
 
-const toggleMobileNav = () => {
-  mobileNav.value = !mobileNav.value;
-};
 
 const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value;
@@ -211,7 +214,7 @@ $max-width-desktop: 1350px;
       text-align: left;
 
       &:hover {
-        background-color: #f0f0f0;
+        background-color: $bacgroundgrey;
         border-radius: 5px;
       }
 
@@ -492,18 +495,25 @@ header {
         }
 
         .icon {
-            display: flex;
-            align-items: center;
-            position: absolute;
-            top: 0;
-            right: 20px;
-            color: $darkGrey;
+          position: fixed; /* Gør det fast, så det altid er på skærmen */
+          top: 20px;       /* Justér afstand fra toppen */
+          right: 20px;     /* Justér afstand fra højre */
+          z-index: 105;    /* Sørg for, at den er over dropdown-menuen */
+          color: $darkGrey;
 
-            i {
-                cursor: pointer;
-                font-size: 20px;
-                @include transition(0.8s);
+          i {
+            font-size: 25px;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+
+            &.fa-times {
+              color: $primaryPurple; // Valgfri farve til krydset
             }
+
+            &.fa-bars {
+              color: $darkGrey;
+            }
+          }
         }
 
         .dropdown-nav {
@@ -527,7 +537,7 @@ header {
                 padding-left: 20px;
 
                 &:hover {
-                background-color: #f0f0f0;
+                background-color: $bacgroundgrey;
                 }
             }
         }
@@ -538,12 +548,12 @@ header {
 
     .mobile-nav-enter-active,
     .mobile-nav-leave-active {
-        @include transition(0.5s);
+        @include transition(0.3s);
     }
 
     .mobile-nav-enter-from,
     .mobile-nav-leave-to {
-        transform: translateX(-250px);
+        transform: translateX(250px);
     }
 
     .mobile-nav-enter-to {
