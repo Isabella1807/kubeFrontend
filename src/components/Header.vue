@@ -1,10 +1,12 @@
 <template>
   <header :class="{ 'scrolled-nav': scrolledNav, 'dark-mode': isDark }">
+
     <nav>
       <div class="branding">
         <RouterLink to="/projects">
           <img src="../img/kubelab.png" alt="Kubelab logo" />
         </RouterLink>
+
         <!-- Søgefelt -->
         <div class="soge-felt">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -104,11 +106,8 @@
     </nav>
   </header>
 </template>
-
   
 <script setup>
-
-
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 
@@ -129,7 +128,6 @@ const searchQuery = ref('');
 const windowWidth = ref(window.innerWidth);
 const dropdownOpen = ref(false);
 
-
 const checkScreen = () => {
   windowWidth.value = window.innerWidth;
   mobile.value = windowWidth.value <= 768;
@@ -144,11 +142,9 @@ const updateScroll = () => {
   scrolledNav.value = window.scrollY > 50;
 };
 
-
 const toggleDropdown = () => {
   dropdownOpen.value = !dropdownOpen.value;
 };
-
 
 const fontSize = ref(localStorage.getItem('fontSize') || 'default');
 
@@ -164,7 +160,6 @@ const changeFontSize = (size) => {
   localStorage.setItem('fontSize', size); // Gemmer valget i localStorage
   fontSize.value = size; // Opdaterer den interne state
 };
-
 
 const searchItems = () => {
   console.log('Searching for: ', searchQuery.value);
@@ -327,10 +322,7 @@ input:checked + .slider .sun-icon {
   color: $darkGrey; 
 }
 
-
-
 // Nr 2 font-size
-
 .font-size-toggle {
   position: relative;
   display: inline-block;
@@ -343,7 +335,6 @@ input:checked + .slider .sun-icon {
   width: 0;
   height: 0;
 }
-
 }
 
 .slider-font {
@@ -400,7 +391,6 @@ input:checked + .slider-font .aa-icon {
 input:checked + .slider-font .a-icon {
   color: $darkGrey; 
 }
-
 
 .soge-felt {
     margin-left: 20px;
@@ -600,7 +590,6 @@ header {
   transform: translateX(250px);
 }
 
-
     .mobile-nav-enter-active,
     .mobile-nav-leave-active {
         @include transition(0.3s);
@@ -615,5 +604,4 @@ header {
         transform: translateX(0);
     }
 }
-
 </style>

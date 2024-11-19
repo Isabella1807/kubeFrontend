@@ -17,6 +17,15 @@ $background-shield: #bcbcbc;
   h1, h2, p, th, td, .link {
     color: $white-color;
   }
+  
+  // Img logo
+  .branding img {
+    transition: filter 0.3s ease;
+  }
+  
+  .dark-mode .branding img {
+    filter: invert(1) brightness(2); /* Gør det sort til hvidt */
+  }  
 
   // Dropdown-menu
   .dropdown-nav {
