@@ -35,11 +35,7 @@
 
         <!-- Settings Icon and Dropdown -->
         <div class="settings-container">
-          <i
-            :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }"
-            class="settings"
-            @click="toggleDropdown"
-          ></i>
+          <i :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen } "class="settings" @click="toggleDropdown"></i>
           <transition name="dropdown-fade">
             <div v-if="dropdownOpen" class="dropdown">
               <button class="changepass-btn">Change-Password</button>
@@ -156,7 +152,7 @@ const toggleFontSize = () => {
 
 // Funktion til at ændre fontstørrelse
 const changeFontSize = (size) => {
-  document.documentElement.style.fontSize = size === 'large' ? '1.2rem' : '1rem'; // Skifter mellem stor og normal størrelse
+  document.documentElement.style.fontSize = size === 'large' ? '20px' : '15px'; // Skifter mellem stor og normal størrelse
   localStorage.setItem('fontSize', size); // Gemmer valget i localStorage
   fontSize.value = size; // Opdaterer den interne state
 };

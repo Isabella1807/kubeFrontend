@@ -2,22 +2,23 @@ $white-color: #fff;
 $darkmode-bg: #180020;
 $darkmode-lilla: #e8aaff;
 $background-shield: #bcbcbc;
+$red: #E04040;
 
 [color-scheme='dark'] {
   // Baggrundsfarver
-  header, body, .dropdown-nav {
+  header, body, .dropdown-nav, .modal-content, .select-container{
     background-color: $darkmode-bg;
   }
 
-  .slider-font, .slider {
+  .slider-font, .slider, input, .custom-select {
     background-color: $background-shield;
   }
 
   // Tekstfarver
-  h1, h2, p, th, td, .link {
+  h1, h2, p, th, td, .link, .darkMode {
     color: $white-color;
   }
-  
+
   // Img logo
   .branding img {
     transition: filter 0.3s ease;
@@ -63,7 +64,8 @@ $background-shield: #bcbcbc;
     }
 
     .logout-btn {
-      color: $white-color;
+
+      color: $red;
 
       &:hover {
         background-color: darken($darkmode-bg, 10%);
