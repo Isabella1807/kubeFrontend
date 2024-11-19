@@ -3,6 +3,10 @@ import {computed, ref} from "vue";
 import IconButton from "@/components/IconButton.vue";
 import Icon from "@/components/Icon.vue";
 import Button from "@/components/Button.vue";
+import DeleteModal from '@/components/Modal_DeleteProject.vue';
+
+const showModalDeleteModal = ref(false);
+const projectName = "Example Project"; // Replace this with dynamic data if needed
 
 const props = defineProps({
   projectData: {
@@ -71,7 +75,12 @@ const toggleAccordion = () => {
       </div>
       <div class="projectButtonsContainer">
         <Button icon="restart" text="Restart"/>
-        <Button icon="trashcan" text="Delete project" danger/>
+        <Button icon="trashcan" text="Delete project" danger @click="showModalDeleteModal = true" 
+        />
+         <DeleteModal 
+      v-if="showModalDeleteModal" 
+      :projectName="projectName" 
+      @close="showModalDeleteModal = false" />
       </div>
     </div>
   </div>

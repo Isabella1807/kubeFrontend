@@ -1,13 +1,12 @@
 <template>
     <div class="deletemodal-overlay">
       <div class="deletemodal">
-        <!-- Close Button with Icon -->
+
         <button @click="$emit('close')" class="deleteclose-button">
-          <i class="fas fa-times modal-icon"></i> <!-- Using Font Awesome icon for close button -->
+          <i class="fas fa-times modal-icon"></i> 
         </button>
-        <h1 class="modal-title">Are you sure you want to delete <span class="highlight">{{ projectName }}</span> project?</h1>
+        <h1 class="modal-title">Are you sure you want to delete this project?</h1>
         
-        <!-- Modal Actions with Icons in Buttons -->
         <div class="deletemodal-action">
           <button @click="$emit('close')" class="deletecancel-button">
             <i class="fas fa-times modal-icon"></i> No, cancel
@@ -21,13 +20,13 @@
   </template>
   
   <script setup>
-  const emit = defineEmits(['close']); // Emit close event to parent
+  const emit = defineEmits(['close']); //lukker så det går til parent 
   
   const deleteProject = () => {
-    // Logic to delete the project goes here (e.g., API call)
+    // det der gør, som man kan slette projektet - kan være api her? 
     console.log("Project deleted");
   
-    // Close the modal after deletion logic
+    // lukker modalen 
     emit('close');
   };
   </script>
@@ -46,7 +45,7 @@
     z-index: 1000;
   }
   
-  /* Modal container styles */
+  
   .deletemodal {
     background-color: #fff;
     padding: 30px;
@@ -77,9 +76,6 @@
     text-align: left;
   }
 
-  .highlight {
-    color: $primaryPurple;;
-  }
   
   .deletemodal-action {
     display: flex;
