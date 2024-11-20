@@ -24,7 +24,7 @@
   };
   </script>
   
-  <style>
+  <style lang="scss">
 
   
   /* Center container */
@@ -63,7 +63,7 @@
     width: 100%;
     border-radius: 10px;
     border: none;
-    background-color: #F6F6F6;
+    background-color: $lightGrey;
     font-size: 14px;
     font-style: italic;
   }
@@ -79,8 +79,8 @@
   /* Submit Button */
   .submit-button {
     padding: 0.9rem 2rem;
-    background-color: #5C007E;
-    color: #fff;
+    background-color: $primaryPurple;
+    color: $white-color;
     border: none;
     border-radius: 10px;
     font-weight: 700;
