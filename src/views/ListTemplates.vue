@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="flex">
-      <RouterLink to="/templates/edit" class="create-btn">
-          <font-awesome-icon :icon="['fas', 'plus']" />
+      <div class="createNewProjectButtonContainer">
+        <RouterLink to="/templates/edit">
+          <IconButton icon="addIcon" large primary />
         </RouterLink>
-      <h1>Create new template</h1>
-    </div>
+        <h1 class="createProjectText">Create new template</h1>
+      </div>
 
     <table>
       <tr>
@@ -69,12 +69,35 @@
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
+
+
+.createNewProjectButtonContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom:4rem;
+  .createProjectText {
+    margin-left: 10px;
+  }
+}
+@include smallScreen {
+  .createNewProjectButtonContainer {
+    display: flex;
+    justify-content: center;
+    position:fixed;
+    bottom:20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    .createProjectText {
+      display: none;
+    }
+  }
+}
 .flex {
   display: flex;
   gap: 20px;
   align-items: baseline;
-  
+
   .create-btn {
     margin: 50px 0px 60px 0px;
   }
@@ -134,7 +157,10 @@ table {
     }
     td {
       border-bottom: 1px solid #ddd;
-      padding: 10px 0;
+      padding: 20px 0;
+    }
+    th,td{
+      font-size: $font-size-desktop;
     }
     table tr th:first-child,
     table tr td:first-child {
@@ -161,14 +187,30 @@ table {
   table {
     padding: 0 10px;
     tr {
-      th {
-        td {
+      th, td {
           width: auto;
+          font-size: $font-size-mobile;
         }
-      }
+      
+    }
+  }
+}
+
+
+[color-scheme='dark']{
+  .edit-btn{
+    color:white;
+    svg{
+      color:white;
     }
   }
 }
 </style>
 
-<script></script>
+<script setup>
+  import IconButton from "@/components/IconButton.vue";
+
+
+
+
+</script>

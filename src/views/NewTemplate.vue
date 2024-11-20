@@ -9,10 +9,10 @@
       <textarea name="" id="" placeholder="Insert code"></textarea>
 
       <div class="btn-container">
-        <button type="submit" class="cancel-btn">
+        <RouterLink to="/templates" class="cancel-btn">
           <font-awesome-icon :icon="['far', 'circle-xmark']" />
           Cancel
-        </button>
+        </RouterLink>
         <button type="submit" class="save-btn">
           <font-awesome-icon :icon="['far', 'floppy-disk']" />
           Save template
@@ -75,6 +75,8 @@ textarea {
   border-radius: 10px;
   color: $primaryPurple;
   font-weight: 600;
+  text-decoration:none;
+  cursor:pointer;
   svg{
     margin-right: 5px;
   }
@@ -86,6 +88,7 @@ textarea {
   color: $white-color;
   border-radius: 10px;
   font-weight: 600;
+  cursor:pointer;
   svg{
     margin-right: 5px;
   }
@@ -99,6 +102,7 @@ textarea {
 }
 
 }
+
 </style>
 
 <script setup></script>
