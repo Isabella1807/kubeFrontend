@@ -109,8 +109,8 @@
 .create-btn {
   border-radius: 50%;
   padding: 10px;
-  background-color: purple;
-  color: white;
+  background-color: $primaryPurple;
+  color: $white-color;
   border: none;
   width: 46px;
   height: 46px;
@@ -127,7 +127,7 @@
 .sort-btn {
   border: none;
   font-size: large;
-  color: purple;
+  color: $primaryPurple;
   background: none;
 }
 
@@ -135,12 +135,12 @@
   border: none;
   font-size: large;
   background: none;
-  color: #333333;
+  color: $darkGrey;
 }
 
 .delete-btn {
   border: none;
-  color: red;
+  color: $dangerRed;
   font-size: large;
   background: none;
   margin-right: 10px;
@@ -150,13 +150,13 @@ table {
   width: 100%;
   tr {
     th {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $lightGrey;
       text-align: left;
-      font-size: x-small;
-      font-weight: 400;
+      font-size: $font-size-desktop;
+      font-weight: $font-weight;
     }
     td {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $lightGrey;
       padding: 20px 0;
     }
     th,td{
@@ -170,7 +170,7 @@ table {
 }
 
 .font-bold {
-  font-weight: 600;
+  font-weight: $boldFont;
 }
 
 /* mobile version */
@@ -199,9 +199,9 @@ table {
 
 [color-scheme='dark']{
   .edit-btn{
-    color:white;
+    color:$white-color;
     svg{
-      color:white;
+      color:$white-color;
     }
   }
 }

@@ -185,13 +185,13 @@ table {
   width: 100%;
   tr {
     th {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $lightGrey;
       text-align: left;
       font-size: x-small;
       font-weight: 400;
     }
     td {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $lightGrey;
       padding: 20px 0;
     }
     th,td{
@@ -219,7 +219,7 @@ table {
 }
 
 .font-bold {
-  font-weight: 600;
+  font-weight: $boldFont;
 }
 
 .checkbox-btn {
@@ -229,9 +229,9 @@ table {
 
 [color-scheme='dark']{
   .edit-btn{
-    color:white;
+    color:$white-color;
     svg{
-      color:white;
+      color:$white-color;
     }
   }
 }

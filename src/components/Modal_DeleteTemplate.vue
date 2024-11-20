@@ -38,7 +38,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: $darkGrey(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,12 +47,12 @@
   
   
   .deletemodal {
-    background-color: #fff;
+    background-color: $white-color;
     padding: 30px;
     width: 500px;
     max-width: 90%;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px $darkGrey(0, 0, 0, 0.1);
     position: relative;
     text-align: center;
   }
@@ -69,9 +69,9 @@
   }
   
   .deletemodal-title {
-    font-size: 35px;
+    font-size: $font-size-desktop;
     margin-bottom: 25px;
-    font-weight: 700;
+    font-weight: $font-weight;
     font-family: 'Poppins';
     text-align: left;
   }
@@ -89,11 +89,11 @@
     display: flex;
     align-items: center; 
     padding: 6px 12px; 
-    font-size: 15px;   
+    font-size: $font-size-desktop;   
     border-radius: 10px; 
     width: auto;      
     font-family: 'Poppins';
-    font-weight: 700;
+    font-weight: $font-weight;
   }
   
   .deletecancel-button {
@@ -113,7 +113,7 @@
   
   .modal-icon {
     margin-right: 8px; 
-    font-size: 16px;    
+    font-size: $font-size-desktop;    
   }
   </style>
   
