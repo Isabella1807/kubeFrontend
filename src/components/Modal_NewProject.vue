@@ -4,15 +4,15 @@
       <button class="modal-close" @click="close">✕</button>
       <h1>New Project</h1>
       <form @submit.prevent="saveProject">
-        <label>
+        <label class="darkMode">
           Project name
           <input type="text" v-model="projectName" placeholder="Write name..." />
         </label>
-        <label>
+        <label class="darkMode">
           Subdomain name
           <input type="text" v-model="subdomainName" placeholder="Write subdomain name..." />
         </label>
-        <label>
+        <label class="darkMode">
           Pick template
           <div class="select-container">
             <select v-model="selectedTemplate" class="custom-select">

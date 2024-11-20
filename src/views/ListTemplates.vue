@@ -4,7 +4,7 @@
       <RouterLink to="/templates/edit" class="create-btn">
           <font-awesome-icon :icon="['fas', 'plus']" />
         </RouterLink>
-      <h3>Create new template</h3>
+      <h2>Create new template</h2>
     </div>
 
     <table>
