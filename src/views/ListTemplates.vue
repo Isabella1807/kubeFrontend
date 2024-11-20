@@ -2,9 +2,9 @@
   <div>
     <div class="flex">
       <RouterLink to="/templates/edit" class="create-btn">
-        <font-awesome-icon :icon="['fas', 'plus']" />
-      </RouterLink>
-      <h3>Create new template</h3>
+          <font-awesome-icon :icon="['fas', 'plus']" />
+        </RouterLink>
+      <h1>Create new template</h1>
     </div>
 
     <table>

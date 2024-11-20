@@ -75,10 +75,10 @@
   };
   </script>
   
-  <style changepassword>
-  
+  <style lang="scss">
+
   .changepassworderror-message {
-    color: red;
+    color: $offline;
     font-size: 15px;
     margin-top: 10px;
     text-align: left;
@@ -99,12 +99,12 @@
   }
   
   .changepasswordmodal-content {
-    background-color: white;
+    background-color: $white-color;
     padding: 30px;
     width: 500px;
     max-width: 90%;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     position: relative;
     text-align: center;
   }
@@ -117,7 +117,7 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: #5C007E;
+    color: $primaryPurple;
   }
   
   .changepasswordmodal-content h1 {
@@ -143,10 +143,10 @@
     margin-top: 5px;
     font-size: 14px;
     font-style: italic;
-    border: 1px solid #EEEEEE;
+    border: 1px solid $lightGrey;
     border-radius: 5px;
     box-sizing: border-box;
-    color: #333;
+    color: $darkGrey;
   }
   
   .changepasswordbuttons {
@@ -167,29 +167,29 @@
   }
   
   .changepasswordcancel-button {
-    background-color: white;
-    color: #5C007E;
-    border: 1px solid #5C007E;
+    background-color: $white-color;
+    color: $primaryPurple;
+    border: 1px solid $primaryPurple;
     cursor: pointer;
   }
   
   .changepasswordsave-button {
-    background-color: #5C007E;
-    color: white;
+    background-color: $primaryPurple;
+    color: $white-color;
     border: none;
     cursor: pointer;
   }
   
   .changepasswordcancel-button:hover {
-    background-color: #eee;
-    color: #333;
-    border-color: #eee;
+    background-color: #eee;  
+    color: $darkGrey;  
+    border-color: #eee;  
   }
   
   .changepasswordsave-button:hover {
-    background-color: #3700b3;
-    color: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    background-color: #eee;  
+    color: $darkGrey;  
+    border-color: #eee;  
   }
   
   @media (max-width: 768px) {

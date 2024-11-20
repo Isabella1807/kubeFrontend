@@ -1,77 +1,106 @@
 <template>
-  <div>
-    <div class="flex">
-      <RouterLink to="/members/edit" class="create-btn">
-        <font-awesome-icon :icon="['fas', 'plus']" />
-      </RouterLink>
-      <h3>Create new user</h3>
+    <div>
+      <div class="flex">
+        <button class="create-btn" @click="openCreateUserModal">
+          <font-awesome-icon :icon="['fas', 'plus']" />
+        </button>
+        <h3 @click="openCreateUserModal">Create new user</h3>
+      </div>
+
+      <!-- New User Modal -->
+      <NewUserModal v-if="isCreateUserModalVisible" @close="closeCreateUserModal" />
+
+      <table>
+        <tr>
+          <th><input class="checkbox-btn" type="checkbox" /></th>
+          <th>
+            Groups
+            <button class="sort-btn">
+              <font-awesome-icon :icon="['fas', 'sort-down']" />
+            </button>
+          </th>
+          <th>Members</th>
+          <th></th>
+        </tr>
+
+        <tr v-for="(group, index) in groups" :key="index">
+          <td><input class="checkbox-btn" type="checkbox" /></td>
+          <td class="font-bold">{{ group.name }}</td>
+          <td>{{ group.members.length }}</td>
+          <td>
+            <div class="flex flex-end">
+              <button class="edit-btn" @click="openEditModal(group)">
+                <font-awesome-icon :icon="['far', 'pen-to-square']" />
+              </button>
+              <button class="delete-btn">
+                <font-awesome-icon :icon="['far', 'trash-can']" />
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Edit Modal -->
+      <EditGroupModal v-if="isEditModalVisible" :showModal="isEditModalVisible" :groupName="selectedGroup?.name"
+        :initialMembers="selectedGroup?.members" @close="isEditModalVisible = false" @save="saveGroupChanges" />
     </div>
+  </template>
 
-    <table>
-      <tr>
-        <th><input class="checkbox-btn" type="checkbox" /></th>
-        <th>
-          Groups
-          <button class="sort-btn">
-            <font-awesome-icon :icon="['fas', 'sort-down']" />
-          </button>
-        </th>
-        <th>Members</th>
-        <th></th>
-      </tr>
+<script>
+import { defineComponent, ref } from 'vue';
+import EditGroupModal from "@/components/Modal_EditGroup.vue";
+import NewUserModal from "@/components/Modal_NewUser.vue";  // Import the new modal component
 
-      <tr>
-        <td><input class="checkbox-btn" type="checkbox" /></td>
-        <td class="font-bold">DCD24</td>
-        <td>35</td>
-        <td>
-          <div class="flex flex-end">
-            <button class="edit-btn">
-              <font-awesome-icon :icon="['far', 'pen-to-square']" />
-            </button>
+export default defineComponent({
+  name: "GroupManagement",
+  components: {
+    EditGroupModal,
+    NewUserModal,  // Register the new modal
+  },
+  setup() {
+    const groups = ref([
+      { name: "DCD24", members: [{ id: 1, name: "Anna Jensen" }, { id: 2, name: "Thomas Hansen" }] },
+      { name: "WUOE24", members: [{ id: 3, name: "Tobias Hammer" }, { id: 4, name: "Joanna Hoppe" }] },
+      { name: "MMD24", members: [{ id: 5, name: "Janus Tomme" }, { id: 6, name: "Martin Hansen" }] },
+    ]);
 
-            <button class="delete-btn">
-              <font-awesome-icon :icon="['far', 'trash-can']" />
-            </button>
-          </div>
-        </td>
-      </tr>
+    const isEditModalVisible = ref(false);
+    const isCreateUserModalVisible = ref(false);  // To control the new user modal visibility
+    const selectedGroup = ref(null);
 
-      <tr>
-        <td><input class="checkbox-btn" type="checkbox" /></td>
-        <td class="font-bold">WUOE24</td>
-        <td>20</td>
-        <td>
-          <div class="flex flex-end">
-            <button class="edit-btn">
-              <font-awesome-icon :icon="['far', 'pen-to-square']" />
-            </button>
+    const openCreateUserModal = () => {
+      isCreateUserModalVisible.value = true; // Show the new user modal
+    };
 
-            <button class="delete-btn">
-              <font-awesome-icon :icon="['far', 'trash-can']" />
-            </button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td><input class="checkbox-btn" type="checkbox" /></td>
-        <td class="font-bold">MMD24</td>
-        <td>34</td>
-        <td>
-          <div class="flex flex-end">
-            <button class="edit-btn">
-              <font-awesome-icon :icon="['far', 'pen-to-square']" />
-            </button>
+    const closeCreateUserModal = () => {
+      isCreateUserModalVisible.value = false; // Close the new user modal
+    };
 
-            <button class="delete-btn">
-              <font-awesome-icon :icon="['far', 'trash-can']" />
-            </button>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-</template>
+    const openEditModal = (group) => {
+      selectedGroup.value = group;
+      isEditModalVisible.value = true;
+    };
+
+    const saveGroupChanges = (updatedMembers) => {
+      if (selectedGroup.value) {
+        selectedGroup.value.members = updatedMembers;
+      }
+      isEditModalVisible.value = false;
+    };
+
+    return {
+      groups,
+      isEditModalVisible,
+      isCreateUserModalVisible,
+      selectedGroup,
+      openCreateUserModal,
+      closeCreateUserModal,
+      openEditModal,
+      saveGroupChanges,
+    };
+  },
+});
+</script>
 
 <style lang="scss">
 .flex {
@@ -174,5 +203,3 @@ table {
   }
 }
 </style>
-
-<script></script>
