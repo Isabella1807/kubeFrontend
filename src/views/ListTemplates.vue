@@ -4,25 +4,26 @@
       <RouterLink to="/templates/edit" class="create-btn">
           <font-awesome-icon :icon="['fas', 'plus']" />
         </RouterLink>
-      <h2>Create new template</h2>
+      <h1>Create new template</h1>
     </div>
 
     <table>
       <tr>
-        <th>Template name
-            <button class="sort-btn">
-          <font-awesome-icon :icon="['fas', 'sort-down']" />
-        </button>
+        <th>
+          Template name
+          <button class="sort-btn">
+            <font-awesome-icon :icon="['fas', 'sort-down']" />
+          </button>
         </th>
         <th>Services</th>
         <th></th>
       </tr>
-     
+
       <tr>
         <td class="font-bold">WordPress template</td>
         <td>WordPress, Database</td>
         <td>
-            <div class="flex flex-end">
+          <div class="flex flex-end">
             <RouterLink to="/templates/edit" class="edit-btn">
               <font-awesome-icon :icon="['far', 'pen-to-square']" />
             </RouterLink>
@@ -30,10 +31,10 @@
             <button class="delete-btn">
               <font-awesome-icon :icon="['far', 'trash-can']" />
             </button>
-            </div>
+          </div>
         </td>
       </tr>
-      
+
       <tr>
         <td class="font-bold">Drupal template</td>
         <td>Drupal, Database</td>
@@ -68,15 +69,15 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
 .flex {
   display: flex;
   gap: 20px;
   align-items: baseline;
-}
-
-.flex .create-btn{
+  
+  .create-btn {
     margin: 50px 0px 60px 0px;
+  }
 }
 
 .flex-end {
@@ -94,10 +95,10 @@
   flex-wrap: wrap-reverse;
   justify-content: center;
   align-content: center;
-}
 
-.create-btn svg {
-  font-size: x-large;
+  svg {
+    font-size: x-large;
+  }
 }
 
 .sort-btn {
@@ -105,10 +106,6 @@
   font-size: large;
   color: purple;
   background: none;
-}
-
-table {
-  width: 100%;
 }
 
 .edit-btn {
@@ -126,44 +123,51 @@ table {
   margin-right: 10px;
 }
 
-table tr th {
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-}
-table tr td {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
-}
-.font-bold{
-    font-weight: 600;
+table {
+  width: 100%;
+  tr {
+    th {
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+      font-size: x-small;
+      font-weight: 400;
+    }
+    td {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    table tr th:first-child,
+    table tr td:first-child {
+      width: 400px;
+    }
+  }
 }
 
-table tr th {
-font-size: x-small;
-font-weight: 400;
-}
-
-table tr th:first-child, table tr td:first-child {
-  width: 400px;
+.font-bold {
+  font-weight: 600;
 }
 
 /* mobile version */
 @media (max-width: 1200px) {
-  .create-btn{
-      position: fixed;
-      bottom: 0px;
-      left:50%;
-      transform: translate(-50%,-0%);
+  .create-btn {
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%, -0%);
+  }
+  .flex h3 {
+    display: none;
+  }
+  table {
+    padding: 0 10px;
+    tr {
+      th {
+        td {
+          width: auto;
+        }
+      }
     }
-    .flex h3{
-      display: none;
-    }
-    table{
-     padding: 0 10px; 
-    }
-  table tr th:first-child, table tr td:first-child{
-  width: auto;
-}
+  }
 }
 </style>
 

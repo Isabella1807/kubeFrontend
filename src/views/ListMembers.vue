@@ -1,4 +1,4 @@
-  <template>
+<template>
     <div>
       <div class="flex">
         <button class="create-btn" @click="openCreateUserModal">
@@ -107,20 +107,21 @@ export default defineComponent({
   display: flex;
   gap: 20px;
   align-items: baseline;
-}
 
-.flex .create-btn {
-  margin: 50px 0px 60px 0px;
+  .create-btn {
+    margin: 50px 0px 60px 0px;
+  }
+}
+.flex {
 }
 
 .flex-end {
   justify-content: flex-end;
 }
-
 .create-btn {
   border-radius: 50%;
-  background-color: purple;
-  color: white;
+  background-color: $primaryPurple;
+  color: $white-color;
   border: none;
   width: 46px;
   height: 46px;
@@ -128,70 +129,63 @@ export default defineComponent({
   flex-wrap: wrap-reverse;
   justify-content: center;
   align-content: center;
-  cursor: pointer;
 }
 
-.create-btn svg {
-  font-size: x-large;
+.create-btn {
+  svg {
+    font-size: x-large;
+  }
 }
 
 .sort-btn {
   border: none;
   font-size: large;
-  color: purple;
+  color: $primaryPurple;
   background: none;
 }
 
 table {
   width: 100%;
+  tr {
+    th {
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+      font-size: x-small;
+      font-weight: 400;
+    }
+    td {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0 0 0;
+    }
+    td:first-child,
+    th:first-child {
+      width: 40px;
+    }
+  }
 }
 
 .edit-btn {
   border: none;
   font-size: large;
   background: none;
-  cursor: pointer;
 }
 
 .delete-btn {
   border: none;
-  color: red;
+  color: $dangerRed;
   font-size: large;
   background: none;
   margin-right: 10px;
-  cursor: pointer;
-}
-
-table tr th {
-  border-bottom: 1px solid #ddd;
-  text-align: left;
-}
-
-table tr td {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0 0 0;
 }
 
 .font-bold {
   font-weight: 600;
 }
 
-table tr th {
-  font-size: x-small;
-  font-weight: 400;
-}
-
-table tr th:first-child,
-table tr td:first-child {
-  width: 40px;
-}
-
 .checkbox-btn {
   height: 20px;
   width: 20px;
-  accent-color: $primaryPurple;
 }
-
 
 /* mobile version */
 @media (max-width: 1200px) {
@@ -201,15 +195,11 @@ table tr td:first-child {
     left: 50%;
     transform: translate(-50%, -0%);
   }
-
   .flex h3 {
     display: none;
   }
-
   table {
     padding: 0 10px;
   }
 }
 </style>
-
-
