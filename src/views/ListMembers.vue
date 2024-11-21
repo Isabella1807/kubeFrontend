@@ -43,7 +43,6 @@
       <EditGroupModal v-if="isEditModalVisible" :showModal="isEditModalVisible" :groupName="selectedGroup?.name"
         :initialMembers="selectedGroup?.members" @close="isEditModalVisible = false" @save="saveGroupChanges" />
 
-      <DeleteUserModal v-if="showDeleteGroupModal" @close="closeDeleteGroupModal()"/>
     </div>
   </template>
 
@@ -52,8 +51,6 @@ import { defineComponent, ref } from 'vue';
 import EditGroupModal from "@/components/Modal_EditGroup.vue";
 import NewUserModal from "@/components/Modal_NewUser.vue";  // Import the new modal component
 import IconButton from "@/components/IconButton.vue";
-import DeleteUserModal from "@/components/Modal_DeleteUser.vue";
-
 
 export default defineComponent({
   name: "GroupManagement",
@@ -61,7 +58,6 @@ export default defineComponent({
     EditGroupModal,
     NewUserModal,  // Register the new modal
     IconButton,
-    DeleteUserModal
   },
   setup() {
     const groups = ref([
@@ -71,7 +67,6 @@ export default defineComponent({
     ]);
 
     const isEditModalVisible = ref(false);
-    const showDeleteGroupModal = ref(false);
     const isCreateUserModalVisible = ref(false);  // To control the new user modal visibility
     const selectedGroup = ref(null);
 
@@ -82,13 +77,6 @@ export default defineComponent({
     const closeCreateUserModal = () => {
       isCreateUserModalVisible.value = false; // Close the new user modal
     };
-
-    const openDeleteGroupModal = (group) => {
-      showDeleteGroupModal.value = true;
-    }
-    const closeDeleteGroupModal = () => {
-      showDeleteGroupModal.value = false;
-    }
 
     const openEditModal = (group) => {
       selectedGroup.value = group;
@@ -110,8 +98,6 @@ export default defineComponent({
       openCreateUserModal,
       closeCreateUserModal,
       openEditModal,
-      openDeleteGroupModal,
-      closeDeleteGroupModal,
       saveGroupChanges,
     };
   },
@@ -206,14 +192,14 @@ table {
 
 .edit-btn {
   border: none;
-  font-size: large;
+  font-size: 24px;
   background: none;
 }
 
 .delete-btn {
   border: none;
   color: $dangerRed;
-  font-size: large;
+  font-size: 24px;
   background: none;
   margin-right: 10px;
 }
