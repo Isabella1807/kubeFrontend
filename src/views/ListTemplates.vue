@@ -152,15 +152,11 @@ table {
     th {
       border-bottom: 1px solid $lightGrey;
       text-align: left;
-      font-size: $font-size-desktop;
       font-weight: $font-weight;
     }
     td {
       border-bottom: 1px solid $lightGrey;
       padding: 20px 0;
-    }
-    th,td{
-      font-size: $font-size-desktop;
     }
     table tr th:first-child,
     table tr td:first-child {

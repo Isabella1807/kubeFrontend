@@ -162,7 +162,6 @@ export default defineComponent({
 
 .sort-btn {
   border: none;
-  font-size: large;
   color: $primaryPurple;
   background: none;
 }
@@ -173,16 +172,14 @@ table {
     th {
       border-bottom: 1px solid $lightGrey;
       text-align: left;
-      font-size: x-small;
+  
       font-weight: 400;
     }
     td {
       border-bottom: 1px solid $lightGrey;
       padding: 20px 0;
     }
-    th,td{
-      font-size: $font-size-desktop;
-    }
+    
     td:first-child,
     th:first-child {
       width: 40px;
