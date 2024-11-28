@@ -35,7 +35,7 @@
 
         <!-- Settings Icon and Dropdown -->
         <div class="settings-container">
-          <i :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen } "class="settings" @click="toggleDropdown"></i>
+          <i :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen } " class="settings" @click="toggleDropdown"></i>
           <transition name="dropdown-fade">
             <div v-if="dropdownOpen" class="dropdown">
               <button class="changepass-btn">Change-Password</button>

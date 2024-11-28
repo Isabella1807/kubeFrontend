@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="flex">
-      <RouterLink to="/templates/edit" class="create-btn">
-          <font-awesome-icon :icon="['fas', 'plus']" />
+      <div class="createNewProjectButtonContainer">
+        <RouterLink to="/templates/edit">
+          <IconButton icon="addIcon" large primary />
         </RouterLink>
-      <h1>Create new template</h1>
-    </div>
+        <h1 class="createProjectText">Create new template</h1>
+      </div>
 
     <table>
       <tr>
@@ -69,12 +69,35 @@
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
+
+
+.createNewProjectButtonContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom:4rem;
+  .createProjectText {
+    margin-left: 10px;
+  }
+}
+@include smallScreen {
+  .createNewProjectButtonContainer {
+    display: flex;
+    justify-content: center;
+    position:fixed;
+    bottom:20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    .createProjectText {
+      display: none;
+    }
+  }
+}
 .flex {
   display: flex;
   gap: 20px;
   align-items: baseline;
-  
+
   .create-btn {
     margin: 50px 0px 60px 0px;
   }
@@ -86,8 +109,8 @@
 .create-btn {
   border-radius: 50%;
   padding: 10px;
-  background-color: purple;
-  color: white;
+  background-color: $primaryPurple;
+  color: $white-color;
   border: none;
   width: 46px;
   height: 46px;
@@ -104,7 +127,7 @@
 .sort-btn {
   border: none;
   font-size: large;
-  color: purple;
+  color: $primaryPurple;
   background: none;
 }
 
@@ -112,12 +135,12 @@
   border: none;
   font-size: large;
   background: none;
-  color: #333333;
+  color: $darkGrey;
 }
 
 .delete-btn {
   border: none;
-  color: red;
+  color: $dangerRed;
   font-size: large;
   background: none;
   margin-right: 10px;
@@ -127,14 +150,13 @@ table {
   width: 100%;
   tr {
     th {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $lightGrey;
       text-align: left;
-      font-size: x-small;
-      font-weight: 400;
+      font-weight: $font-weight;
     }
     td {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
+      border-bottom: 1px solid $lightGrey;
+      padding: 20px 0;
     }
     table tr th:first-child,
     table tr td:first-child {
@@ -144,7 +166,7 @@ table {
 }
 
 .font-bold {
-  font-weight: 600;
+  font-weight: $boldFont;
 }
 
 /* mobile version */
@@ -161,14 +183,30 @@ table {
   table {
     padding: 0 10px;
     tr {
-      th {
-        td {
+      th, td {
           width: auto;
+          font-size: $font-size-mobile;
         }
-      }
+      
+    }
+  }
+}
+
+
+[color-scheme='dark']{
+  .edit-btn{
+    color:$white-color;
+    svg{
+      color:$white-color;
     }
   }
 }
 </style>
 
-<script></script>
+<script setup>
+  import IconButton from "@/components/IconButton.vue";
+
+
+
+
+</script>

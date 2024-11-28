@@ -1,10 +1,9 @@
 <template>
     <div>
-      <div class="flex">
-        <button class="create-btn" @click="openCreateUserModal">
-          <font-awesome-icon :icon="['fas', 'plus']" />
-        </button>
-        <h3 @click="openCreateUserModal">Create new user</h3>
+      
+      <div class="createNewProjectButtonContainer">
+        <IconButton icon="addIcon" large primary @click="openCreateUserModal"/>
+        <h1 class="createProjectText" @click="openCreateUserModal">Create new user</h1>
       </div>
 
       <!-- New User Modal -->
@@ -32,7 +31,7 @@
               <button class="edit-btn" @click="openEditModal(group)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" />
               </button>
-              <button class="delete-btn">
+              <button class="delete-btn" @click="openDeleteGroupModal">
                 <font-awesome-icon :icon="['far', 'trash-can']" />
               </button>
             </div>
@@ -43,6 +42,7 @@
       <!-- Edit Modal -->
       <EditGroupModal v-if="isEditModalVisible" :showModal="isEditModalVisible" :groupName="selectedGroup?.name"
         :initialMembers="selectedGroup?.members" @close="isEditModalVisible = false" @save="saveGroupChanges" />
+
     </div>
   </template>
 
@@ -50,12 +50,14 @@
 import { defineComponent, ref } from 'vue';
 import EditGroupModal from "@/components/Modal_EditGroup.vue";
 import NewUserModal from "@/components/Modal_NewUser.vue";  // Import the new modal component
+import IconButton from "@/components/IconButton.vue";
 
 export default defineComponent({
   name: "GroupManagement",
   components: {
     EditGroupModal,
     NewUserModal,  // Register the new modal
+    IconButton,
   },
   setup() {
     const groups = ref([
@@ -102,7 +104,30 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+.createNewProjectButtonContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom:4rem;
+  
+  .createProjectText {
+    margin-left: 10px;
+  }
+}
+@include smallScreen {
+  .createNewProjectButtonContainer {
+    display: flex;
+    justify-content: center;
+    position:fixed;
+    bottom:20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    .createProjectText {
+      display: none;
+    }
+  }
+}
+
 .flex {
   display: flex;
   gap: 20px;
@@ -111,8 +136,6 @@ export default defineComponent({
   .create-btn {
     margin: 50px 0px 60px 0px;
   }
-}
-.flex {
 }
 
 .flex-end {
@@ -139,7 +162,6 @@ export default defineComponent({
 
 .sort-btn {
   border: none;
-  font-size: large;
   color: $primaryPurple;
   background: none;
 }
@@ -148,15 +170,16 @@ table {
   width: 100%;
   tr {
     th {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid $lightGrey;
       text-align: left;
-      font-size: x-small;
+  
       font-weight: 400;
     }
     td {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0 0 0;
+      border-bottom: 1px solid $lightGrey;
+      padding: 20px 0;
     }
+    
     td:first-child,
     th:first-child {
       width: 40px;
@@ -166,25 +189,34 @@ table {
 
 .edit-btn {
   border: none;
-  font-size: large;
+  font-size: 24px;
   background: none;
 }
 
 .delete-btn {
   border: none;
   color: $dangerRed;
-  font-size: large;
+  font-size: 24px;
   background: none;
   margin-right: 10px;
 }
 
 .font-bold {
-  font-weight: 600;
+  font-weight: $boldFont;
 }
 
 .checkbox-btn {
   height: 20px;
   width: 20px;
+}
+
+[color-scheme='dark']{
+  .edit-btn{
+    color:$white-color;
+    svg{
+      color:$white-color;
+    }
+  }
 }
 
 /* mobile version */
@@ -200,6 +232,11 @@ table {
   }
   table {
     padding: 0 10px;
+    tr{
+      th,td{
+        font-size: $font-size-mobile;
+      }
+    }
   }
 }
 </style>
