@@ -64,8 +64,7 @@
     border-radius: 10px;
     border: none;
     background-color: $lightGrey;
-    font-size: 14px;
-    font-style: italic;
+    font-size: $font-size-mobile;
   }
   
   /* Message under input field */

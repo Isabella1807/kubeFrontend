@@ -124,10 +124,9 @@ export default {
 }
 
 .newuser-modal-content h1 {
-    font-size: 35px;
+    font-size: $font-size-h1;
     margin-bottom: 25px;
-    font-weight: 700;
-    font-family: 'Poppins';
+    font-weight: $font-weight;
     text-align: left;
 }
 
@@ -177,7 +176,7 @@ export default {
   flex-grow: 1;
   text-align: center;
   color: $darkGrey;
-  font-weight: 700;
+  font-weight: $font-weight;
 }
 
 .newuser-delete-btn {
@@ -202,8 +201,7 @@ export default {
 .newuser-checkbox-item {
   display: flex;
   align-items: center;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: $font-size-desktop;
 }
 .newuser-checkbox-item input {
   margin-right: 10px;
@@ -244,11 +242,10 @@ export default {
 
 .newuser-cancel-btn, .newuser-save-btn { 
     padding: 6px 12px; 
-    font-size: 15px;   
+    font-size: $font-size-desktop;   
     border-radius: 10px; 
     width: auto;      
-    font-family: 'Poppins';
-    font-weight: 700;
+    font-weight: $font-weight;
     gap: 10px;
 }
 
@@ -273,14 +270,14 @@ export default {
 
 /* Hover effects */
 .newuser-cancel-btn:hover {
-    background-color: #eee;  
+    background-color: $lightGrey;  
     color: $darkGrey;  
-    border-color: #eee;  
+    border-color: $lightGrey;  
   }
   
   .newuser-save-btn:hover {
-    background-color: #eee;  
+    background-color: $lightGrey;  
     color: $darkGrey;  
-    border-color: #eee;  
+    border-color: $lightGrey;  
   }
 </style>

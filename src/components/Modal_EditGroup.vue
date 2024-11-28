@@ -132,10 +132,9 @@ export default {
 }
 
 .edit-title  {
-    font-size: 35px;
+    font-size: $font-size-h1;
     margin-bottom: 25px;
-    font-weight: 700;
-    font-family: 'Poppins';
+    font-weight: $font-weight;
     text-align: left;
 }
 
@@ -158,7 +157,7 @@ export default {
 .edit-icon-button-delete{
     background: none;
     border: none;
-    color: $offline;
+    color: $dangerRed;
     font-size: 18px;
     cursor: pointer;
 }
@@ -214,10 +213,9 @@ export default {
 .edit-cancel-button,
 .edit-save-button {
     padding: 6px 12px; 
-    font-size: 15px;   
+    font-size: $font-size-desktop;   
     border-radius: 10px; 
     width: auto;      
-    font-family: 'Poppins';
-    font-weight: 700;
+    font-weight: $font-weight;
 }
 </style>

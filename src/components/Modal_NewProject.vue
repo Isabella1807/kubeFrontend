@@ -89,11 +89,10 @@ export default {
 <style lang="scss">
   
   .error-message {
-    color: $offline;
-    font-size: 15px;
+    color: $dangerRed;
+    font-size: $font-size-desktop;
     margin-top: 10px;
     text-align: left;
-    font-family: 'Poppins';
   }
  
   .modal-overlay {
@@ -132,20 +131,17 @@ export default {
   }
   
   .modal-content h1 {   
-    font-size: 35px;
+    font-size: $font-size-h1;
     margin-bottom: 25px;
-    font-weight: 700;
-    font-family: 'Poppins';
+    font-weight: $font-weight;
     text-align: left;
   }
   
   form label {
     display: block;
-    font-size: 15px;
+    font-size: $font-size-desktop;
     margin-bottom: 10px;
     text-align: left;
-    font-weight: 400;
-    font-family: 'Poppins';
   }
   
   .modal-overlay input, .custom-select {
@@ -153,8 +149,7 @@ export default {
     padding: 8px;
     margin-top: 5px;
     font-size: 14px;
-    font-style: italic;
-    border: 1px solid #EEEEEE;
+    border: 1px solid $lightGrey;
     border-radius: 5px;
     box-sizing: border-box;
     color: $darkGrey;
@@ -189,11 +184,10 @@ export default {
   
   .cancel-button, .save-button {
     padding: 6px 12px; 
-    font-size: 15px;   
+    font-size: $font-size-desktop;   
     border-radius: 10px; 
     width: auto;      
-    font-family: 'Poppins';
-    font-weight: 700;
+    font-weight: $font-weight;
   }
   
   .cancel-button {
@@ -212,15 +206,15 @@ export default {
   
   /* Hover effects */
   .cancel-button:hover {
-    background-color: #eee;  
+    background-color: $lightGrey;  
     color: $darkGrey;  
-    border-color: #eee;  
+    border-color: $lightGrey;  
   }
   
   .save-button:hover {
-    background-color: #eee;  
+    background-color: $lightGrey;  
     color: $darkGrey;  
-    border-color: #eee;  
+    border-color: $lightGrey;  
   }
   
   
@@ -240,7 +234,7 @@ export default {
     }
   
     h1 {
-      font-size: 25px;
+      font-size: $font-size-h1-moblie;
     }
   
     .buttons {

@@ -1,7 +1,7 @@
 <template>
-    <div v-if="show" class="changepasswordmodal-overlay">
+    <div v-if="show" class="changepasswordmodal-overlay" >
       <div class="changepasswordmodal-content">
-        <button class="changepasswordmodal-close" @click="close">✕</button>
+        <button class="changepasswordmodal-close" @click="close">✖</button>
         <h1>Change Password</h1>
         <form @submit.prevent="changePassword" class="changepassword">
           <label>
@@ -75,14 +75,13 @@
   };
   </script>
   
-  <style lang="scss">
-
+  <style lang="scss" changepassword>
+  
   .changepassworderror-message {
-    color: $offline;
-    font-size: 15px;
+    color: $dangerRed;
+    font-size: $font-size-desktop;
     margin-top: 10px;
     text-align: left;
-    font-family: 'Poppins';
   }
   
   .changepasswordmodal-overlay {
@@ -104,7 +103,7 @@
     width: 500px;
     max-width: 90%;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     position: relative;
     text-align: center;
   }
@@ -117,7 +116,7 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: $primaryPurple;
+    color: #5C007E;
   }
   
   .changepasswordmodal-content h1 {
@@ -143,10 +142,10 @@
     margin-top: 5px;
     font-size: 14px;
     font-style: italic;
-    border: 1px solid $lightGrey;
+    border: 1px solid #EEEEEE;
     border-radius: 5px;
     box-sizing: border-box;
-    color: $darkGrey;
+    color: #333;
   }
   
   .changepasswordbuttons {
@@ -167,29 +166,29 @@
   }
   
   .changepasswordcancel-button {
-    background-color: $white-color;
-    color: $primaryPurple;
-    border: 1px solid $primaryPurple;
+    background-color: white;
+    color: #5C007E;
+    border: 1px solid #5C007E;
     cursor: pointer;
   }
   
   .changepasswordsave-button {
-    background-color: $primaryPurple;
-    color: $white-color;
+    background-color: #5C007E;
+    color: white;
     border: none;
     cursor: pointer;
   }
   
   .changepasswordcancel-button:hover {
-    background-color: #eee;  
-    color: $darkGrey;  
-    border-color: #eee;  
+    background-color: #eee;
+    color: #333;
+    border-color: #eee;
   }
   
   .changepasswordsave-button:hover {
-    background-color: #eee;  
-    color: $darkGrey;  
-    border-color: #eee;  
+    background-color: #3700b3;
+    color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   }
   
   @media (max-width: 768px) {

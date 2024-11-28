@@ -132,7 +132,7 @@ const toggleAccordion = () => {
 
       p {
         padding: 0.25rem 0.5rem;
-        font-weight: 700;
+        font-weight: $font-weight;
       }
 
       &.green p {
@@ -155,7 +155,7 @@ const toggleAccordion = () => {
       gap: 10px;
 
       .accordionTitle {
-        font-weight: 700;
+        font-weight: $font-weight;
       }
       .accordionResponsiveItems{
         display: none;

@@ -232,7 +232,7 @@ $max-width-desktop: 1350px;
 }
 
 .logout-btn {
-    color: $offline;
+    color: $dangerRed;
 
   &:hover {
     opacity: 80%;
