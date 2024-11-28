@@ -34,6 +34,7 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
+
 .buttonShape {
   display: inline-flex;
   background-color: $primaryPurple;
@@ -41,9 +42,8 @@ const props = defineProps({
   padding: 0.5rem 2rem 0.5rem 1.7rem;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: $white-color;
   gap: 0.6rem;
-  font-weight: 500;
   border: 3px solid $primaryPurple;
   cursor: pointer;
   white-space: nowrap;
@@ -53,14 +53,13 @@ const props = defineProps({
   }
 
   p {
-    color: white;
+    color: $white-color;
   }
 
   &.hollow {
     border: 3px solid $primaryPurple;
     background-color: transparent;
     color: $primaryPurple;
-    font-weight: 700;
 
     p {
       color: $primaryPurple;
@@ -85,7 +84,7 @@ const props = defineProps({
     padding: 0.3rem 1.3rem 0.3rem 1rem;
   }
   .buttonText {
-    font-size: 14px;
+    font-size: $font-size-mobile;
   }
 }
 

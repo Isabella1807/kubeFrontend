@@ -214,7 +214,7 @@ $max-width-desktop: 1350px;
       text-align: left;
 
       &:hover {
-        background-color: $bacgroundgrey;
+        background-color: $lightGrey;
         border-radius: 5px;
       }
 
@@ -397,7 +397,7 @@ input:checked + .slider-font .a-icon {
         font-size: $font-size-desktop;
         border: none ;
         border-radius: 5px;
-        background: $bacgroundgrey;
+        background: $lightGrey;
         width: 349px;
 
         &:focus {
@@ -450,7 +450,7 @@ header {
             justify-content: flex-end;
 
             .settings {
-                font-size: 25px;
+                font-size: $iconsSize;
                 margin-left: 20px;
 
                 &:hover {
@@ -521,7 +521,7 @@ header {
                 border: none;
 
                 &:hover {
-                background-color: $bacgroundgrey;
+                background-color: $lightGrey;
                 }
             }
         }

@@ -6,16 +6,16 @@ $red: #E04040;
 
 [color-scheme='dark'] {
   // Baggrundsfarver
-  header, body, .dropdown-nav, .modal-content, .select-container{
+  header, body, .dropdown-nav, .modal-content, .select-container, .newuser-modal-content{
     background-color: $darkmode-bg;
   }
 
-  .slider-font, .slider, input, .custom-select {
+  .slider-font, .slider, input, .custom-select, .newuser-upload-button {
     background-color: $background-shield;
   }
 
   // Tekstfarver
-  h1, h2, p, th, td, .link, .darkMode {
+  h1, h2, p, th, td, .link, .darkMode, .darkmodelabel, .newuser-checkbox-item {
     color: $white-color;
   }
 

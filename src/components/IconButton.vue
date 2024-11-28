@@ -38,7 +38,7 @@ const props = defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: $white-color;
   cursor: pointer;
   user-select: none;
 

@@ -1,11 +1,11 @@
 <template>
   <div id="template_form">
-    <h2>New template</h2>
+    <h1>New template</h1>
     <form action="X">
-      <label for="tname">Template name</label>
+      <label for="tname" class="darkmodelabel">Template name</label>
       <input type="text" id="tname" name="tname" placeholder="Name" />
 
-      <label for="lname">Template</label>
+      <label for="lname" class="darkmodelabel">Template</label>
       <textarea name="" id="" placeholder="Insert code"></textarea>
 
       <div class="btn-container">
@@ -23,27 +23,25 @@
 </template>
 
 <style scoped lang="scss">
-@import '../assets/globalVariables.scss';
 
-h2 {
-  font-weight: $font-weight;
+h1 {
+  font-size:$font-size-h1;
   margin: 25px 0px;
 }
 
 label {
   font-weight: $font-weight;
+  font-size: $font-size-desktop;
 }
 
 input {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  background-color: $bacgroundgrey;
+  background-color: $lightGrey;
   border: none;
   width: 100%;
-  font-style: italic;
   padding: 5px 15px;
-  font-weight: $font-weight;
   margin-top: 10px;
   margin-bottom: 40px;
 }
@@ -52,13 +50,11 @@ textarea {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  background-color: $bacgroundgrey;
+  background-color: $lightGrey;
   border: none;
   width: 100%;
   height: 500px;
-  font-style: italic;
   padding: 5px 15px;
-  font-weight: $font-weight;
   margin-top: 10px;
 }
 
@@ -70,8 +66,8 @@ textarea {
 
 .cancel-btn {
   padding: 5px 25px 5px 10px;
-  background: none;
-  border: 4px solid $primaryPurple;
+  background: $white-color;
+  border: 2px solid $primaryPurple;
   border-radius: 10px;
   color: $primaryPurple;
   font-weight: $font-weight;
@@ -86,6 +82,7 @@ textarea {
   padding: 5px 25px 5px 10px;
   background-color: $primaryPurple;
   color: $white-color;
+  border: none;
   border-radius: 10px;
   font-weight: $font-weight;
   cursor:pointer;
@@ -94,9 +91,8 @@ textarea {
   }
 }
 
-
 /* mobile version*/
-@media (max-width: 1200px) {
+@media (max-width: 1350px) {
 #template_form{
   padding: 20px;
 }

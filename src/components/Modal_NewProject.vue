@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" class="modal-overlay">
     <div class="modal-content">
-      <button class="modal-close" @click="close">✕</button>
+      <button class="modal-close" @click="close">✖</button>
       <h1>New Project</h1>
       <form @submit.prevent="saveProject">
         <label class="darkMode">

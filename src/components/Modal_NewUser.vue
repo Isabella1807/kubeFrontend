@@ -18,11 +18,11 @@
             </div>
             <div class="newuser-checkbox-section">
                 <label class="newuser-checkbox-item">
-                    <input type="checkbox" v-model="isStudent" @change="resetFields" />
+                    <input type="checkbox" v-model="isStudent" @change="resetFields"  />
                     Students
                 </label>
                 <label class="newuser-checkbox-item">
-                    <input type="checkbox" v-model="isTeacher" @change="resetFields" />
+                    <input type="checkbox" v-model="isTeacher" @change="resetFields"  />
                     Teachers
                 </label>
             </div>
@@ -219,7 +219,7 @@ export default {
   padding: 8px;
   border: 1px solid $lightGrey;
   border-radius: 4px;
-  background: $bacgroundgrey;
+  background: $lightGrey;
 }
 
 /* Buttons */
