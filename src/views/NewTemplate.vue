@@ -25,7 +25,7 @@
 <style scoped lang="scss">
 
 h1 {
-  font-size:$font-size-h1;
+  font-size: $font-size-h1;
   margin: 25px 0px;
 }
 

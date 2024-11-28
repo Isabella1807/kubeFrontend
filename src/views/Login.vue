@@ -75,8 +75,7 @@
     border-radius: 10px;
     border: none;
     background-color: $lightGrey;
-    font-size: 14px;
-    font-style: italic;
+    font-size: $font-size-desktop;
   }
   
   /* Bottom Links (Remember Me & Forgot Password) */
@@ -96,16 +95,16 @@
   
   .remember-me-label {
     color: $primaryPurple; 
-    font-size: 14px;
-    font-weight: 500; 
+    font-size: $font-size-desktop;
+    font-weight: 400; 
     cursor: pointer;
     margin-left: 5px;
   }
   
   /* Forgot Password Link */
   .forgot-password {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: $font-size-desktop;
+    font-weight: 400;
     color: $primaryPurple;
     text-decoration: none;
     
@@ -123,8 +122,8 @@
     color: $white-color;
     border: none;
     border-radius: 10px;
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: $font-weight;
+    font-size: $font-size-desktop;
     cursor: pointer;
     letter-spacing: 1px;
     width: auto;

@@ -69,10 +69,9 @@
   
   /* Message under input field */
   .message {
-    font-size: 14px;
-    color: #333333;
+    font-size: $font-size-mobile;
+    color: $darkGrey;
     margin-top: 10px;
-    font-style: italic;
   }
   
   /* Submit Button */
@@ -82,8 +81,8 @@
     color: $white-color;
     border: none;
     border-radius: 10px;
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: $font-weight;
+    font-size: $font-size-mobile;
     cursor: pointer;
     letter-spacing: 1px;
     width: auto;
@@ -91,7 +90,7 @@
   }
   
   .submit-button:hover {
-    background-color: #6e0296;
+    background-color: $primaryPurpledarkmode;
   }
   </style>
   

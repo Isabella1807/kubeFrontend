@@ -126,14 +126,14 @@
 
 .sort-btn {
   border: none;
-  font-size: large;
+  font-size: $font-size-desktop;
   color: $primaryPurple;
   background: none;
 }
 
 .edit-btn {
   border: none;
-  font-size: large;
+  font-size: $font-size-desktop;
   background: none;
   color: $darkGrey;
 }
@@ -141,7 +141,7 @@
 .delete-btn {
   border: none;
   color: $dangerRed;
-  font-size: large;
+  font-size: $font-size-desktop;
   background: none;
   margin-right: 10px;
 }
@@ -166,7 +166,7 @@ table {
 }
 
 .font-bold {
-  font-weight: $boldFont;
+  font-weight: $font-weight;
 }
 
 /* mobile version */
@@ -205,8 +205,4 @@ table {
 
 <script setup>
   import IconButton from "@/components/IconButton.vue";
-
-
-
-
 </script>

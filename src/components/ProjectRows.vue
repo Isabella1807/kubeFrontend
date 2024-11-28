@@ -112,7 +112,7 @@ const toggleAccordion = () => {
         }
 
         .projectName {
-          font-weight: $boldFont;
+          font-weight: $font-weight;
         }
       }
 

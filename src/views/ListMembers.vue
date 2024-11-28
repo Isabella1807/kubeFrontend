@@ -154,12 +154,6 @@ export default defineComponent({
   align-content: center;
 }
 
-.create-btn {
-  svg {
-    font-size: x-large;
-  }
-}
-
 .sort-btn {
   border: none;
   color: $primaryPurple;
@@ -172,7 +166,6 @@ table {
     th {
       border-bottom: 1px solid $lightGrey;
       text-align: left;
-  
       font-weight: 400;
     }
     td {
@@ -189,20 +182,20 @@ table {
 
 .edit-btn {
   border: none;
-  font-size: 24px;
+  font-size: $iconsSize;
   background: none;
 }
 
 .delete-btn {
   border: none;
   color: $dangerRed;
-  font-size: 24px;
+  font-size: $iconsSize;
   background: none;
   margin-right: 10px;
 }
 
 .font-bold {
-  font-weight: $boldFont;
+  font-weight: $font-weight;
 }
 
 .checkbox-btn {
