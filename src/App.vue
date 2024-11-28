@@ -1,8 +1,6 @@
 <script setup>
 import {RouterView} from 'vue-router'
 import Header from './components/Header.vue';
-
-
 </script>
 
 <template>
@@ -36,12 +34,6 @@ import Header from './components/Header.vue';
 }
 
 @include largeScreenOrSmaller {
-  .body_container {
-    .main_container {
-      main {
-        //padding: 0 1.5rem;
-      }
-    }
-  }
+
 }
 </style>
