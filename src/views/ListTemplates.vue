@@ -172,13 +172,13 @@ table {
 </style>
 
 <script>
-import IconButton from "@/components/IconButton.vue";
 import ApiService from "@/services/apiService";
 import { ref, defineComponent, onMounted } from "vue";
+import IconButton from "@/components/IconButton.vue";
 
 export default defineComponent({
   name: "Templates",
-  components: {},
+  components: {IconButton},
   setup() {
     const templates = ref();
 
