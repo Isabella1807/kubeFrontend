@@ -199,6 +199,8 @@ export default defineComponent({
 
     return {
       templates,
+      IconButton
+
     };
   },
 });
