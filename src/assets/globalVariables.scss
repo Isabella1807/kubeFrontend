@@ -25,6 +25,7 @@ $mediumBreakPoint: 700px;
 $smallBreakPoint: 550px;
 
 //Media queries
+
 @mixin smallScreen {
   @media only screen and (max-width: #{$smallBreakPoint}) {
     @content;
