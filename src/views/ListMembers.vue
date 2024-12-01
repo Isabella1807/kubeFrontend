@@ -24,8 +24,8 @@
 
         <tr v-for="(group, index) in groups" :key="index">
           <td><input class="checkbox-btn" type="checkbox" /></td>
-          <td class="font-bold">{{ group.name }}</td>
-          <td>{{ group.members.length }}</td>
+          <td class="font-bold">{{ group.teamName }}</td>
+          <!-- <td>{{ group.members.length }}</td> -->
           <td>
             <div class="flex flex-end">
               <button class="edit-btn" @click="openEditModal(group)">
@@ -47,10 +47,12 @@
   </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import EditGroupModal from "@/components/Modal_EditGroup.vue";
 import NewUserModal from "@/components/Modal_NewUser.vue";  // Import the new modal component
 import IconButton from "@/components/IconButton.vue";
+import ApiService from '@/services/apiService.js';
+
 
 export default defineComponent({
   name: "GroupManagement",
@@ -61,10 +63,22 @@ export default defineComponent({
   },
   setup() {
     const groups = ref([
-      { name: "DCD24", members: [{ id: 1, name: "Anna Jensen" }, { id: 2, name: "Thomas Hansen" }] },
-      { name: "WUOE24", members: [{ id: 3, name: "Tobias Hammer" }, { id: 4, name: "Joanna Hoppe" }] },
-      { name: "MMD24", members: [{ id: 5, name: "Janus Tomme" }, { id: 6, name: "Martin Hansen" }] },
+      // { name: "DCD24", members: [{ id: 1, name: "Anna Jensen" }, { id: 2, name: "Thomas Hansen" }] },
+      // { name: "WUOE24", members: [{ id: 3, name: "Tobias Hammer" }, { id: 4, name: "Joanna Hoppe" }] },
+      // { name: "MMD24", members: [{ id: 5, name: "Janus Tomme" }, { id: 6, name: "Martin Hansen" }] },
     ]);
+
+    const fetchGroups = async () => {
+      try {
+        const response = await ApiService.get('/teams');
+        console.log(response);
+        groups.value = response.data; 
+
+        console.log(groups);
+      } catch (error) {
+        console.error("Error fetching groups:", error);
+      }
+    };
 
     const isEditModalVisible = ref(false);
     const isCreateUserModalVisible = ref(false);  // To control the new user modal visibility
@@ -89,6 +103,11 @@ export default defineComponent({
       }
       isEditModalVisible.value = false;
     };
+
+    // Fetch groups when the component is mounted
+    onMounted(() => {
+      fetchGroups();
+    });
 
     return {
       groups,

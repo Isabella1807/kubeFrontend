@@ -1,11 +1,11 @@
 <template>
   <div>
-      <div class="createNewProjectButtonContainer">
-        <RouterLink to="/templates/edit">
-          <IconButton icon="addIcon" large primary />
-        </RouterLink>
-        <h1 class="createProjectText">Create new template</h1>
-      </div>
+    <div class="createNewProjectButtonContainer">
+      <RouterLink to="/templates/edit">
+        <IconButton icon="addIcon" large primary />
+      </RouterLink>
+      <h1 class="createProjectText">Create new template</h1>
+    </div>
 
     <table>
       <tr>
@@ -19,9 +19,10 @@
         <th></th>
       </tr>
 
-      <tr>
-        <td class="font-bold">WordPress template</td>
-        <td>WordPress, Database</td>
+      
+      <tr v-for="(template, index) in templates" :key="index">
+        <td class="font-bold">{{ template.templateName }}</td>
+        <td>{{ template.templateText }}</td>
         <td>
           <div class="flex flex-end">
             <RouterLink to="/templates/edit" class="edit-btn">
@@ -35,47 +36,15 @@
         </td>
       </tr>
 
-      <tr>
-        <td class="font-bold">Drupal template</td>
-        <td>Drupal, Database</td>
-        <td>
-          <div class="flex flex-end">
-            <RouterLink to="/templates/edit" class="edit-btn">
-              <font-awesome-icon :icon="['far', 'pen-to-square']" />
-            </RouterLink>
-
-            <button class="delete-btn">
-              <font-awesome-icon :icon="['far', 'trash-can']" />
-            </button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="font-bold">Another template</td>
-        <td>Another, Database</td>
-        <td>
-          <div class="flex flex-end">
-            <RouterLink to="/templates/edit" class="edit-btn">
-              <font-awesome-icon :icon="['far', 'pen-to-square']" />
-            </RouterLink>
-
-            <button class="delete-btn">
-              <font-awesome-icon :icon="['far', 'trash-can']" />
-            </button>
-          </div>
-        </td>
-      </tr>
     </table>
   </div>
 </template>
 
 <style scoped lang="scss">
-
-
 .createNewProjectButtonContainer {
   display: flex;
   align-items: center;
-  margin-bottom:4rem;
+  margin-bottom: 4rem;
   .createProjectText {
     margin-left: 10px;
   }
@@ -84,8 +53,8 @@
   .createNewProjectButtonContainer {
     display: flex;
     justify-content: center;
-    position:fixed;
-    bottom:20px;
+    position: fixed;
+    bottom: 20px;
     left: 50%;
     transform: translate(-50%, 0);
     .createProjectText {
@@ -183,26 +152,56 @@ table {
   table {
     padding: 0 10px;
     tr {
-      th, td {
-          width: auto;
-          font-size: $font-size-mobile;
-        }
-      
+      th,
+      td {
+        width: auto;
+        font-size: $font-size-mobile;
+      }
     }
   }
 }
 
-
-[color-scheme='dark']{
-  .edit-btn{
-    color:$white-color;
-    svg{
-      color:$white-color;
+[color-scheme="dark"] {
+  .edit-btn {
+    color: $white-color;
+    svg {
+      color: $white-color;
     }
   }
 }
 </style>
 
-<script setup>
-  import IconButton from "@/components/IconButton.vue";
+<script>
+import ApiService from "@/services/apiService";
+import { ref, defineComponent, onMounted } from "vue";
+import IconButton from "@/components/IconButton.vue";
+
+export default defineComponent({
+  name: "Templates",
+  components: {IconButton},
+  setup() {
+    const templates = ref();
+
+    const fetchTemplates = async () => {
+      try {
+        const response = await ApiService.get("/templates");
+        templates.value = response.data;
+
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching templates:", error);
+      }
+    };
+
+    onMounted(() => {
+      fetchTemplates();
+    });
+
+    return {
+      templates,
+      IconButton
+
+    };
+  },
+});
 </script>
