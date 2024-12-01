@@ -184,8 +184,8 @@ export default defineComponent({
 
     const fetchTemplates = async () => {
       try {
-        const response = await ApiService.get("/templates");
-        templates.value = response.data;
+        const response = await ApiService.get("/templates"); // Kald apiservice, for at hente templates.
+        templates.value = response.data; // sæt vores data til templates variablen
 
         console.log(response.data);
       } catch (error) {
@@ -194,6 +194,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      // Kør funktion ved load.
       fetchTemplates();
     });
 
