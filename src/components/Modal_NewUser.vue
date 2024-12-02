@@ -18,11 +18,11 @@
             </div>
             <div class="newuser-checkbox-section">
                 <label class="newuser-checkbox-item">
-                    <input type="checkbox" v-model="isStudent" @change="resetFields"  />
+                    <input type="checkbox" v-model="isStudent" @change="resetFields" />
                     Students
                 </label>
                 <label class="newuser-checkbox-item">
-                    <input type="checkbox" v-model="isTeacher" @change="resetFields"  />
+                    <input type="checkbox" v-model="isTeacher" @change="resetFields" />
                     Teachers
                 </label>
             </div>
@@ -42,61 +42,73 @@
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            fileName: "", // navnet af csv fil som er opoladet
-            isStudent: false, // viser om students er valgt
-            isTeacher: false, // viser om teachers er valgt
-            groupName: "", // gruppe navn
-        };
-    },
-    computed: {
-        canSave() {
-            // sikker om forholden for at save knappen kan aktiveres 
-            return this.fileName && (this.isTeacher || (this.isStudent && this.groupName));
-        },
-    },
-    methods: {
-        handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file && file.type === "text/csv") {
-                this.fileName = file.name; //gemmer navnet på filen som er oploadet
-                console.log("Dummy: File uploaded", file.name); // Dummy data for nu
-            } else {
-                alert("Please upload a valid .CSV file.");
-            }
-        },
-        clearFile() {
-            // rydder den oploadet file
-            this.fileName = "";
-            console.log("Dummy: File cleared");
-        },
-        resetFields() {
-            // uncheker den valgte knap
-            if (this.isStudent) this.isTeacher = false;
-            if (this.isTeacher) {
-                this.isStudent = false;
-                this.groupName = "";
-            }
-        },
-        emitClose() {
-            // gør at modalen lukker og vender tilbage til parent / siden som modalen er på
-            this.$emit("close");
-        },
-        saveGroup() {
-            // Dummy save logic; simply log the input data
-            console.log("Dummy Save:", {
-                fileName: this.fileName,
-                isStudent: this.isStudent,
-                isTeacher: this.isTeacher,
-                groupName: this.groupName,
-            });
-            this.emitClose(); // lukker modalen efter at have gemt den 
-        },
-    },
+import { ref, computed } from 'vue';
+
+const fileName = ref(""); // navnet af csv fil som er opoladet
+const isStudent = ref(false); // viser om students er valgt
+const isTeacher = ref(false); // viser om teachers er valgt
+const groupName = ref(""); // gruppe navn
+
+const canSave = computed(() => {
+    // sikker om forholden for at save knappen kan aktiveres
+    return fileName.value && (isTeacher.value || (isStudent.value && groupName.value));
+});
+
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file && file.type === "text/csv") {
+        fileName.value = file.name; // gemmer navnet på filen som er oploadet
+        console.log("Dummy: File uploaded", file.name); // Dummy data for nu
+    } else {
+        alert("Please upload a valid .CSV file.");
+    }
+}
+
+function clearFile() {
+    // rydder den oploadet file
+    fileName.value = "";
+    console.log("Dummy: File cleared");
+}
+
+function resetFields() {
+    // uncheker den valgte knap
+    if (isStudent.value) isTeacher.value = false;
+    if (isTeacher.value) {
+        isStudent.value = false;
+        groupName.value = "";
+    }
+}
+
+function emitClose(emit) {
+    // gør at modalen lukker og vender tilbage til parent / siden som modalen er på
+    emit("close");
+}
+
+function saveGroup(emit) {
+    // Dummy save logic; simply log the input data
+    console.log("Dummy Save:", {
+        fileName: fileName.value,
+        isStudent: isStudent.value,
+        isTeacher: isTeacher.value,
+        groupName: groupName.value,
+    });
+    emitClose(emit); // lukker modalen efter at have gemt den
+}
+
+export {
+    fileName,
+    isStudent,
+    isTeacher,
+    groupName,
+    canSave,
+    handleFileUpload,
+    clearFile,
+    resetFields,
+    emitClose,
+    saveGroup,
 };
 </script>
+
 
 <style lang="scss">
 

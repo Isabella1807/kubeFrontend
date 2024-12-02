@@ -23,7 +23,6 @@
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </div>
         </label>
-        <!-- fejl besked kommer frem -->
         <p v-if="error" class="error-message">{{ error }}</p>
         <div class="buttons">
           <button type="button" @click="close" class="cancel-button">
@@ -39,52 +38,56 @@
 </template>
 
 <script>
-export default {
-  props: {
-    show: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  emits: ["close", "save"],
-  data() {
-    return {
-      projectName: "",
-      subdomainName: "",
-      selectedTemplate: "",
-      error: "",  // fejl besked
-    };
-  },
-  methods: {
-    close() {
-      this.$emit("close");
-    },
-    saveProject() {
-      // ser om alle felterne er udfyldt
-      if (!this.projectName || !this.subdomainName || !this.selectedTemplate) {
-        this.error = "Please fill out all fields before saving.";  // viser fejl besked
-        return;
-      }
+import { ref, defineProps, defineEmits } from 'vue';
 
-      // gemmer projektet med data
-      this.$emit("save", {
-        projectName: this.projectName,
-        subdomainName: this.subdomainName,
-        selectedTemplate: this.selectedTemplate,
-      });
-
-      // reset input felter
-      this.projectName = "";
-      this.subdomainName = "";
-      this.selectedTemplate = "";
-      this.error = "";
-      this.close();
-    },
+const props = defineProps({
+  show: {
+    type: Boolean,
+    required: true,
   },
+});
+
+const emit = defineEmits(['close', 'save']);
+
+const projectName = ref('');
+const subdomainName = ref('');
+const selectedTemplate = ref('');
+const error = ref('');
+
+function close() {
+  emit('close');
+}
+
+function saveProject() {
+  if (!projectName.value || !subdomainName.value || !selectedTemplate.value) {
+    error.value = 'Please fill out all fields before saving.';
+    return;
+  }
+
+  emit('save', {
+    projectName: projectName.value,
+    subdomainName: subdomainName.value,
+    selectedTemplate: selectedTemplate.value,
+  });
+
+  projectName.value = '';
+  subdomainName.value = '';
+  selectedTemplate.value = '';
+  error.value = '';
+  close();
+}
+
+export {
+  props,
+  emit,
+  projectName,
+  subdomainName,
+  selectedTemplate,
+  error,
+  close,
+  saveProject,
 };
 </script>
-
-
   
 <style lang="scss">
   
