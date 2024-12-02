@@ -37,9 +37,10 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, defineProps, defineEmits } from 'vue';
 
+// Define props
 const props = defineProps({
   show: {
     type: Boolean,
@@ -47,13 +48,16 @@ const props = defineProps({
   },
 });
 
+// Define emits
 const emit = defineEmits(['close', 'save']);
 
+// Reactive state
 const projectName = ref('');
 const subdomainName = ref('');
 const selectedTemplate = ref('');
 const error = ref('');
 
+// Methods
 function close() {
   emit('close');
 }
@@ -64,29 +68,27 @@ function saveProject() {
     return;
   }
 
-  emit('save', {
+  // Create the new project object with additional details
+  const newProject = {
     projectName: projectName.value,
     subdomainName: subdomainName.value,
     selectedTemplate: selectedTemplate.value,
-  });
+    groupName: "NEW GROUP", // You might want to add a way to input this
+    status: true, // Default to true, or add a status input
+    id: 0, // You'll need to handle ID generation appropriately
+    owner: "Current User", // Replace with actual user
+    mail: "user@example.com", // Replace with actual user email
+  };
 
+  emit('save', newProject);
+
+  // Reset form
   projectName.value = '';
   subdomainName.value = '';
   selectedTemplate.value = '';
   error.value = '';
   close();
 }
-
-export {
-  props,
-  emit,
-  projectName,
-  subdomainName,
-  selectedTemplate,
-  error,
-  close,
-  saveProject,
-};
 </script>
   
 <style lang="scss">
