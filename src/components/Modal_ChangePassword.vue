@@ -31,8 +31,12 @@
   </template>
   
   <script>
+  //CHATGPT PROMPT
+  //Convert this to composition api. It should start with "<script setup>" and use ref around reactive variables and so on
+
   export default {
     props: {
+      //single prop called show
       show: {
         type: Boolean,
         required: true,
@@ -41,6 +45,7 @@
     emits: ["close", "change"],
     data() {
       return {
+        //reactive variables, ref
         oldPassword: "",
         newPassword: "",
         repeatPassword: "",
@@ -48,6 +53,8 @@
       };
     },
     methods: {
+
+      //2 functions
       close() {
         this.$emit("close");
       },
