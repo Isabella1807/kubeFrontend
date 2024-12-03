@@ -1,40 +1,39 @@
 <template>
-    <div class="login-container">
-      <!-- Logo and Login Form -->
-      <div class="form-container">
-        <img src="@/img/logo.png" alt="KubeLab Logo" class="logo" />
-        <form>
-          <!-- Email Input -->
-          <input type="email" placeholder="Email" class="input-field" />
-  
-          <!-- Password Input -->
-          <input type="password" placeholder="Password" class="input-field" />
-  
-          <!-- Remember Me and Forgot Password -->
-          <div class="bottom-links">
-            <!-- Remember Me Checkbox -->
-            <div class="remember-me">
-              <input type="checkbox" id="remember-me" />
-              <label for="remember-me" class="remember-me-label">Remember me</label>
-            </div>
-            <!-- Forgot Password Link -->
-            <router-link to="/forgot-password" class="forgot-password">Forgot password</router-link>
+  <div class="login-container">
+    <!-- Logo and Login Form -->
+    <div class="form-container">
+      <img src="@/img/logo.png" alt="KubeLab Logo" class="logo" />
+      <form>
+        <!-- Email Input -->
+        <input type="email" placeholder="Email" class="input-field" v-model="email" />
+        <!-- Password Input -->
+        <input type="password" placeholder="Password" class="input-field" v-model="password" />
+        <!-- Remember Me and Forgot Password -->
+        <div class="bottom-links">
+          <!-- Remember Me Checkbox -->
+          <div class="remember-me">
+            <input type="checkbox" id="remember-me" v-model="rememberMe" />
+            <label for="remember-me" class="remember-me-label">Remember me</label>
           </div>
-  
-            <!-- Login Button -->
+          <!-- Forgot Password Link -->
+          <router-link to="/forgot-password" class="forgot-password">Forgot password</router-link>
+        </div>
+        <!-- Login Button -->
         <router-link to="/projects">
           <button type="button" class="login-button">Login</button>
         </router-link>
-        </form>
-      </div>
+      </form>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "Login",
-  };
-  </script>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+const email = ref('');
+const password = ref('');
+const rememberMe = ref(false);
+</script>
   
   <style lang="scss">
   /* Center the container */

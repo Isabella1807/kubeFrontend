@@ -1,100 +1,119 @@
 <template>
-    <div class="newuser-modal">
-        <div class="newuser-modal-content">
-            <button class="newuser-close-btn" @click="emitClose">✖</button>
-            <h1>New User</h1>
-            <div class="newuser-upload-section">
-                <div class="newuser-upload-button">
-                    <label class="newuser-upload-label">
-                        <i class="fa solid fa-cloud-arrow-up"></i>
-                        <span class="newuser-upload-text">
-                            {{ fileName || "Upload .CSV file" }}
-                        </span>
-                        <input type="file" accept=".csv" @change="handleFileUpload" hidden />
-                    </label>
-                    <!-- viser kun slet knappen, hvis der er fil oploadet -->
-                    <button v-if="fileName" class="newuser-delete-btn" @click="clearFile" title="Delete File">✖</button>
-                </div>
-            </div>
-            <div class="newuser-checkbox-section">
-                <label class="newuser-checkbox-item">
-                    <input type="checkbox" v-model="isStudent" @change="resetFields"  />
-                    Students
-                </label>
-                <label class="newuser-checkbox-item">
-                    <input type="checkbox" v-model="isTeacher" @change="resetFields"  />
-                    Teachers
-                </label>
-            </div>
-            <div v-if="isStudent" class="newuser-group-input-section">
-                <input type="text" v-model="groupName" placeholder="Group name" class="newuser-group-input" />
-            </div>
-            <div class="newuser-button-section">
-                <button class="newuser-cancel-btn" @click="emitClose">
-                    <i class="fa-solid fa-times"></i> Cancel
-                </button>
-                <button class="newuser-save-btn" :disabled="!canSave" @click="saveGroup">
-                    <i class="fa-solid fa-floppy-disk"></i> Save Group
-                </button>
-            </div>
-        </div>
-    </div>
+  <div class="newuser-modal">
+      <div class="newuser-modal-content">
+          <button class="newuser-close-btn" @click="handleClose">✖</button>
+          <h1>New User</h1>
+          <div class="newuser-upload-section">
+              <div class="newuser-upload-button">
+                  <label class="newuser-upload-label">
+                      <i class="fa solid fa-cloud-arrow-up"></i>
+                      <span class="newuser-upload-text">
+                          {{ fileName || "Upload .CSV file" }}
+                      </span>
+                      <input type="file" accept=".csv" @change="handleFileUpload" hidden />
+                  </label>
+                  <button v-if="fileName" class="newuser-delete-btn" @click="clearFile">✖</button>
+              </div>
+              <div v-if="error" class="error-message">{{ error }}</div>
+          </div>
+          
+          <div class="newuser-checkbox-section">
+              <label class="newuser-checkbox-item">
+                  <input type="checkbox" v-model="isStudent" @change="resetFields" />
+                  Students
+              </label>
+              <label class="newuser-checkbox-item">
+                  <input type="checkbox" v-model="isTeacher" @change="resetFields" />
+                  Teachers
+              </label>
+          </div>        
+          <div v-if="isStudent" class="newuser-group-input-section">
+              <input type="text" v-model="groupName" placeholder="Group name" class="newuser-group-input"/>
+          </div>
+          <div class="newuser-button-section">
+              <button class="newuser-cancel-btn" @click="handleClose">
+                  <i class="fa-solid fa-times"></i> Cancel
+              </button>
+              <button class="newuser-save-btn" :disabled="!canSave || isLoading"  @click="uploadUsers">
+                  <i class="fa-solid fa-spinner fa-spin" v-if="isLoading"></i>
+                  <i class="fa-solid fa-floppy-disk" v-else></i>
+                  Save Group
+              </button>
+          </div>
+      </div>
+  </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            fileName: "", // navnet af csv fil som er opoladet
-            isStudent: false, // viser om students er valgt
-            isTeacher: false, // viser om teachers er valgt
-            groupName: "", // gruppe navn
-        };
-    },
-    computed: {
-        canSave() {
-            // sikker om forholden for at save knappen kan aktiveres 
-            return this.fileName && (this.isTeacher || (this.isStudent && this.groupName));
-        },
-    },
-    methods: {
-        handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file && file.type === "text/csv") {
-                this.fileName = file.name; //gemmer navnet på filen som er oploadet
-                console.log("Dummy: File uploaded", file.name); // Dummy data for nu
-            } else {
-                alert("Please upload a valid .CSV file.");
-            }
-        },
-        clearFile() {
-            // rydder den oploadet file
-            this.fileName = "";
-            console.log("Dummy: File cleared");
-        },
-        resetFields() {
-            // uncheker den valgte knap
-            if (this.isStudent) this.isTeacher = false;
-            if (this.isTeacher) {
-                this.isStudent = false;
-                this.groupName = "";
-            }
-        },
-        emitClose() {
-            // gør at modalen lukker og vender tilbage til parent / siden som modalen er på
-            this.$emit("close");
-        },
-        saveGroup() {
-            // Dummy save logic; simply log the input data
-            console.log("Dummy Save:", {
-                fileName: this.fileName,
-                isStudent: this.isStudent,
-                isTeacher: this.isTeacher,
-                groupName: this.groupName,
-            });
-            this.emitClose(); // lukker modalen efter at have gemt den 
-        },
-    },
+<script setup>
+
+import { ref, computed } from 'vue';
+import axios from 'axios';
+
+// close the modal efter a file has been uploaded with a success
+const emit = defineEmits(['close', 'upload-success']);
+
+//variables 
+const fileName = ref('');
+const isStudent = ref(false);
+const isTeacher = ref(false);
+const groupName = ref('');
+const isLoading = ref(false);
+const error = ref('');
+const fileToUpload = ref(null);
+
+//if a file is uploaded the save button can be clicked on
+const canSave = computed(() => 
+  fileName.value && 
+  fileToUpload.value && 
+  (isTeacher.value || (isStudent.value && groupName.value))
+);
+
+// this handles the file upload event, name the file and save the file
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  if (file?.type === "text/csv") {
+      fileName.value = file.name;
+      fileToUpload.value = file;
+      error.value = '';
+  }
+};
+
+// does that you can remove the uploaded file 
+const clearFile = () => {
+  fileName.value = '';
+  fileToUpload.value = null;
+  error.value = '';
+};
+// reset if you have chosen teacher or students 
+const resetFields = () => {
+  if (isStudent.value) isTeacher.value = false;
+  if (isTeacher.value) {
+      isStudent.value = false;
+      groupName.value = '';
+  }
+};
+
+//close the modal
+const handleClose = () => emit('close');
+//uploads the users to server
+const uploadUsers = async () => {
+  if (!fileToUpload.value || (isStudent.value && !groupName.value)) return;
+  
+  isLoading.value = true;
+  
+  //formdata is javascript object that makes is possible to upload and send files
+  try {
+      const formData = new FormData();
+      formData.append('file', fileToUpload.value);
+      // uploader the file to backend server API endpoint
+      await axios.post('http://localhost:3000/users/upload', formData);
+      emit('upload-success');
+      handleClose();
+  } catch (err) {
+      error.value = 'Upload failed';
+  } finally {
+      isLoading.value = false;
+  }
 };
 </script>
 
