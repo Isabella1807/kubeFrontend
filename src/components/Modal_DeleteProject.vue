@@ -20,13 +20,13 @@
   </template>
   
   <script setup>
-  const emit = defineEmits(['close']); //lukker så det går til parent 
+  const emit = defineEmits(['close']); // close the modal and return to the parent view
   
   const deleteProject = () => {
-    // det der gør, som man kan slette projektet - kan være api her? 
+    // deleting the project 
     console.log("Project deleted");
   
-    // lukker modalen 
+    // closing the modal
     emit('close');
   };
   </script>
