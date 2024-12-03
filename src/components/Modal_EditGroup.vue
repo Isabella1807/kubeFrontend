@@ -1,7 +1,7 @@
 <template>
-  <div class="edit-modal-overlay" v-if="showModal">
+  <div v-if="modelValue" class="edit-modal-overlay">
     <div class="edit-modal-content">
-      <button class="edit-close-button" @click="closeModal">
+      <button class="edit-close-button" @click="handleClose">
         <i class="fas fa-times"></i>
       </button>
       <h1 class="edit-title">Edit {{ groupName }}</h1>
@@ -31,10 +31,10 @@
       </div>
 
       <div class="edit-footer">
-        <button class="edit-cancel-button" @click="closeModal">
+        <button class="edit-cancel-button" @click="handleClose">
           <i class="fas fa-times"></i> Cancel
         </button>
-        <button class="edit-save-button" @click="saveChanges">
+        <button class="edit-save-button" @click="handleSave">
           <i class="fas fa-save"></i> Save changes
         </button>
       </div>
@@ -46,12 +46,21 @@
 import { ref, computed } from 'vue';
 
 const props = defineProps({
-  showModal: Boolean,
-  groupName: String,
-  initialMembers: Array,
+  modelValue: {
+    type: Boolean,
+    default: false
+  },
+  groupName: {
+    type: String,
+    default: ''
+  },
+  initialMembers: {
+    type: Array,
+    default: () => []
+  }
 });
 
-const emit = defineEmits(['save', 'close']);
+const emit = defineEmits(['update:modelValue', 'save', 'close']);
 
 const members = ref([...props.initialMembers]);
 const selectedMembers = ref([]);
@@ -62,27 +71,27 @@ const toggleAll = () => {
     ? members.value.map((member) => member.id)
     : [];
 };
-// removes selected members from the array and then clear the array
+
 const deleteSelectedMembers = () => {
   members.value = members.value.filter((member) => !selectedMembers.value.includes(member.id));
   selectedMembers.value = [];
   selectAll.value = false;
 };
 
-const saveChanges = () => {
-  emit('save', members.value);
-  closeModal();
-};
-
-const closeModal = () => {
+const handleClose = () => {
+  emit('update:modelValue', false);
   emit('close');
 };
-// make so you can add a member to the group
-const addMember = () => {
+
+const handleSave = () => {
+  emit('save', members.value);
+  handleClose();
 };
 
-// this shows if all members has been selected --> it checks if the "allselected" array has the same length as "members"
-//if that is true, it means all users have been selected
+const addMember = () => {
+  // Implement add member logic
+};
+
 const isAllSelected = computed(() => selectedMembers.value.length === members.value.length);
 </script>
 

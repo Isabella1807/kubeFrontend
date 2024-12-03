@@ -1,11 +1,16 @@
 <template>
   <div>
-    
     <div class="createNewProjectButtonContainer">
       <IconButton icon="addIcon" large primary @click="openCreateUserModal"/>
       <h1 class="createProjectText" @click="openCreateUserModal">Create new user</h1>
     </div>
     <NewUserModal v-if="isCreateUserModalVisible" @close="closeCreateUserModal" />
+    <Modal_EditGroup 
+      v-model="isEditModalVisible"
+      :groupName="currentTeam?.teamName"
+      @close="closeEditModal" 
+      @save="saveTeamChanges"
+    />
     <table>
       <tr>
         <th><input class="checkbox-btn" type="checkbox" /></th>
@@ -23,7 +28,7 @@
         <td class="font-bold">{{ group.teamName }}</td>
         <td>
           <div class="flex flex-end">
-            <button class="edit-btn">
+            <button class="edit-btn" @click="EditGroup(group)">
               <font-awesome-icon :icon="['far', 'pen-to-square']" />
             </button>
             <button class="delete-btn">
@@ -41,30 +46,43 @@ import { ref, onMounted } from 'vue';
 import NewUserModal from "@/components/Modal_NewUser.vue";
 import IconButton from "@/components/IconButton.vue";
 import axios from 'axios';
+import Modal_EditGroup from '@/components/Modal_EditGroup.vue';
 
-// Variables to edit modal and create user model
 const groups = ref([]);
 const isCreateUserModalVisible = ref(false);
+const isEditModalVisible = ref(false);
+const currentTeam = ref(null);
 
-// Get the data from group from api and update variables 
 const fetchGroups = async () => {
   try {
     const response = await axios.get('/teams');
     groups.value = response.data.reverse();
-    console.log('Fetched groups:', groups.value);
   } catch (error) {
     console.error("Error fetching groups:", error);
   }
 };
 
-// Open create user modal --> true means you can see it 
 const openCreateUserModal = () => {
   isCreateUserModalVisible.value = true;
 };
 
-// Close create modal --> false means you can't see it 
 const closeCreateUserModal = () => {
   isCreateUserModalVisible.value = false;
+};
+
+const EditGroup = (group) => {
+  currentTeam.value = group;
+  isEditModalVisible.value = true;
+};
+
+const closeEditModal = () => {
+  isEditModalVisible.value = false;
+  currentTeam.value = null;
+};
+
+const saveTeamChanges = (updatedMembers) => {
+  console.log('Members updated:', updatedMembers);
+  closeEditModal();
 };
 
 onMounted(() => {
@@ -154,6 +172,7 @@ tr {
 border: none;
 font-size: $iconsSize;
 background: none;
+cursor: pointer;
 }
 
 .delete-btn {
