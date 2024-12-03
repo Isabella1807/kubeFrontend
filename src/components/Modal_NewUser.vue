@@ -92,6 +92,7 @@ const resetFields = () => {
       groupName.value = '';
   }
 };
+
 //close the modal
 const handleClose = () => emit('close');
 //uploads the users to server
@@ -100,6 +101,7 @@ const uploadUsers = async () => {
   
   isLoading.value = true;
   
+  //formdata is javascript object that makes is possible to upload and send files
   try {
       const formData = new FormData();
       formData.append('file', fileToUpload.value);
