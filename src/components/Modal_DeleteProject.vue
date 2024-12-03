@@ -2,13 +2,13 @@
     <div class="deletemodal-overlay">
       <div class="deletemodal">
 
-        <button @click="$emit('close')" class="deleteclose-button">
+        <button @click="emit('close')" class="deleteclose-button">
           <i class="fas fa-times modal-icon"></i> 
         </button>
         <h1 class="modal-title">Are you sure you want to delete this project?</h1>
         
         <div class="deletemodal-action">
-          <button @click="$emit('close')" class="deletecancel-button">
+          <button @click="emit('close')" class="deletecancel-button">
             <i class="fas fa-times modal-icon"></i> No, cancel
           </button>
           <button @click="deleteProject" class="deleteconfirm-button">
