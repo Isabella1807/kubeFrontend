@@ -7,6 +7,7 @@
     </div>
     <NewUserModal v-if="isCreateUserModalVisible" @close="closeCreateUserModal" />
     <Modal_EditGroup v-model="isEditModalVisible" :groupName="currentTeam?.teamName" @close="closeEditModal" @save="saveTeamChanges"/>
+    <DeleteModal v-if="isDeleteModalVisible" @close="closeDeleteModal" />
     <table>
       <tr>
         <th><input class="checkbox-btn" type="checkbox" /></th>
@@ -27,7 +28,7 @@
             <button class="edit-btn" @click="EditGroup(group)">
               <font-awesome-icon :icon="['far', 'pen-to-square']" />
             </button>
-            <button class="delete-btn">
+            <button class="delete-btn" @click="openDeleteModal">
               <font-awesome-icon :icon="['far', 'trash-can']" />
             </button>
           </div>
@@ -43,12 +44,14 @@ import NewUserModal from "@/components/Modal_NewUser.vue";
 import IconButton from "@/components/IconButton.vue";
 import axios from 'axios';
 import Modal_EditGroup from '@/components/Modal_EditGroup.vue';
+import DeleteModal from '@/components/Modal_DeleteProject.vue'
 
 // Variables to edit modal and create user model
 const groups = ref([]);
 const isCreateUserModalVisible = ref(false);
 const isEditModalVisible = ref(false);
 const currentTeam = ref(null);
+const isDeleteModalVisible = ref(false);
 
 // Get the data from group from api and update variables 
 const fetchGroups = async () => {
@@ -87,6 +90,14 @@ const saveTeamChanges = (updatedMembers) => {
   console.log('Members updated:', updatedMembers);
   closeEditModal();
 };
+
+const openDeleteModal = () => {
+  isDeleteModalVisible.value = true;
+};
+
+const closeDeleteModal = () => {
+  isDeleteModalVisible.value = false;
+}
 
 onMounted(() => {
   fetchGroups();
