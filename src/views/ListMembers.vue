@@ -195,6 +195,7 @@ color: $dangerRed;
 font-size: $iconsSize;
 background: none;
 margin-right: 10px;
+cursor: pointer;
 }
 
 .font-bold {
