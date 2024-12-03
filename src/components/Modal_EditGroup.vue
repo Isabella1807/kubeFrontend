@@ -1,97 +1,89 @@
 <template>
-    <div class="edit-modal-overlay" v-if="showModal">
-      <div class="edit-modal-content">
-        <button class="edit-close-button" @click="closeModal">
-          <i class="fas fa-times"></i>
-        </button>
-        <h1 class="edit-title">Edit {{ groupName }}</h1>
-        
-        <div class="edit-member-list-header">
-          <div class="edit-select-all">
-            <input type="checkbox" v-model="selectAll" @change="toggleAll" /> All
-          </div>
-          <div class="edit-icons">
-            <button @click="addMember" class="edit-icon-button-add">
-              <i class="fas fa-plus"></i>
-            </button>
-            <button @click="deleteSelectedMembers" class="edit-icon-button-delete">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </div>
+  <div class="edit-modal-overlay" v-if="showModal">
+    <div class="edit-modal-content">
+      <button class="edit-close-button" @click="closeModal">
+        <i class="fas fa-times"></i>
+      </button>
+      <h1 class="edit-title">Edit {{ groupName }}</h1>
+
+      <div class="edit-member-list-header">
+        <div class="edit-select-all">
+          <input type="checkbox" v-model="selectAll" @change="toggleAll" /> All
         </div>
-        <hr class="edit-divider" />
-        
-        <div class="edit-member-list">
-          <ul>
-            <li v-for="(member, index) in members" :key="member.id" class="edit-member-item">
-              <input
-                type="checkbox"
-                :value="member.id"
-                v-model="selectedMembers"
-              />
-              {{ member.name }}
-            </li>
-          </ul>
-        </div>
-  
-        <div class="edit-footer">
-          <button class="edit-cancel-button" @click="closeModal">
-            <i class="fas fa-times"></i> Cancel
+        <div class="edit-icons">
+          <button @click="addMember" class="edit-icon-button-add">
+            <i class="fas fa-plus"></i>
           </button>
-          <button class="edit-save-button" @click="saveChanges">
-            <i class="fas fa-save"></i> Save changes
+          <button @click="deleteSelectedMembers" class="edit-icon-button-delete">
+            <i class="fas fa-trash-alt"></i>
           </button>
         </div>
       </div>
+      <hr class="edit-divider" />
+
+      <div class="edit-member-list">
+        <ul>
+          <li v-for="member in members" :key="member.id" class="edit-member-item">
+            <input type="checkbox" :value="member.id" v-model="selectedMembers" />
+            {{ member.name }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="edit-footer">
+        <button class="edit-cancel-button" @click="closeModal">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+        <button class="edit-save-button" @click="saveChanges">
+          <i class="fas fa-save"></i> Save changes
+        </button>
+      </div>
     </div>
-  </template>
+  </div>
+</template>
 
-<script>
-export default {
-    name: "EditGroupModal",
-    props: {
-        showModal: Boolean,
-        groupName: String,
-        initialMembers: Array,
-    },
-    data() {
-        return {
-            members: [...this.initialMembers],
-            selectedMembers: [],
-            selectAll: false,
-        };
-    },
-    methods: {
-        closeModal() {
-            this.$emit("close");
-        },
-        toggleAll() {
-            this.selectedMembers = this.selectAll
-                ? this.members.map(member => member.id)
-                : [];
-        },
-        deleteSelectedMembers() {
-            this.members = this.members.filter(
-                member => !this.selectedMembers.includes(member.id)
-            );
-            this.selectedMembers = [];
-            this.selectAll = false;
-        },
-        saveChanges() {
-            this.$emit("save", this.members);
-            this.closeModal();
-        },
-        addMember() {
+<script setup>
+import { ref, computed } from 'vue';
 
-        }
-    },
-    watch: {
-        selectedMembers() {
-            this.selectAll = this.selectedMembers.length === this.members.length;
-        }
-    }
+const props = defineProps({
+  showModal: Boolean,
+  groupName: String,
+  initialMembers: Array,
+});
+
+const emit = defineEmits(['save', 'close']);
+
+const members = ref([...props.initialMembers]);
+const selectedMembers = ref([]);
+const selectAll = ref(false);
+
+const toggleAll = () => {
+  selectedMembers.value = selectAll.value
+    ? members.value.map((member) => member.id)
+    : [];
+};
+// removes selected members from the array and then clear the array
+const deleteSelectedMembers = () => {
+  members.value = members.value.filter((member) => !selectedMembers.value.includes(member.id));
+  selectedMembers.value = [];
+  selectAll.value = false;
 };
 
+const saveChanges = () => {
+  emit('save', members.value);
+  closeModal();
+};
+
+const closeModal = () => {
+  emit('close');
+};
+// make so you can add a member to the group
+const addMember = () => {
+};
+
+// this shows if all members has been selected --> it checks if the "allselected" array has the same length as "members"
+//if that is true, it means all users have been selected
+const isAllSelected = computed(() => selectedMembers.value.length === members.value.length);
 </script>
 
 <style lang="scss">

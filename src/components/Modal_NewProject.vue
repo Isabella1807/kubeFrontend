@@ -6,19 +6,20 @@
       <form @submit.prevent="saveProject">
         <label class="darkMode">
           Project name
-          <input type="text" v-model="projectName" placeholder="Write name..." />
+          <input v-model="projectName" placeholder="Write name..." />
         </label>
         <label class="darkMode">
           Subdomain name
-          <input type="text" v-model="subdomainName" placeholder="Write subdomain name..." />
+          <input v-model="subdomainName" placeholder="Write subdomain name..." />
         </label>
         <label class="darkMode">
           Pick template
           <div class="select-container">
             <select v-model="selectedTemplate" class="custom-select">
               <option value="" disabled>Pick template...</option>
-              <option value="Template 1">Template 1</option>
-              <option value="Template 2">Template 2</option>
+              <option v-for="template in templateOptions" :key="template" :value="template">
+                {{ template }}
+              </option>
             </select>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </div>
@@ -40,7 +41,6 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
 
-// Define props
 const props = defineProps({
   show: {
     type: Boolean,
@@ -48,47 +48,35 @@ const props = defineProps({
   },
 });
 
-// Define emits
 const emit = defineEmits(['close', 'save']);
 
-// Reactive state
+const templateOptions = ['Template 1', 'Template 2'];
 const projectName = ref('');
 const subdomainName = ref('');
 const selectedTemplate = ref('');
 const error = ref('');
 
-// Methods
-function close() {
+const close = () => {
   emit('close');
-}
+};
 
-function saveProject() {
+const saveProject = () => {
   if (!projectName.value || !subdomainName.value || !selectedTemplate.value) {
     error.value = 'Please fill out all fields before saving.';
     return;
   }
 
-  // Create the new project object with additional details
-  const newProject = {
-    projectName: projectName.value,
-    subdomainName: subdomainName.value,
-    selectedTemplate: selectedTemplate.value,
-    groupName: "NEW GROUP", // You might want to add a way to input this
-    status: true, // Default to true, or add a status input
-    id: 0, // You'll need to handle ID generation appropriately
-    owner: "Current User", // Replace with actual user
-    mail: "user@example.com", // Replace with actual user email
-  };
+  emit('save', { projectName: projectName.value, subdomainName: subdomainName.value, selectedTemplate: selectedTemplate.value });
+  resetForm();
+};
 
-  emit('save', newProject);
-
-  // Reset form
+const resetForm = () => {
   projectName.value = '';
   subdomainName.value = '';
   selectedTemplate.value = '';
   error.value = '';
   close();
-}
+};
 </script>
   
 <style lang="scss">
