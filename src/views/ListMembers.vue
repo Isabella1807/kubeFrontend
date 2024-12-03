@@ -175,6 +175,7 @@ tr {
 border: none;
 font-size: $iconsSize;
 background: none;
+cursor: pointer;
 }
 
 .delete-btn {
