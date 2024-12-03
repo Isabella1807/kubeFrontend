@@ -77,6 +77,8 @@ const resetForm = () => {
   error.value = '';
   close();
 };
+
+
 </script>
   
 <style lang="scss">

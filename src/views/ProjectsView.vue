@@ -62,6 +62,8 @@ import {ref, onMounted} from 'vue';
 import ApiService from '../services/apiServer.js';
 
 const projectRows = ref([]);
+const templateOptions = ref([]); 
+const selectedTemplate = ref(null);
 
 onMounted(async () => {
   try {
@@ -73,14 +75,46 @@ onMounted(async () => {
   }
 });
 
+onMounted(async () => {
+  try {
+    // Hent templates fra backend
+    const response = await ApiService.get('/api/templates'); // Backend skal returnere [{ id, name }]
+    templateOptions.value = response.data; // Antager at backend returnerer [{ id, name }]
+  } catch (err) {
+    console.error('Fejl ved hentning af templates:', err);
+  }
+});
+
 
 const showModal = ref(false);  // gør at modal er der
 
 // funktionen til at gemme et nyt projekt
-const saveNewProject = (newProject) => {
-  projectRows.value.unshift(newProject);  // gør at det nye projekt kommer op i toppen
-  showModal.value = false;  // lukker modal
+// const saveNewProject = (newProject) => {
+//   projectRows.value.unshift(newProject);  // gør at det nye projekt kommer op i toppen
+//   showModal.value = false;  // lukker modal
+// };
+
+const saveNewProject = async (newProject) => {
+  
+    try {
+        // Send dataene til backend
+        const response = await ApiService.post('/api/projects', {
+            projectName: newProject.projectName,
+            subdomainName: newProject.subdomainName,
+            selectedTemplate: newProject.selectedTemplate,
+            stackId: 1,  // Eksempel på stackId, du kan tilpasse dette
+            userId: 1     // Eksempel på userId, du kan tilpasse dette
+        });
+
+        // Hvis projektet blev oprettet, tilføj det til listen i frontend
+        projectRows.value.unshift(response.data);  // Tilføj det nye projekt i toppen
+        showModal.value = false;  // Luk modal
+    } catch (error) {
+        console.error("Fejl ved oprettelse af projekt:", error.response?.data || error.message);
+    }
 };
+
+
 </script>
 
 <template>
