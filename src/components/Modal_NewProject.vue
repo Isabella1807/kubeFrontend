@@ -6,24 +6,24 @@
       <form @submit.prevent="saveProject">
         <label class="darkMode">
           Project name
-          <input type="text" v-model="projectName" placeholder="Write name..." />
+          <input v-model="projectName" placeholder="Write name..." />
         </label>
         <label class="darkMode">
           Subdomain name
-          <input type="text" v-model="subdomainName" placeholder="Write subdomain name..." />
+          <input v-model="subdomainName" placeholder="Write subdomain name..." />
         </label>
         <label class="darkMode">
           Pick template
           <div class="select-container">
             <select v-model="selectedTemplate" class="custom-select">
               <option value="" disabled>Pick template...</option>
-              <option value="Template 1">Template 1</option>
-              <option value="Template 2">Template 2</option>
+              <option v-for="template in templateOptions" :key="template" :value="template">
+                {{ template }}
+              </option>
             </select>
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </div>
         </label>
-        <!-- fejl besked kommer frem -->
         <p v-if="error" class="error-message">{{ error }}</p>
         <div class="buttons">
           <button type="button" @click="close" class="cancel-button">
@@ -38,53 +38,46 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    show: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  emits: ["close", "save"],
-  data() {
-    return {
-      projectName: "",
-      subdomainName: "",
-      selectedTemplate: "",
-      error: "",  // fejl besked
-    };
-  },
-  methods: {
-    close() {
-      this.$emit("close");
-    },
-    saveProject() {
-      // ser om alle felterne er udfyldt
-      if (!this.projectName || !this.subdomainName || !this.selectedTemplate) {
-        this.error = "Please fill out all fields before saving.";  // viser fejl besked
-        return;
-      }
+<script setup>
+import { ref, defineProps, defineEmits } from 'vue';
 
-      // gemmer projektet med data
-      this.$emit("save", {
-        projectName: this.projectName,
-        subdomainName: this.subdomainName,
-        selectedTemplate: this.selectedTemplate,
-      });
-
-      // reset input felter
-      this.projectName = "";
-      this.subdomainName = "";
-      this.selectedTemplate = "";
-      this.error = "";
-      this.close();
-    },
+const props = defineProps({
+  show: {
+    type: Boolean,
+    required: true,
   },
+});
+
+const emit = defineEmits(['close', 'save']);
+
+const templateOptions = ['Template 1', 'Template 2'];
+const projectName = ref('');
+const subdomainName = ref('');
+const selectedTemplate = ref('');
+const error = ref('');
+
+const close = () => {
+  emit('close');
+};
+
+const saveProject = () => {
+  if (!projectName.value || !subdomainName.value || !selectedTemplate.value) {
+    error.value = 'Please fill out all fields before saving.';
+    return;
+  }
+
+  emit('save', { projectName: projectName.value, subdomainName: subdomainName.value, selectedTemplate: selectedTemplate.value });
+  resetForm();
+};
+
+const resetForm = () => {
+  projectName.value = '';
+  subdomainName.value = '';
+  selectedTemplate.value = '';
+  error.value = '';
+  close();
 };
 </script>
-
-
   
 <style lang="scss">
   
