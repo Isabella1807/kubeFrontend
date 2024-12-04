@@ -42,9 +42,9 @@
 import { ref, onMounted } from 'vue';
 import NewUserModal from "@/components/Modal_NewUser.vue";
 import IconButton from "@/components/IconButton.vue";
-import axios from 'axios';
 import Modal_EditGroup from '@/components/Modal_EditGroup.vue';
 import DeleteModal from '@/components/Modal_DeleteProject.vue'
+import ApiService from '@/services/apiService';
 
 // Variables to edit modal and create user model
 const groups = ref([]);
@@ -56,7 +56,7 @@ const isDeleteModalVisible = ref(false);
 // Get the data from group from api and update variables 
 const fetchGroups = async () => {
   try {
-    const response = await axios.get('/teams');
+    const response = await ApiService.get('/teams');
     groups.value = response.data.reverse();
     console.log('Fetched groups:', groups.value);
   } catch (error) {

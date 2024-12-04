@@ -47,7 +47,7 @@
 <script setup>
 
 import { ref, computed } from 'vue';
-import axios from 'axios';
+import ApiService from '@/services/apiService';
 
 // close the modal efter a file has been uploaded with a success
 const emit = defineEmits(['close', 'upload-success']);
@@ -106,7 +106,7 @@ const uploadUsers = async () => {
       const formData = new FormData();
       formData.append('file', fileToUpload.value);
       // uploader the file to backend server API endpoint
-      await axios.post('http://localhost:3000/users/upload', formData);
+      await ApiService.post('http://localhost:3000/users/upload', formData);
       emit('upload-success');
       handleClose();
   } catch (err) {
