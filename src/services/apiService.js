@@ -2,17 +2,17 @@ import axios from "axios";
 
 const ApiService = {
   init(baseURL) {
-    axios.defaults.baseURL = baseURL;
+    axios.defaults.baseURL = baseURL; //baseURl - se evt. main.js 
   },
 
   // Add a method to set JWT token
   setToken(token) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`; // For at tilføje JWT token (validerering af login)
   },
 
   // Clear the token
   clearToken() {
-    delete axios.defaults.headers.common["Authorization"];
+    delete axios.defaults.headers.common["Authorization"]; // fjerner token
   },
   // GET request
   get(resource) {
