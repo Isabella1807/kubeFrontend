@@ -67,7 +67,7 @@ const selectedTemplate = ref(null);
 
 onMounted(async () => {
   try {
-    const response = await ApiService.get("/api/projects");
+    const response = await ApiService.get("/projects");
     console.log("API-respons:", response.data); // Tjek hvad der kommer fra API'et
     projectRows.value = response.data;
   } catch (error) {
@@ -78,7 +78,7 @@ onMounted(async () => {
 onMounted(async () => {
   try {
     // Hent templates fra backend
-    const response = await ApiService.get('/api/templates'); // Backend skal returnere [{ id, name }]
+    const response = await ApiService.get('/templates'); // Backend skal returnere [{ id, name }]
     templateOptions.value = response.data; // Antager at backend returnerer [{ id, name }]
   } catch (err) {
     console.error('Fejl ved hentning af templates:', err);
@@ -98,13 +98,13 @@ const saveNewProject = async (newProject) => {
   
     try {
         // Send dataene til backend
-        const response = await ApiService.post('/api/projects', {
-            projectName: newProject.projectName,
-            subdomainName: newProject.subdomainName,
-            selectedTemplate: newProject.selectedTemplate,
-            stackId: 1,  // Eksempel på stackId, du kan tilpasse dette
-            userId: 1     // Eksempel på userId, du kan tilpasse dette
-        });
+        const response = await ApiService.post('/projects', {
+        projectName: newProject.projectName,
+        subdomainName: newProject.subdomainName,
+        selectedTemplate: newProject.selectedTemplate,
+        stackId: 1,  // Eksempel på stackId
+        userId: 1    // Eksempel på userId
+    });
 
         // Hvis projektet blev oprettet, tilføj det til listen i frontend
         projectRows.value.unshift(response.data);  // Tilføj det nye projekt i toppen

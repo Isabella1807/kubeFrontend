@@ -16,7 +16,7 @@
           Pick template
           <div class="select-container">
             <select v-model="selectedTemplate" class="custom-select">
-              <option value="" disabled>Pick template...</option>
+              <option value="null" disabled>Pick template...</option>
               <option v-for="template in templateOptions" :key="template" :value="template">
                 {{ template }}
               </option>

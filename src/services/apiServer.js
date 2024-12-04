@@ -21,7 +21,10 @@ const ApiService = {
   },
 
   post(resource, data) {
-    return axios.post(resource, data);
+    return axios.post(resource).catch((error) => {
+        console.error(`Fejl i POST-anmodning til ${resource}`, error.response || error.message);
+        throw error; // Genkaster fejlen for yderligere håndtering
+      });
   },
 
   put(resource, data) {
