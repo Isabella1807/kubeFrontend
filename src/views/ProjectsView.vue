@@ -95,26 +95,22 @@ const showModal = ref(false);  // gør at modal er der
 // };
 
 const saveNewProject = async (newProject) => {
-  
-    try {
-        // Send dataene til backend
-        const response = await ApiService.post('/projects', {
-        projectName: newProject.projectName,
-        subdomainName: newProject.subdomainName,
-        selectedTemplate: newProject.selectedTemplate,
-        stackId: 1,  // Eksempel på stackId
-        userId: 1    // Eksempel på userId
+  try {
+    // Sørg for at selectedTemplate er et tal
+    const templateId = Number(newProject.selectedTemplate);  // Konverter til et tal
+
+    const response = await ApiService.post('/projects', {
+      projectName: newProject.projectName,
+      subdomainName: newProject.subdomainName,
+      templateId: templateId,  // Send som et tal
     });
 
-        // Hvis projektet blev oprettet, tilføj det til listen i frontend
-        projectRows.value.unshift(response.data);  // Tilføj det nye projekt i toppen
-        showModal.value = false;  // Luk modal
-    } catch (error) {
-        console.error("Fejl ved oprettelse af projekt:", error.response?.data || error.message);
-    }
+    projectRows.value.unshift(response.data);  
+    showModal.value = false;  
+  } catch (error) {
+    console.error("Fejl ved oprettelse af projekt:", error.response?.data || error.message);
+  }
 };
-
-
 </script>
 
 <template>
