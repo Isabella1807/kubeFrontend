@@ -15,16 +15,16 @@ const ApiService = {
 
   get(resource) {
     return axios.get(resource).catch((error) => {
-        console.error(`Fejl i GET-anmodning til ${resource}`, error.response || error.message);
-        throw error; // Genkaster fejlen for yderligere håndtering
-      });
+      console.error(`Fejl i GET-anmodning til ${resource}`, error.response || error.message);
+      throw error;
+    });
   },
 
   post(resource, data) {
-    return axios.post(resource).catch((error) => {
-        console.error(`Fejl i POST-anmodning til ${resource}`, error.response || error.message);
-        throw error; // Genkaster fejlen for yderligere håndtering
-      });
+    return axios.post(resource, data).catch((error) => {
+      console.error(`Fejl i POST-anmodning til ${resource}`, error.response || error.message);
+      throw error;
+    });
   },
 
   put(resource, data) {
@@ -36,5 +36,4 @@ const ApiService = {
   },
 };
 
-// Eksportér som ES-modul
 export default ApiService;

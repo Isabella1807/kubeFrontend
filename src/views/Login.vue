@@ -3,7 +3,7 @@
     <!-- Logo and Login Form -->
     <div class="form-container">
       <img src="@/img/logo.png" alt="KubeLab Logo" class="logo" />
-      <form>
+      <form @submit.prevent="loginUser">
         <!-- Email Input -->
         <input type="email" placeholder="Email" class="input-field" v-model="email" />
         <!-- Password Input -->
@@ -19,9 +19,9 @@
           <router-link to="/forgot-password" class="forgot-password">Forgot password</router-link>
         </div>
         <!-- Login Button -->
-        <router-link to="/projects">
-          <button type="button" class="login-button">Login</button>
-        </router-link>
+        <button type="submit" class="login-button">Login</button>
+        <!-- Error Message -->
+        <p v-if="loginError" class="error">{{ loginError }}</p>
       </form>
     </div>
   </div>
@@ -29,10 +29,46 @@
 
 <script setup>
 import { ref } from 'vue';
+import ApiService from '@/services/apiServer'; // Opdater stien afhængigt af din projekstruktur
+import { useRouter } from 'vue-router';
 
 const email = ref('');
 const password = ref('');
 const rememberMe = ref(false);
+const loginError = ref(null);
+const router = useRouter();
+
+const loginUser = async () => {
+  loginError.value = null;
+
+  try {
+    // Send login-anmodning til backend
+    const response = await ApiService.post('/login', {
+      uclMail: email.value,
+      password: password.value
+    });
+
+    const token = response.data.token;
+
+    // Hvis "Remember me" er valgt, gem token i localStorage
+    if (rememberMe.value) {
+      localStorage.setItem('token', token);
+    } else {
+      sessionStorage.setItem('token', token); // Gem token i sessionStorage hvis ikke "Remember me"
+    }
+
+    // Sæt tokenet globalt i Axios header (så det bruges til fremtidige anmodninger)
+    ApiService.setToken(token);
+
+    // Omdiriger brugeren til forsiden eller en beskyttet rute
+    router.push('/projects');
+  } catch (error) {
+    console.error('Login failed:', error);
+    loginError.value = 'Invalid email or password';
+  }
+};
+
+
 </script>
   
   <style lang="scss">
