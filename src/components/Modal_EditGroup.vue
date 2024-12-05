@@ -70,7 +70,7 @@
 import { ref, computed, watch } from 'vue';
 import ApiService from '@/services/apiService';
 
-// says what props and emit that are being receive from the parent (listmembers)
+// props that being recived from the parent (listmembers)
 const props = defineProps({
   modelValue: Boolean, // this checks if the modal is open or not
   groupName: String,
@@ -80,8 +80,9 @@ const props = defineProps({
   }
 });
 
-// variables
+// this does that you can commicate with the parent
 const emit = defineEmits(['update:modelValue', 'save', 'close']);
+//all information needed
 const teamMembers = ref([]);
 const selectedMembers = ref([]);
 const selectAll = ref(false);
