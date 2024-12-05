@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import ApiService from '@/services/apiServer'; // Opdater stien afhængigt af din projekstruktur
+import ApiService from '@/services/apiServer'; 
 import { useRouter } from 'vue-router';
 
 const email = ref('');
@@ -45,7 +45,7 @@ const loginUser = async () => {
     // Send login-anmodning til backend
     const response = await ApiService.post('/login', {
       uclMail: email.value,
-      password: password.value
+      password: password.value,
     });
 
     const token = response.data.token;
@@ -67,6 +67,7 @@ const loginUser = async () => {
     loginError.value = 'Invalid email or password';
   }
 };
+
 
 
 </script>
