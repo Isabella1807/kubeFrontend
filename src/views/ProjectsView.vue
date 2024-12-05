@@ -99,7 +99,7 @@ const saveNewProject = async (newProject) => {
     // Sørg for at selectedTemplate er et tal
     const templateId = Number(newProject.selectedTemplate);  // Konverter til et tal
 
-    const response = await ApiService.post('/projects', {
+    const response = await ApiService.post('/api/projects', {
       projectName: newProject.projectName,
       subdomainName: newProject.subdomainName,
       templateId: templateId,  // Send som et tal
