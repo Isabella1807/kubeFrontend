@@ -8,10 +8,10 @@
 
       <div class="edit-member-list-header">
         <div class="edit-select-all">
-          <input type="checkbox" v-model="selectAll" @change="toggleAll"/> All
+          <input type="checkbox" v-model="selectAll" @change="toggleAll" /> All
         </div>
         <div class="edit-icons">
-          <button @click="addMember" class="edit-icon-button-add">
+          <button @click="showAddForm = true" class="edit-icon-button-add">
             <i class="fas fa-plus"></i>
           </button>
           <button @click="deleteSelectedMembers" class="edit-icon-button-delete">
@@ -19,35 +19,60 @@
           </button>
         </div>
       </div>
-      <hr class="edit-divider"/>
+      <hr class="edit-divider" />
 
       <div class="edit-member-list">
         <ul>
           <li v-for="member in teamMembers" :key="member.userId" class="edit-member-item">
-            <input type="checkbox" :value="member.userId" v-model="selectedMembers"/>
+            <input type="checkbox" :value="member.userId" v-model="selectedMembers" />
             {{ member.firstName }} {{ member.lastName }}
           </li>
         </ul>
       </div>
 
       <div class="edit-footer">
-        <button class="edit-cancel-button" @click="handleClose">
-          <i class="fas fa-times"></i> Cancel
+        <button class="edit-cancel-button" @click="handleClose">Cancel</button>
+        <button class="edit-save-button" @click="handleSave">Save changes</button>
+      </div>
+    </div>
+
+    <div v-if="showAddForm" class="edit-modal-overlay">
+      <div class="edit-modal-content">
+        <button class="edit-close-button" @click="showAddForm = false">
+          <i class="fas fa-times"></i>
         </button>
-        <button class="edit-save-button" @click="handleSave">
-          <i class="fas fa-save"></i> Save changes
-        </button>
+        <h1 class="edit-title">Add Member</h1>
+
+        <div class="addMember-form-group">
+          <input v-model="newMember.firstName" placeholder="First Name" class="addMember-form-input" />
+          <input v-model="newMember.lastName" placeholder="Last Name" class="addMember-form-input" />
+          <input v-model="newMember.uclMail" placeholder="UCL Mail" class="addMember-form-input" />
+          <div class="addMember-dropdown-container">
+            <select v-model="newMember.roleId" class="addMember-input-field">
+              <option value="" disabled selected>Select Role</option>
+              <option value="2">Teacher</option>
+              <option value="3">Student</option>
+            </select>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+          </div>
+        </div>
+
+        <div class="edit-footer">
+          <button class="edit-cancel-button" @click="showAddForm = false">Cancel</button>
+          <button class="edit-save-button" @click="addNewMember">Add Member</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import {ref, watch} from 'vue';
+import { ref, computed, watch } from 'vue';
 import ApiService from '@/services/apiService';
 
+// says what props and emit that are being receive from the parent (listmembers)
 const props = defineProps({
-  modelValue: Boolean,
+  modelValue: Boolean, // this checks if the modal is open or not
   groupName: String,
   teamId: {
     type: Number,
@@ -55,15 +80,22 @@ const props = defineProps({
   }
 });
 
+// variables
 const emit = defineEmits(['update:modelValue', 'save', 'close']);
-
 const teamMembers = ref([]);
 const selectedMembers = ref([]);
 const selectAll = ref(false);
+const showAddForm = ref(false);
+const newMember = ref({
+  firstName: '',
+  lastName: '',
+  uclMail: '',
+  roleId: '3'
+});
 
+// finds team members
 async function fetchTeamMembers() {
   if (!props.teamId) return;
-
   try {
     const response = await ApiService.get(`/users/team/${props.teamId}/members`);
     teamMembers.value = response.data.users;
@@ -71,21 +103,7 @@ async function fetchTeamMembers() {
     console.error('Error fetching team members:', error);
   }
 }
-
-watch(() => props.modelValue, (isModalOpen) => {
-  if (isModalOpen && props.teamId) {
-    fetchTeamMembers();
-  }
-});
-
-function toggleAll() {
-  if (selectAll.value) {
-    selectedMembers.value = teamMembers.value.map(member => member.userId);
-  } else {
-    selectedMembers.value = [];
-  }
-}
-
+// this does it so when you select a member you can delete them
 async function deleteSelectedMembers() {
   try {
     for (const userId of selectedMembers.value) {
@@ -98,7 +116,45 @@ async function deleteSelectedMembers() {
     console.error('Error deleting members:', error);
   }
 }
+// this is how you add a single new member
+async function addNewMember() {
+  try {
+    const userData = {
+      firstName: newMember.value.firstName,
+      lastName: newMember.value.lastName,
+      uclMail: newMember.value.uclMail,
+      roleId: newMember.value.roleId,
+      teamId: props.teamId
+    };
+    await ApiService.post('/users/new', userData);
+    await fetchTeamMembers();
+    showAddForm.value = false;
+    newMember.value = {
+      firstName: '',
+      lastName: '',
+      uclMail: '',
+      roleId: '3'
+    };
+  } catch (error) {
+    console.error('Error adding member:', error);
+  }
+}
 
+// watching if the modal is open, and when it opens it gets team members
+watch(() => props.modelValue, (isModalOpen) => {
+  if (isModalOpen && props.teamId) {
+    fetchTeamMembers();
+  }
+});
+// makes so you can checkmark all
+function toggleAll() {
+  if (selectAll.value) {
+    selectedMembers.value = teamMembers.value.map(member => member.userId);
+  } else {
+    selectedMembers.value = [];
+  }
+}
+// does so you can close and save events
 function handleClose() {
   emit('update:modelValue', false);
   emit('close');
@@ -108,8 +164,26 @@ function handleSave() {
   emit('save', teamMembers.value);
   handleClose();
 }
-
+// this counts if all members are selected
+const isAllSelected = computed(() =>
+    selectedMembers.value.length === teamMembers.value.length
+);
 </script>
+
+<style scoped>
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.form-input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+</style>
 
 <style lang="scss">
 
@@ -235,4 +309,56 @@ function handleSave() {
   width: auto;
   font-weight: $font-weight;
 }
+
+.addMember-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.addMember-form-input,
+.addMember-input-field {
+  padding: 0.9rem 1.2rem;
+  margin: 10px 0;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  background-color: $lightGrey;
+  font-size: $font-size-desktop;
+}
+
+.addMember-input-field {
+  appearance: none;
+  padding-right: 30px;
+  color: $darkGrey;
+  background-color: $lightGrey;
+}
+
+.addMember-dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: $primaryPurple;
+}
+
+.edit-cancel-button:hover {
+  background-color: $lightGrey;
+  color: $darkGrey;
+  border-color: $lightGrey;
+}
+
+.edit-save-button:hover {
+  background-color: $lightGrey;
+  color: $darkGrey;
+  border-color: $lightGrey;
+}
+
 </style>
