@@ -170,21 +170,6 @@ const isAllSelected = computed(() =>
 );
 </script>
 
-<style scoped>
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 1rem 0;
-}
-
-.form-input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-</style>
-
 <style lang="scss">
 
 .edit-modal-overlay {
