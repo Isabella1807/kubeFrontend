@@ -65,22 +65,25 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, computed, watch } from 'vue';
 import ApiService from '@/services/apiService';
 
-// says what props and emit that are being receive from the parent (listmembers)
 const props = defineProps({
-  modelValue: Boolean, // this checks if the modal is open or not
-  groupName: String,
+  modelValue: {
+    type: Boolean,
+    required: true
+  },
+  groupName: {
+    type: String,
+    required: true
+  },
   teamId: {
     type: Number,
     default: null
   }
 });
 
-// variables
 const emit = defineEmits(['update:modelValue', 'save', 'close']);
 const teamMembers = ref([]);
 const selectedMembers = ref([]);
@@ -93,22 +96,32 @@ const newMember = ref({
   roleId: '3'
 });
 
-// finds team members
 async function fetchTeamMembers() {
-  if (!props.teamId) return;
+  // Explicitly check if teamId is null or undefined
+  if (props.teamId === null || props.teamId === undefined) {
+    return;
+  }
+
   try {
+    // Make the API request using full path
     const response = await ApiService.get(`/users/team/${props.teamId}/members`);
+
+    // Set the team members data from the response
     teamMembers.value = response.data.users;
   } catch (error) {
     console.error('Error fetching team members:', error);
   }
 }
-// this does it so when you select a member you can delete them
+
 async function deleteSelectedMembers() {
   try {
-    for (const userId of selectedMembers.value) {
+    // Delete every selected member
+    for (let index = 0; index < selectedMembers.value.length; index++) {
+      const userId = selectedMembers.value[index];
       await ApiService.delete(`/users/${userId}`);
     }
+
+    // refreah the page when you have delete a user
     await fetchTeamMembers();
     selectedMembers.value = [];
     selectAll.value = false;
@@ -116,9 +129,10 @@ async function deleteSelectedMembers() {
     console.error('Error deleting members:', error);
   }
 }
-// this is how you add a single new member
+
 async function addNewMember() {
   try {
+    // data need for creating a user
     const userData = {
       firstName: newMember.value.firstName,
       lastName: newMember.value.lastName,
@@ -126,8 +140,14 @@ async function addNewMember() {
       roleId: newMember.value.roleId,
       teamId: props.teamId
     };
+
+    //POST route for creating a user
     await ApiService.post('/users/new', userData);
+
+    // make the page with team members refresh
     await fetchTeamMembers();
+
+    // reset the form for adding a user
     showAddForm.value = false;
     newMember.value = {
       firstName: '',
@@ -140,34 +160,46 @@ async function addNewMember() {
   }
 }
 
-// watching if the modal is open, and when it opens it gets team members
-watch(() => props.modelValue, (isModalOpen) => {
-  if (isModalOpen && props.teamId) {
+// this keeps a eye out for when the modal is open or closed
+watch(() => props.modelValue, (newValue) => {
+  if (newValue === true && props.teamId !== null) {
     fetchTeamMembers();
   }
 });
-// makes so you can checkmark all
+
 function toggleAll() {
-  if (selectAll.value) {
-    selectedMembers.value = teamMembers.value.map(member => member.userId);
+  if (selectAll.value === true) {
+    // this is for when you click on the checkmark for select all members
+    const allMemberIds = [];
+    for (let index = 0; index < teamMembers.value.length; index++) {
+      const memberId = teamMembers.value[index].userId;
+      allMemberIds.push(memberId);
+    }
+    selectedMembers.value = allMemberIds;
   } else {
+    // if there is any selected it will be clear
     selectedMembers.value = [];
   }
 }
-// does so you can close and save events
+// this handles the closing of the modal
 function handleClose() {
   emit('update:modelValue', false);
   emit('close');
 }
-
+// this handles the saving of members and changing
 function handleSave() {
+  // Emit save event with current team members
   emit('save', teamMembers.value);
+  // Call handle close
   handleClose();
 }
-// this counts if all members are selected
-const isAllSelected = computed(() =>
-    selectedMembers.value.length === teamMembers.value.length
-);
+
+const isAllSelected = computed(() => {
+  if (teamMembers.value.length === 0) {
+    return false;
+  }
+  return selectedMembers.value.length === teamMembers.value.length;
+});
 </script>
 
 <style scoped>
