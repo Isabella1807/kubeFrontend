@@ -23,6 +23,7 @@
       <tr v-for="(group, index) in groups" :key="index">
         <td><input class="checkbox-btn" type="checkbox" /></td>
         <td class="font-bold">{{ group.teamName }}</td>
+        <td>{{ group.memberCount }}</td>
         <td>
           <div class="flex flex-end">
             <button class="edit-btn" @click="EditGroup(group)">
@@ -58,7 +59,6 @@ const fetchGroups = async () => {
   try {
     const response = await ApiService.get('/teams');
     groups.value = response.data.reverse();
-    console.log('Fetched groups:', groups.value);
   } catch (error) {
     console.error("Error fetching groups:", error);
   }
@@ -85,6 +85,7 @@ const closeEditModal = () => {
   isEditModalVisible.value = false;
   currentTeam.value = null;
 };
+
 // how you change changes to the group 
 const saveTeamChanges = (updatedMembers) => {
   console.log('Members updated:', updatedMembers);
