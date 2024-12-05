@@ -6,7 +6,7 @@
       <h1 class="createProjectText" @click="openCreateUserModal">Create new user</h1>
     </div>
     <NewUserModal v-if="isCreateUserModalVisible" @close="closeCreateUserModal" />
-    <Modal_EditGroup v-model="isEditModalVisible" :groupName="currentTeam?.teamName" @close="closeEditModal" @save="saveTeamChanges"/>
+    <Modal_EditGroup v-model="isEditModalVisible" :groupName="currentTeam?.teamName"  :teamId="Number(currentTeam?.teamId)" @close="closeEditModal" @save="saveTeamChanges"/>
     <DeleteModal v-if="isDeleteModalVisible" @close="closeDeleteModal" />
     <table>
       <tr>
@@ -84,6 +84,7 @@ const EditGroup = (group) => {
 const closeEditModal = () => {
   isEditModalVisible.value = false;
   currentTeam.value = null;
+  fetchGroups();
 };
 
 // how you change changes to the group 
