@@ -172,7 +172,7 @@ table {
 </style>
 
 <script>
-import ApiService from "@/services/apiService";
+import ApiService from "@/services/apiServer";
 import { ref, defineComponent, onMounted } from "vue";
 import IconButton from "@/components/IconButton.vue";
 

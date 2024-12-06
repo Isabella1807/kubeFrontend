@@ -1,4 +1,5 @@
 <template>
+  <div v-if="$route.meta && !$route.meta.hideHeader">
   <header :class="{ 'scrolled-nav': scrolledNav, 'dark-mode': isDark }">
 
     <nav>
@@ -101,6 +102,7 @@
       </transition>
     </nav>
   </header>
+</div>
 </template>
   
 <script setup>
