@@ -49,7 +49,7 @@
                 </span>
               </label>
 
-              <button class="logout-btn">
+              <button class="logout-btn" @click="logout">
                 Log out
                 <i class="fa-solid fa-right-from-bracket logout-icon"></i>
               </button>
@@ -84,6 +84,10 @@
                   <i class="fa-solid fa-text-height a-icon"></i>
                 </span>
               </label>
+              <button class="logout-btn" @click="logout">
+                Log out
+                <i class="fa-solid fa-right-from-bracket logout-icon"></i>
+              </button>
 
           <transition name="top-slider">
         <div v-if="dropdownOpen" class="top-slider">
@@ -97,6 +101,8 @@
               class="settings-icon"
               @click="toggleDropdown"
             ></i>
+
+            
           </div>
         </ul>
       </transition>
@@ -107,7 +113,11 @@
   
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { useDark, useToggle } from '@vueuse/core';
+import ApiService from '@/services/apiServer';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
 
 const isDark = ref(localStorage.getItem('isDarkMode') === 'true');
 const toggleDark = () => {
@@ -118,6 +128,24 @@ const toggleDark = () => {
 onMounted(() => {
   document.documentElement.setAttribute('color-scheme', isDark.value ? 'dark' : 'light');
 });
+
+
+const logout = async () => {
+  try {
+    // Fjern tokenet fra storage
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+
+    // Fjern tokenet fra Axios headers
+    ApiService.clearToken();
+
+    // Omdiriger til login-siden
+    router.push('/'); // Går tilbage til login-siden
+  } catch (error) {
+    console.error('Fejl under log-ud:', error);
+  }
+};
+
 
 const scrolledNav = ref(false);
 const mobile = ref(false);
@@ -400,7 +428,7 @@ input:checked + .slider-font .a-icon {
         border: none ;
         border-radius: 5px;
         background: $lightGrey;
-        width: 349px;
+        width: 300px;
 
         &:focus {
             border-color: $primaryPurple; /* Juster farve efter behov */
@@ -551,7 +579,7 @@ header {
 // Styling til top-slideren
 .top-slider {
   position: fixed;
-  top: 780px; /* Skjult til at starte med */
+  top: 450px; /* Skjult til at starte med */
   right: 0; /* Juster til at være til højre */
   width: 200px;
   z-index: 100;

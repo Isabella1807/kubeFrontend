@@ -31,7 +31,7 @@ const router = createRouter({
             path: '/forgot-password',
             name: 'ForgotPassword',
             component: () => import('../views/ForgotPassword.vue'),
-            meta: { hideHeader: false }
+            meta: { hideHeader: true }
         },
         {
             path: '/projects',

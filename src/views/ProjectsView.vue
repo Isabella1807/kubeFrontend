@@ -94,22 +94,22 @@ const showModal = ref(false);  // gør at modal er der
 //   showModal.value = false;  // lukker modal
 // };
 
-// const saveNewProject = async (newProject) => {
-//     console.log("Data sendt til backend:", newProject); // Debug
+const saveNewProject = async (newProject) => {
+    console.log("Data sendt til backend:", newProject); // Debug
 
-//     try {
-//         const response = await ApiService.post('/projects', {
-//             projectName: newProject.projectName,
-//             subdomainName: newProject.subdomainName,
-//             selectedTemplate: newProject.selectedTemplate,
-//         });
+    try {
+        const response = await ApiService.post('/projects/post', {
+            projectName: newProject.projectName,
+            subdomainName: newProject.subdomainName,
+            selectedTemplate: newProject.selectedTemplate,
+        });
 
-//         projectRows.value.unshift(response.data); // Opdater listen
-//         showModal.value = false; // Luk modal
-//     } catch (error) {
-//         console.error("Fejl ved oprettelse af projekt:", error.response?.data || error.message);
-//     }
-// };
+        projectRows.value.unshift(response.data); // Opdater listen
+        showModal.value = false; // Luk modal
+    } catch (error) {
+        console.error("Fejl ved oprettelse af projekt:", error.response?.data || error.message);
+    }
+};
 
 </script>
 

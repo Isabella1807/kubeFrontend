@@ -24,13 +24,21 @@ const ApiService = {
     });
 },
 
-
-  post(resource, data) {
-    return axios.post(resource, data).catch((error) => {
-      console.error(`Fejl i POST-anmodning til ${resource}`, error.response || error.message);
-      throw error;
-    });
-  },
+post(resource, data) {
+  return axios.post(resource, data).catch((error) => {
+    // Tjek om der er en response fra serveren
+    if (error.response) {
+      console.error(`Fejl i POST-anmodning til ${resource}:`, error.response.data);
+      throw new Error(`Error: ${error.response.status} - ${error.response.data}`);
+    } else if (error.request) {
+      console.error("No response received:", error.request);
+      throw new Error("No response received from server");
+    } else {
+      console.error("Error setting up request:", error.message);
+      throw new Error("Error setting up the request");
+    }
+  });
+},
 
   put(resource, data) {
     return axios.put(resource, data);
