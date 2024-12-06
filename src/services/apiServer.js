@@ -14,11 +14,16 @@ const ApiService = {
   },
 
   get(resource) {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+        this.setToken(token); // Indsæt token i `Authorization` headeren
+    }
     return axios.get(resource).catch((error) => {
-      console.error(`Fejl i GET-anmodning til ${resource}`, error.response || error.message);
-      throw error;
+        console.error(`Fejl i GET-anmodning til ${resource}`, error.response?.data || error.message);
+        throw error;
     });
-  },
+},
+
 
   post(resource, data) {
     return axios.post(resource, data).catch((error) => {
