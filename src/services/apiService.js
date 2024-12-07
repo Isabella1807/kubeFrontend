@@ -1,38 +1,49 @@
-// import axios from "axios";
+import axios from "axios";
 
-// const ApiService = {
-//   init(baseURL) {
-//     axios.defaults.baseURL = baseURL;
-//   },
+const ApiService = {
+  init(baseURL) {
+    axios.defaults.baseURL = baseURL;
+  },
 
-//   // Add a method to set JWT token
-//   setToken(token) {
-//     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-//   },
+  setToken(token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  },
 
-//   // Clear the token
-//   clearToken() {
-//     delete axios.defaults.headers.common["Authorization"];
-//   },
-//   // GET request
-//   get(resource) {
-//     return axios.get(resource);
-//   },
+  clearToken() {
+    delete axios.defaults.headers.common["Authorization"];
+  },
 
-//   // POST request
-//   post(resource, data) {
-//     return axios.post(resource, data);
-//   },
+  get(resource) {
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (token) {
+      this.setToken(token); // Indsæt token i `Authorization` headeren
+    }
+    return axios.get(resource).catch((error) => {
+      console.error(`Fejl i GET-anmodning til ${resource}`, error.response?.data || error.message);
+      throw error;
+    });
+  },
 
-//   // PUT request
-//   put(resource, data) {
-//     return axios.put(resource, data);
-//   },
+  post(resource, data) {
+    return axios.post(resource, data).catch((error) => {
+      console.error(`Fejl i POST-anmodning til ${resource}:`, error.response?.data || error.message);
+      throw error;
+    });
+  },
 
-//   // DELETE request
-//   delete(resource) {
-//     return axios.delete(resource);
-//   },
-// };
+  put(resource, data) {
+    return axios.put(resource, data).catch((error) => {
+      console.error(`Fejl i PUT-anmodning til ${resource}:`, error.response?.data || error.message);
+      throw error;
+    });
+  },
 
-// export default ApiService;
+  delete(resource) {
+    return axios.delete(resource).catch((error) => {
+      console.error(`Fejl i DELETE-anmodning til ${resource}:`, error.response?.data || error.message);
+      throw error;
+    });
+  },
+};
+
+export default ApiService;
