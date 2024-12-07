@@ -22,10 +22,12 @@
       <hr class="edit-divider" />
 
       <div class="edit-member-list">
-        <ul>
+        <ul class="edit-member-list-inner">
           <li v-for="member in teamMembers" :key="member.userId" class="edit-member-item">
-            <input type="checkbox" :value="member.userId" v-model="selectedMembers" />
-            {{ member.firstName }} {{ member.lastName }}
+            <div class="edit-member-info">
+              <input type="checkbox" :value="member.userId" v-model="selectedMembers" />
+              <span class="edit-member-name">{{ member.firstName }} {{ member.lastName }}</span>
+            </div>
           </li>
         </ul>
       </div>
@@ -70,9 +72,8 @@
 import { ref, computed, watch } from 'vue';
 import ApiService from '@/services/apiService';
 
-// props that being recived from the parent (listmembers)
 const props = defineProps({
-  modelValue: Boolean, // this checks if the modal is open or not
+  modelValue: Boolean,
   groupName: String,
   teamId: {
     type: Number,
@@ -80,9 +81,8 @@ const props = defineProps({
   }
 });
 
-// this does that you can commicate with the parent
 const emit = defineEmits(['update:modelValue', 'save', 'close']);
-//all information needed
+
 const teamMembers = ref([]);
 const selectedMembers = ref([]);
 const selectAll = ref(false);
@@ -94,7 +94,6 @@ const newMember = ref({
   roleId: '3'
 });
 
-// finds team members
 async function fetchTeamMembers() {
   if (!props.teamId) return;
   try {
@@ -104,7 +103,7 @@ async function fetchTeamMembers() {
     console.error('Error fetching team members:', error);
   }
 }
-// this does it so when you select a member you can delete them
+
 async function deleteSelectedMembers() {
   try {
     for (const userId of selectedMembers.value) {
@@ -117,7 +116,7 @@ async function deleteSelectedMembers() {
     console.error('Error deleting members:', error);
   }
 }
-// this is how you add a single new member
+
 async function addNewMember() {
   try {
     const userData = {
@@ -141,13 +140,12 @@ async function addNewMember() {
   }
 }
 
-// watching if the modal is open, and when it opens it gets team members
 watch(() => props.modelValue, (isModalOpen) => {
   if (isModalOpen && props.teamId) {
     fetchTeamMembers();
   }
 });
-// makes so you can checkmark all
+
 function toggleAll() {
   if (selectAll.value) {
     selectedMembers.value = teamMembers.value.map(member => member.userId);
@@ -155,7 +153,7 @@ function toggleAll() {
     selectedMembers.value = [];
   }
 }
-// does so you can close and save events
+
 function handleClose() {
   emit('update:modelValue', false);
   emit('close');
@@ -165,14 +163,13 @@ function handleSave() {
   emit('save', teamMembers.value);
   handleClose();
 }
-// this counts if all members are selected
+
 const isAllSelected = computed(() =>
-    selectedMembers.value.length === teamMembers.value.length
+  selectedMembers.value.length === teamMembers.value.length
 );
 </script>
 
 <style lang="scss">
-
 .edit-modal-overlay {
   position: fixed;
   top: 0;
@@ -196,7 +193,7 @@ const isAllSelected = computed(() =>
   position: relative;
   text-align: center;
   overflow-y: auto;
-  height: 85vh;
+  max-height: 90vh;
 }
 
 .edit-close-button {
@@ -255,17 +252,32 @@ const isAllSelected = computed(() =>
   margin: 10px 0;
 }
 
-.edit-member-list ul {
-  list-style-type: none;
+.edit-member-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.edit-member-list-inner {
   padding: 0;
   margin: 0;
+  list-style-type: none;
 }
 
 .edit-member-item {
   display: flex;
   align-items: center;
-  padding: 5px 0;
+  padding: 10px 0;
   accent-color: $primaryPurple;
+}
+
+.edit-member-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-member-name {
+  text-align: left;
 }
 
 .edit-footer {
@@ -349,4 +361,13 @@ const isAllSelected = computed(() =>
   border-color: $lightGrey;
 }
 
+@media (max-height: 600px) {
+  .edit-modal-content {
+    max-height: 90vh;
+  }
+
+  .edit-member-list {
+    max-height: 60vh;
+  }
+}
 </style>
