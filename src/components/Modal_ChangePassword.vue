@@ -29,52 +29,52 @@
       </div>
     </div>
   </template>
-  <script setup>
-  import { ref, defineProps, defineEmits } from 'vue'
   
-  const props = defineProps({
-    show: {
-      type: Boolean,
-      required: true
-    }
-  })
+  <script>
+  export default {
+    props: {
+      show: {
+        type: Boolean,
+        required: true,
+      },
+    },
+    emits: ["close", "change"],
+    data() {
+      return {
+        oldPassword: "",
+        newPassword: "",
+        repeatPassword: "",
+        error: "",
+      };
+    },
+    methods: {
+      close() {
+        this.$emit("close");
+      },
+      changePassword() {
+        if (!this.oldPassword || !this.newPassword || !this.repeatPassword) {
+          this.error = "Please fill out all fields.";
+          return;
+        }
+        if (this.newPassword !== this.repeatPassword) {
+          this.error = "New passwords do not match.";
+          return;
+        }
+        this.$emit("change", {
+          oldPassword: this.oldPassword,
+          newPassword: this.newPassword,
+        });
   
-  const emit = defineEmits(['close', 'change'])
-  
-  const oldPassword = ref('')
-  const newPassword = ref('')
-  const repeatPassword = ref('')
-  const error = ref('')
-  
-  const close = () => {
-    emit('close')
-  }
-  
-  const changePassword = () => {
-    if (!oldPassword.value || !newPassword.value || !repeatPassword.value) {
-      error.value = 'Please fill out all fields.'
-      return
-    }
-  
-    if (newPassword.value !== repeatPassword.value) {
-      error.value = 'New passwords do not match.'
-      return
-    }
-  
-    emit('change', {
-      oldPassword: oldPassword.value,
-      newPassword: newPassword.value
-    })
-  
-    // this makes sure that fields will get reset 
-    oldPassword.value = ''
-    newPassword.value = ''
-    repeatPassword.value = ''
-    error.value = ''
-    close()
-  }
+        this.oldPassword = "";
+        this.newPassword = "";
+        this.repeatPassword = "";
+        this.error = "";
+        this.close();
+      },
+    },
+  };
   </script>
-
+  
   <style lang="scss" changepassword>
   
   .changepassworderror-message {

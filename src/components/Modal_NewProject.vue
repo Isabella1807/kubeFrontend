@@ -50,7 +50,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'save']);
 
-const templateOptions = ['Template 1', 'Template 2'];
+const templateOptions = [1, 2];
 const projectName = ref('');
 const subdomainName = ref('');
 const selectedTemplate = ref('');
@@ -77,6 +77,8 @@ const resetForm = () => {
   error.value = '';
   close();
 };
+
+
 </script>
   
 <style lang="scss">
