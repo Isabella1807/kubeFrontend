@@ -39,7 +39,16 @@
           <i :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen } " class="settings" @click="toggleDropdown"></i>
           <transition name="dropdown-fade">
             <div v-if="dropdownOpen" class="dropdown">
-              <button class="changepass-btn">Change-Password</button>
+
+              <ModalChangePassword
+  :show="showChangePasswordModal"
+  @close="showChangePasswordModal = false"
+  @change="handlePasswordChange"
+/>
+<button @click="showChangePasswordModal = true" class="changepass-btn">
+  Change Password
+</button>
+
 
               <label class="font-size-toggle">
                 <input type="checkbox" @change="toggleFontSize" :checked="fontSize === 'large'" />
@@ -115,6 +124,10 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import ApiService from '@/services/apiServer';
 import { useRouter } from 'vue-router';
+import ModalChangePassword from "@/components/Modal_ChangePassword.vue";
+
+const showChangePasswordModal = ref(false);
+
 
 const router = useRouter();
 
