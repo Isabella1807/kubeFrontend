@@ -1,60 +1,97 @@
 <template>
   <div>
-    
     <div class="createNewProjectButtonContainer">
       <IconButton icon="addIcon" large primary @click="openCreateUserModal"/>
       <h1 class="createProjectText" @click="openCreateUserModal">Create new user</h1>
     </div>
     <NewUserModal v-if="isCreateUserModalVisible" @close="closeCreateUserModal" />
-    <Modal_EditGroup v-model="isEditModalVisible" :groupName="currentTeam?.teamName"  :teamId="Number(currentTeam?.teamId)" @close="closeEditModal" @save="saveTeamChanges"/>
-    <DeleteModal v-if="isDeleteModalVisible" @close="closeDeleteModal" />
+    <Modal_EditGroup 
+      v-model="isEditModalVisible" 
+      :groupName="currentTeam?.teamName"  
+      :teamId="Number(currentTeam?.teamId)" 
+      @close="closeEditModal" 
+      @save="saveTeamChanges"
+    />
+    <DeleteModal 
+      v-if="isDeleteModalVisible" 
+      :selectedCount="selectedGroups.length" 
+      @confirm="deleteConfirm" 
+      @close="closeDeleteModal" 
+    />
     <table>
-      <tr>
-        <th><input class="checkbox-btn" type="checkbox" /></th>
-        <th>
-          Groups
-          <button class="sort-btn">
-            <font-awesome-icon :icon="['fas', 'sort-down']" />
-          </button>
-        </th>
-        <th>Members</th>
-        <th></th>
-      </tr>
-      <tr v-for="(group, index) in groups" :key="index">
-        <td><input class="checkbox-btn" type="checkbox" /></td>
-        <td class="font-bold">{{ group.teamName }}</td>
-        <td>{{ group.memberCount }}</td>
-        <td>
-          <div class="flex flex-end">
-            <button class="edit-btn" @click="EditGroup(group)">
-              <font-awesome-icon :icon="['far', 'pen-to-square']" />
+      <thead>
+        <tr>
+          <th>
+            <input 
+              class="checkbox-btn" 
+              type="checkbox"
+              :checked="isAllSelected"
+              @change="toggleAllGroups"
+            />
+          </th>
+          <th>
+            Groups
+            <button class="sort-btn">
+              <font-awesome-icon :icon="['fas', 'sort-down']" />
             </button>
-            <button class="delete-btn" @click="openDeleteModal">
-              <font-awesome-icon :icon="['far', 'trash-can']" />
-            </button>
-          </div>
-        </td>
-      </tr>
+          </th>
+          <th>Members</th>
+          <th>
+            <div class="flex flex-end">
+              <button 
+                v-if="showMoreGroupsSelected"
+                class="delete-btn"  
+                @click="openDeleteModal()"
+              >
+                <font-awesome-icon :icon="['far', 'trash-can']" />
+              </button>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="group in groups" :key="group.teamId">
+          <td>
+            <input 
+              class="checkbox-btn" 
+              type="checkbox"
+              v-model="selectedGroups"
+              :value="group.teamId"
+            />
+          </td>
+          <td class="font-bold">{{ group.teamName }}</td>
+          <td>{{ group.memberCount }}</td>
+          <td>
+            <div class="flex flex-end">
+              <button class="edit-btn" @click="EditGroup(group)">
+                <font-awesome-icon :icon="['far', 'pen-to-square']" />
+              </button>
+              <button class="delete-btn" @click="singleDelete(group.teamId)">
+                <font-awesome-icon :icon="['far', 'trash-can']" />
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import NewUserModal from "@/components/Modal_NewUser.vue";
 import IconButton from "@/components/IconButton.vue";
 import Modal_EditGroup from '@/components/Modal_EditGroup.vue';
 import DeleteModal from '@/components/Modal_DeleteProject.vue'
 import ApiService from '@/services/apiService';
 
-// Variables to edit modal and create user model
 const groups = ref([]);
 const isCreateUserModalVisible = ref(false);
 const isEditModalVisible = ref(false);
 const currentTeam = ref(null);
 const isDeleteModalVisible = ref(false);
+const selectedGroups = ref([]);
 
-// Get the data from group from api and update variables 
 const fetchGroups = async () => {
   try {
     const response = await ApiService.get('/teams');
@@ -64,30 +101,25 @@ const fetchGroups = async () => {
   }
 };
 
-// Open create user modal --> true means you can see it 
 const openCreateUserModal = () => {
   isCreateUserModalVisible.value = true;
 };
 
-// Close create modal --> false means you can't see it 
 const closeCreateUserModal = () => {
   isCreateUserModalVisible.value = false;
 };
 
-// get the group data 
 const EditGroup = (group) => {
   currentTeam.value = group;
   isEditModalVisible.value = true;
 };
 
-// the way you close the edit group modal
 const closeEditModal = () => {
   isEditModalVisible.value = false;
   currentTeam.value = null;
   fetchGroups();
 };
 
-// how you change changes to the group 
 const saveTeamChanges = (updatedMembers) => {
   console.log('Members updated:', updatedMembers);
   closeEditModal();
@@ -99,7 +131,44 @@ const openDeleteModal = () => {
 
 const closeDeleteModal = () => {
   isDeleteModalVisible.value = false;
-}
+};
+
+const showMoreGroupsSelected = computed(() => {
+  return selectedGroups.value.length > 1;
+});
+
+const isAllSelected = computed(() => {
+  return groups.value.length > 0 && selectedGroups.value.length === groups.value.length;
+});
+
+const toggleAllGroups = (event) => {
+  selectedGroups.value = event.target.checked 
+    ? groups.value.map(group => group.teamId) 
+    : [];
+};
+
+const singleDelete = (teamId) => {
+  currentTeam.value = teamId;
+  selectedGroups.value = [teamId];
+  isDeleteModalVisible.value = true;
+};
+
+const deleteConfirm = async () => {
+  try {
+    const idsToDelete = selectedGroups.value.length === 1 
+      ? [currentTeam.value] 
+      : selectedGroups.value;
+      
+    for (const teamId of idsToDelete) {
+      await ApiService.delete(`/teams/${teamId}`);
+    }
+    await fetchGroups();
+    selectedGroups.value = [];
+    closeDeleteModal();
+  } catch (error) {
+    console.error("Error deleting groups:", error);
+  }
+};
 
 onMounted(() => {
   fetchGroups();
@@ -162,6 +231,10 @@ align-content: center;
 border: none;
 color: $primaryPurple;
 background: none;
+}
+
+.checkbox-btn {
+  accent-color: $primaryPurple;
 }
 
 table {
