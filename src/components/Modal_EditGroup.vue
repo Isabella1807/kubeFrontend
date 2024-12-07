@@ -1,9 +1,7 @@
 <template>
   <div v-if="modelValue" class="edit-modal-overlay">
     <div class="edit-modal-content">
-      <button class="edit-close-button" @click="handleClose">
-        <i class="fas fa-times"></i>
-      </button>
+      <button class="edit-close-button" @click="handleClose">✖</button>
       <h1 class="edit-title">Edit {{ groupName }}</h1>
 
       <div class="edit-member-list-header">
@@ -19,7 +17,7 @@
           </button>
         </div>
       </div>
-      <hr class="edit-divider" />
+      <hr class="edit-divider"/>
 
       <div class="edit-member-list">
         <ul class="edit-member-list-inner">
@@ -170,6 +168,7 @@ const isAllSelected = computed(() =>
 </script>
 
 <style lang="scss">
+
 .edit-modal-overlay {
   position: fixed;
   top: 0;
