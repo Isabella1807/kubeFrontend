@@ -1,80 +1,90 @@
 <template>
-    <div v-if="show" class="changepasswordmodal-overlay" >
-      <div class="changepasswordmodal-content">
-        <button class="changepasswordmodal-close" @click="close">✖</button>
-        <h1>Change Password</h1>
-        <form @submit.prevent="changePassword" class="changepassword">
-          <label>
-            Old Password
-            <input type="password" v-model="oldPassword" placeholder="Enter old password..." />
-          </label>
-          <label>
-            New Password
-            <input type="password" v-model="newPassword" placeholder="Enter new password..." />
-          </label>
-          <label>
-            Repeat New Password
-            <input type="password" v-model="repeatPassword" placeholder="Repeat new password..." />
-          </label>
-          <p v-if="error" class="changepassworderror-message">{{ error }}</p>
-          <div class="changepasswordbuttons">
-            <button type="button" @click="close" class="changepasswordcancel-button">
-              <i class="fas fa-times"></i> Cancel
-            </button>
-            <button type="submit" class="changepasswordsave-button">
-              <i class="fas fa-save"></i> Change Password
-            </button>
-          </div>
-        </form>
-      </div>
+  <div v-if="show" class="changepasswordmodal-overlay">
+    <div class="changepasswordmodal-content">
+      <button class="changepasswordmodal-close" @click="close">✖</button>
+      <h1>Change Password</h1>
+      <form @submit.prevent="changePassword" class="changepassword">
+        <label>
+          Old Password
+          <input type="password" v-model="oldPassword" placeholder="Enter old password..." />
+        </label>
+        <label>
+          New Password
+          <input type="password" v-model="newPassword" placeholder="Enter new password..." />
+        </label>
+        <label>
+          Repeat New Password
+          <input type="password" v-model="repeatPassword" placeholder="Repeat new password..." />
+        </label>
+        <p v-if="error" class="changepassworderror-message">{{ error }}</p>
+        <div class="changepasswordbuttons">
+          <button type="button" @click="close" class="changepasswordcancel-button">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+          <button type="submit" class="changepasswordsave-button">
+            <i class="fas fa-save"></i> Change Password
+          </button>
+        </div>
+      </form>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      show: {
-        type: Boolean,
-        required: true,
-      },
-    },
-    emits: ["close", "change"],
-    data() {
-      return {
-        oldPassword: "",
-        newPassword: "",
-        repeatPassword: "",
-        error: "",
-      };
-    },
-    methods: {
-      close() {
-        this.$emit("close");
-      },
-      changePassword() {
-        if (!this.oldPassword || !this.newPassword || !this.repeatPassword) {
-          this.error = "Please fill out all fields.";
-          return;
-        }
-        if (this.newPassword !== this.repeatPassword) {
-          this.error = "New passwords do not match.";
-          return;
-        }
-        this.$emit("change", {
-          oldPassword: this.oldPassword,
-          newPassword: this.newPassword,
-        });
-  
-        this.oldPassword = "";
-        this.newPassword = "";
-        this.repeatPassword = "";
-        this.error = "";
-        this.close();
-      },
-    },
-  };
-  </script>
-  
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import ApiService from "@/services/apiServer";
+
+const props = defineProps({
+  show: {
+    type: Boolean,
+    required: true,
+  },
+});
+
+const emit = defineEmits(["close", "change"]);
+
+const oldPassword = ref("");
+const newPassword = ref("");
+const repeatPassword = ref("");
+const error = ref("");
+
+const close = () => {
+  emit("close");
+};
+
+const changePassword = async () => {
+  if (!oldPassword.value || !newPassword.value || !repeatPassword.value) {
+    error.value = "Please fill out all fields.";
+    return;
+  }
+  if (newPassword.value !== repeatPassword.value) {
+    error.value = "New passwords do not match.";
+    return;
+  }
+
+  try {
+    const token = localStorage.getItem("authToken"); // Get token from localStorage
+
+    // Send PUT request to backend
+    const response = await ApiService.put("/login/changepassword", {
+      oldPassword: oldPassword.value,
+      newPassword: newPassword.value,
+    });
+
+    // If successful, reset form and close modal
+    console.log(response.data);
+    oldPassword.value = "";
+    newPassword.value = "";
+    repeatPassword.value = "";
+    error.value = "";
+    close();
+  } catch (err) {
+    error.value = err.message || "An error occurred while changing the password";
+    console.error("Error during password change:", err);
+  }
+};
+</script>
+
   <style lang="scss" changepassword>
   
   .changepassworderror-message {

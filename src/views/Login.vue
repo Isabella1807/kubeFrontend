@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import ApiService from '@/services/apiServer'; 
 import { useRouter } from 'vue-router';
 
@@ -37,6 +37,17 @@ const password = ref('');
 const rememberMe = ref(false);
 const loginError = ref(null);
 const router = useRouter();
+
+onMounted(() => {
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+  if (token) {
+    ApiService.setToken(token);
+    router.push('/projects'); // Hvis token findes, omdiriger til projektsiden
+  } else {
+    router.push('/'); // Hvis token ikke findes, omdiriger til login
+  }
+});
+
 
 const loginUser = async () => {
   loginError.value = null;

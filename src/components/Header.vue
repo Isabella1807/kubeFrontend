@@ -136,8 +136,8 @@ onMounted(() => {
 const logout = async () => {
   try {
     // Fjern tokenet fra storage
-    localStorage.removeItem('authToken');
-    sessionStorage.removeItem('authToken');
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
 
     // Fjern tokenet fra Axios headers
     ApiService.clearToken();

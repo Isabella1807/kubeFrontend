@@ -88,12 +88,6 @@ onMounted(async () => {
 
 const showModal = ref(false);  // gør at modal er der
 
-// funktionen til at gemme et nyt projekt
-// const saveNewProject = (newProject) => {
-//   projectRows.value.unshift(newProject);  // gør at det nye projekt kommer op i toppen
-//   showModal.value = false;  // lukker modal
-// };
-
 const saveNewProject = async (newProject) => {
     console.log("Data sendt til backend:", newProject); // Debug
 
