@@ -195,6 +195,8 @@ const isAllSelected = computed(() =>
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
   text-align: center;
+  overflow-y: auto;
+  height: 85vh;
 }
 
 .edit-close-button {
