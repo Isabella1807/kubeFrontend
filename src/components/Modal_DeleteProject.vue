@@ -7,7 +7,7 @@
       <h1 class="modal-title">
         Are you sure you want to delete {{ selectedCount > 1 ? `these ${selectedCount} groups` : 'this group' }}?
       </h1>
-      
+
       <div class="deletemodal-action">
         <button @click="emit('close')" class="deletecancel-button">
           <i class="fas fa-times modal-icon"></i> No, cancel
@@ -15,12 +15,14 @@
         <button @click="handleConfirm" class="deleteconfirm-button">
           <i class="fas fa-check modal-icon"></i> Yes, confirm
         </button>
-      </div>  
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
+
+// get the selcted items and the number of items 
 const props = defineProps({
   selectedCount: {
     type: Number,
@@ -28,12 +30,15 @@ const props = defineProps({
   }
 });
 
+//  tells the partent component what is happening 
 const emit = defineEmits(['close', 'confirm']);
 
+// when you click on confirm or close it will close the modal 
 const handleConfirm = () => {
   emit('confirm');
   emit('close');
 };
+
 </script>
 
 <style lang="scss">
@@ -92,9 +97,9 @@ const handleConfirm = () => {
   display: flex;
   align-items: center;
   padding: 6px 12px;
-  font-size: 15px;  
+  font-size: 15px;
   border-radius: 10px;
-  width: auto;      
+  width: auto;
   font-family: 'Poppins';
   font-weight: 700;
 }
@@ -115,6 +120,6 @@ const handleConfirm = () => {
 
 .modal-icon {
   margin-right: 8px;
-  font-size: 16px;    
+  font-size: 16px;
 }
 </style>

@@ -55,6 +55,7 @@
 </template>
 
 <script setup>
+//import the components need for list members 
 import { ref, onMounted, computed } from 'vue';
 import NewUserModal from "@/components/Modal_NewUser.vue";
 import IconButton from "@/components/IconButton.vue";
@@ -62,6 +63,7 @@ import Modal_EditGroup from '@/components/Modal_EditGroup.vue';
 import DeleteModal from '@/components/Modal_DeleteProject.vue'
 import ApiService from '@/services/apiService';
 
+// this is variables like the modals are visable or not 
 const groups = ref([]);
 const isCreateUserModalVisible = ref(false);
 const isEditModalVisible = ref(false);
@@ -69,6 +71,12 @@ const currentTeam = ref(null);
 const isDeleteModalVisible = ref(false);
 const selectedGroups = ref([]);
 
+// loading the teams when the page is open 
+onMounted(() => {
+  fetchGroups();
+});
+
+// this is getting teams for our database 
 const fetchGroups = async () => {
   try {
     const response = await ApiService.get('/teams');
@@ -78,6 +86,7 @@ const fetchGroups = async () => {
   }
 };
 
+//opens Create User Modal and closes it too 
 const openCreateUserModal = () => {
   isCreateUserModalVisible.value = true;
 };
@@ -86,6 +95,7 @@ const closeCreateUserModal = () => {
   isCreateUserModalVisible.value = false;
 };
 
+// open the modal for edit group and making sure we are saving teams that are being edit 
 const EditGroup = (group) => {
   currentTeam.value = group;
   isEditModalVisible.value = true;
@@ -102,6 +112,7 @@ const saveTeamChanges = (updatedMembers) => {
   closeEditModal();
 };
 
+//opens Delete Modal and closes it too 
 const openDeleteModal = () => {
   isDeleteModalVisible.value = true;
 };
@@ -110,26 +121,31 @@ const closeDeleteModal = () => {
   isDeleteModalVisible.value = false;
 };
 
+// see if there more checkmarks being clicked on with teams 
 const showMoreGroupsSelected = computed(() => {
   return selectedGroups.value.length > 1;
 });
 
+// seeing if all teams are selected 
 const isAllSelected = computed(() => {
   return groups.value.length > 0 && selectedGroups.value.length === groups.value.length;
 });
 
+// if teams click with checkmark it gets the id of the team
 const toggleAllGroups = (event) => {
   selectedGroups.value = event.target.checked
     ? groups.value.map(group => group.teamId)
     : [];
 };
 
+// how to delete i single user in edit group modal 
 const singleDelete = (teamId) => {
   currentTeam.value = teamId;
   selectedGroups.value = [teamId];
   isDeleteModalVisible.value = true;
 };
 
+// deleting the user when you click on confirm 
 const deleteConfirm = async () => {
   try {
     const idsToDelete = selectedGroups.value.length === 1
@@ -139,6 +155,7 @@ const deleteConfirm = async () => {
     for (const teamId of idsToDelete) {
       await ApiService.delete(`/teams/${teamId}`);
     }
+    // make so they page dont have the delete user on it anymore
     await fetchGroups();
     selectedGroups.value = [];
     closeDeleteModal();
@@ -147,6 +164,7 @@ const deleteConfirm = async () => {
   }
 };
 
+// this is doing the sorting with teams, and getting the new list after being sorted 
 const isDescending = ref(false);
 
 const toggleSort = async () => {
@@ -159,9 +177,7 @@ const toggleSort = async () => {
   }
 };
 
-onMounted(() => {
-  fetchGroups();
-});
+
 </script>
 
 <style scoped lang="scss">
