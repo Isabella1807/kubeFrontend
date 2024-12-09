@@ -3,7 +3,7 @@
     <div class="changepasswordmodal-content">
       <div class="changepasswordmodal-header">
         <h1>Change Password</h1>
-        <button class="changepasswordmodal-close-btn" @click="close">
+        <button class="changepasswordmodal-close" @click="close">
           ✖
         </button>
       </div>
@@ -129,7 +129,7 @@ const changePassword = async () => {
   margin-bottom: 20px;
 }
 
-.changepasswordmodal-close-btn {
+.changepasswordmodal-close {
   position: absolute !important;
   top: 10px !important; 
   right: 10px !important;
