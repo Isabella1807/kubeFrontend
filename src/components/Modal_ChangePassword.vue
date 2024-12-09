@@ -85,121 +85,126 @@ const changePassword = async () => {
 };
 </script>
 
-  <style lang="scss" changepassword>
+  <style lang="scss" scoped>
   
   .changepassworderror-message {
-    color: $dangerRed;
-    font-size: $font-size-desktop;
-    margin-top: 10px;
-    text-align: left;
-  }
-  
-  .changepasswordmodal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .changepasswordmodal-content {
-    background-color: $white-color;
-    padding: 30px;
-    width: 500px;
-    max-width: 90%;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    text-align: center;
-  }
-  
-  .changepasswordmodal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #5C007E;
-  }
-  
-  .changepasswordmodal-content h1 {
-    font-size: 35px;
-    margin-bottom: 25px;
-    font-weight: 700;
-    font-family: 'Poppins';
-    text-align: left;
-  }
-  
-  .changepassword label {
-    display: block;
-    font-size: 15px;
-    margin-bottom: 10px;
-    text-align: left;
-    font-weight: 400;
-    font-family: 'Poppins';
-  }
-  
-  .changepasswordmodal-overlay input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    font-size: 14px;
-    font-style: italic;
-    border: 1px solid #EEEEEE;
-    border-radius: 5px;
-    box-sizing: border-box;
-    color: #333;
-  }
-  
-  .changepasswordbuttons {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    margin-top: 25px;
-  }
-  
-  .changepasswordcancel-button,
-  .changepasswordsave-button {
-    padding: 6px 12px;
-    font-size: 15px;
-    border-radius: 10px;
-    width: auto;
-    font-family: 'Poppins';
-    font-weight: 700;
-  }
-  
-  .changepasswordcancel-button {
-    background-color: white;
-    color: #5C007E;
-    border: 1px solid #5C007E;
-    cursor: pointer;
-  }
-  
-  .changepasswordsave-button {
-    background-color: #5C007E;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .changepasswordcancel-button:hover {
-    background-color: #eee;
-    color: #333;
-    border-color: #eee;
-  }
-  
-  .changepasswordsave-button:hover {
-    background-color: #3700b3;
-    color: white;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  }
+  color: $dangerRed;
+  font-size: $font-size-desktop;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.changepasswordmodal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.changepasswordmodal-content {
+  background-color: $white-color;
+  padding: 30px;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  text-align: center;
+}
+
+.changepasswordmodal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.changepasswordmodal-close {
+  position: absolute !important;
+  top: 10px !important; 
+  right: 10px !important;
+  background: none !important;
+  border: none !important;
+  font-size: 20px !important;
+  cursor: pointer;
+  color: $primaryPurple !important;
+  text-align: right !important;
+}
+
+.changepasswordmodal-content h1 {
+  font-size: 35px;
+  font-weight: $font-weight;
+  text-align: left;
+}
+
+.changepassword label {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 10px;
+  text-align: left;
+  font-weight: $font-weight;
+}
+
+.changepasswordmodal-overlay input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  font-size: $font-size-desktop;
+  font-style: italic;
+  border: 1px solid  $lightGrey;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: $darkGrey;
+}
+
+.changepasswordbuttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.changepasswordcancel-button {
+  background-color: $white-color !important;
+  color: $primaryPurple !important;
+  border: 1px solid $primaryPurple !important;
+  cursor: pointer !important;
+  padding: 6px 12px !important;
+  font-size: 15px !important;
+  border-radius: 10px !important;
+  width: auto !important;
+  font-weight: $font-weight!important;
+}
+
+.changepasswordsave-button {
+  background-color: $primaryPurple !important;
+  color: $white-color !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 6px 12px !important;
+  font-size: $font-size-desktop !important;
+  border-radius: 10px !important;
+  width: auto !important;
+  font-weight: $font-weight !important;
+}
+
+.changepasswordcancel-button:hover {
+  background-color: $lightGrey !important;
+  color: $darkGrey !important;
+  border-color: $lightGrey  !important;
+}
+
+.changepasswordsave-button:hover {
+  background-color: $lightGrey !important;
+  color: $darkGrey !important;
+  border-color: $lightGrey  !important;
+}
   
   @media (max-width: 768px) {
     .modal-content {
