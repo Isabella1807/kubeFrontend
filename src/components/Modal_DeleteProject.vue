@@ -1,18 +1,18 @@
 <template>
-  <div class="delete-modal-overlay">
-    <div class="delete-modal">
-      <button @click="emit('close')" class="delete-close-button">
-        <i class="fas fa-times delete-modal-icon"></i>
+  <div class="deletemodal-overlay">
+    <div class="deletemodal">
+      <button @click="emit('close')" class="deleteclose-button">
+        <i class="fas fa-times modal-icon"></i>
       </button>
-      <h1 class="delete-modal-title">
+      <h1 class="modal-title">
         Are you sure you want to delete {{ selectedCount > 1 ? `these ${selectedCount} groups` : 'this group' }}?
       </h1>
 
-      <div class="delete-modal">
-        <button @click="emit('close')" class="delete-cancel-button">
+      <div class="deletemodal-action">
+        <button @click="emit('close')" class="deletecancel-button">
           <i class="fas fa-times modal-icon"></i> No, cancel
         </button>
-        <button @click="Confirm" class="delete-confirm-button">
+        <button @click="handleConfirm" class="deleteconfirm-button">
           <i class="fas fa-check modal-icon"></i> Yes, confirm
         </button>
       </div>
@@ -34,7 +34,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'confirm']);
 
 // when you click on confirm or close it will close the modal 
-const Confirm = () => {
+const handleConfirm = () => {
   emit('confirm');
   emit('close');
 };
@@ -42,7 +42,7 @@ const Confirm = () => {
 </script>
 
 <style lang="scss">
-.delete-modal-overlay {
+.deletemodal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -55,7 +55,7 @@ const Confirm = () => {
   z-index: 1000;
 }
 
-.delete-modal {
+.deletemodal {
   background-color: $white-color;
   padding: 30px;
   width: 500px;
@@ -66,7 +66,7 @@ const Confirm = () => {
   text-align: center;
 }
 
-.delete-close-button {
+.deleteclose-button {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -77,7 +77,7 @@ const Confirm = () => {
   color: $primaryPurple;
 }
 
-.delete-modal-title {
+.modal-title {
   font-size: 35px;
   margin-bottom: 25px;
   font-weight: 700;
@@ -85,15 +85,15 @@ const Confirm = () => {
   text-align: left;
 }
 
-.delete-modal-action {
+.deletemodal-action {
   display: flex;
   justify-content: left;
   gap: 20px;
   margin-top: 25px;
 }
 
-.delete-cancel-button,
-.delete-confirm-button {
+.deletecancel-button,
+.deleteconfirm-button {
   display: flex;
   align-items: center;
   padding: 6px 12px;
@@ -104,21 +104,21 @@ const Confirm = () => {
   font-weight: 700;
 }
 
-.delete-cancel-button {
+.deletecancel-button {
   background-color: $white-color;
   color: $primaryPurple;
   border: 1px solid $primaryPurple;
   cursor: pointer;
 }
 
-.delete-confirm-button {
+.deleteconfirm-button {
   background-color: $primaryPurple;
   color: $white-color;
   border: none;
   cursor: pointer;
 }
 
-.delete-modal-icon {
+.modal-icon {
   margin-right: 8px;
   font-size: 16px;
 }
