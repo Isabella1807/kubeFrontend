@@ -1,42 +1,40 @@
 <template>
-  <div class="newuser-modal">
-      <div class="newuser-modal-content">
-          <button class="newuser-close-btn" @click="handleClose">✖</button>
+  <div class="newUserModal">
+      <div class="newUserModalContent">
+          <button class="newUserCloseBtn" @click="Close">✖</button>
           <h1>New User</h1>
-          <div class="newuser-upload-section">
-              <div class="newuser-upload-button">
-                  <label class="newuser-upload-label">
+          <div class="newUserUpload">
+              <div class="newUserUploadBtn">
+                  <label class="newUserUploadLabel">
                       <i class="fa solid fa-cloud-arrow-up"></i>
-                      <span class="newuser-upload-text">
-                          {{ fileName || "Upload .CSV file" }}
+                      <span class="newUserUploadText">
+                          {{ nameOfFile || "Upload .CSV file" }}
                       </span>
-                      <input type="file" accept=".csv" @change="handleFileUpload" hidden />
+                      <input type="file" accept=".csv" @change="FileUpload" hidden />
                   </label>
-                  <button v-if="fileName" class="newuser-delete-btn" @click="clearFile">✖</button>
+                  <button v-if="nameOfFile" class="newUserDeleteBtn" @click="refreahFile">✖</button>
               </div>
-              <div v-if="error" class="error-message">{{ error }}</div>
           </div>
           
-          <div class="newuser-checkbox-section">
-              <label class="newuser-checkbox-item">
-                  <input type="checkbox" v-model="isStudent" @change="resetFields" />
+          <div class="newUserCheckbox">
+              <label class="newUserCheckboxItem">
+                  <input type="checkbox" v-model="pickStudent" @change="resetFields" />
                   Students
               </label>
-              <label class="newuser-checkbox-item">
-                  <input type="checkbox" v-model="isTeacher" @change="resetFields" />
+              <label class="newUserCheckboxItem">
+                  <input type="checkbox" v-model="pickTeacher" @change="resetFields" />
                   Teachers
               </label>
           </div>        
-          <div v-if="isStudent" class="newuser-group-input-section">
-              <input type="text" v-model="groupName" placeholder="Group name" class="newuser-group-input"/>
+          <div v-if="pickStudent" class="NewUserGroupSection">
+              <input type="text" v-model="groupName" placeholder="Group name" class="newUserGroupInput"/>
           </div>
-          <div class="newuser-button-section">
-              <button class="newuser-cancel-btn" @click="handleClose">
+          <div class="newUserButtons">
+              <button class="newUserCancelBtn" @click="Close">
                   <i class="fa-solid fa-times"></i> Cancel
               </button>
-              <button class="newuser-save-btn" :disabled="!canSave || isLoading"  @click="uploadUsers">
-                  <i class="fa-solid fa-spinner fa-spin" v-if="isLoading"></i>
-                  <i class="fa-solid fa-floppy-disk" v-else></i>
+              <button class="newUserSaveBtn" @click="uploadUsers">
+                  <i class="fa-solid fa-floppy-disk"></i>
                   Save Group
               </button>
           </div>
@@ -53,9 +51,9 @@ import ApiService from '@/services/apiService';
 const emit = defineEmits(['close', 'upload-success']);
 
 //variables 
-const fileName = ref('');
-const isStudent = ref(false);
-const isTeacher = ref(false);
+const nameOfFile = ref('');
+const pickStudent = ref(false);
+const pickTeacher = ref(false);
 const groupName = ref('');
 const isLoading = ref(false);
 const error = ref('');
@@ -63,41 +61,41 @@ const fileToUpload = ref(null);
 
 //if a file is uploaded the save button can be clicked on
 const canSave = computed(() => 
-  fileName.value && 
+  nameOfFile.value && 
   fileToUpload.value && 
-  (isTeacher.value || (isStudent.value && groupName.value))
+  (pickTeacher.value || (pickStudent.value && groupName.value))
 );
 
 // this handles the file upload event, name the file and save the file
-const handleFileUpload = (event) => {
+const FileUpload = (event) => {
   const file = event.target.files[0];
   if (file?.type === "text/csv") {
-      fileName.value = file.name;
+      nameOfFile.value = file.name;
       fileToUpload.value = file;
       error.value = '';
   }
 };
 
 // does that you can remove the uploaded file 
-const clearFile = () => {
-  fileName.value = '';
+const refreahFile = () => {
+  nameOfFile.value = '';
   fileToUpload.value = null;
   error.value = '';
 };
 // reset if you have chosen teacher or students 
 const resetFields = () => {
-  if (isStudent.value) isTeacher.value = false;
-  if (isTeacher.value) {
-      isStudent.value = false;
+  if (pickStudent.value) pickTeacher.value = false;
+  if (pickTeacher.value) {
+      pickStudent.value = false;
       groupName.value = '';
   }
 };
 
 //close the modal
-const handleClose = () => emit('close');
+const Close = () => emit('close');
 //uploads the users to server
 const uploadUsers = async () => {
-  if (!fileToUpload.value || (isStudent.value && !groupName.value)) return;
+  if (!fileToUpload.value || (pickStudent.value && !groupName.value)) return;
   
   isLoading.value = true;
   
@@ -108,7 +106,7 @@ const uploadUsers = async () => {
       // uploader the file to backend server API endpoint
       await ApiService.post('http://localhost:3000/users/upload', formData);
       emit('upload-success');
-      handleClose();
+      Close();
   } catch (err) {
       error.value = 'Upload failed';
   } finally {
@@ -119,7 +117,7 @@ const uploadUsers = async () => {
 
 <style lang="scss">
 
-.newuser-modal {
+.newUserModal {
     position: fixed;
     top: 0;
     left: 0;
@@ -131,7 +129,7 @@ const uploadUsers = async () => {
     align-items: center;
     z-index: 1000;
 }
-.newuser-modal-content {
+.newUserModalContent {
     background-color: $white-color;
     padding: 30px;
     width: 500px;
@@ -142,14 +140,14 @@ const uploadUsers = async () => {
     text-align: center;
 }
 
-.newuser-modal-content h1 {
+.newUserModalContent h1 {
     font-size: $font-size-h1;
     margin-bottom: 25px;
     font-weight: $font-weight;
     text-align: left;
 }
 
-.newuser-close-btn {
+.newUserCloseBtn {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -161,13 +159,13 @@ const uploadUsers = async () => {
 }
 
 /* Upload Section */
-.newuser-upload-section {
+.newUserUpload {
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.newuser-upload-button {
+.newUserUploadBtn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -180,25 +178,25 @@ const uploadUsers = async () => {
   position: relative;
   cursor: pointer;
 }
-.newuser-upload-label {
+.newUserUploadLabel {
   display: flex;
   align-items: center;
   width: 100%;
   cursor: pointer;
 }
-.newuser-upload-label i {
+.newUserUploadLabel i {
   margin-right: 10px;
   color: $darkGrey;
   cursor: pointer;
 }
-.newuser-upload-text {
+.newUserUploadText {
   flex-grow: 1;
   text-align: center;
   color: $darkGrey;
   font-weight: $font-weight;
 }
 
-.newuser-delete-btn {
+.newUserDeleteBtn {
   background: none;
   border: none;
   color: $darkGrey;
@@ -209,7 +207,7 @@ const uploadUsers = async () => {
 }
 
 /* check mark sektion */
-.newuser-checkbox-section {
+.newUserCheckbox {
     margin-bottom: 20px;
     text-align: left;
     display: flex;
@@ -217,21 +215,21 @@ const uploadUsers = async () => {
     align-items: center;
     accent-color: $primaryPurple;
 }
-.newuser-checkbox-item {
+.newUserCheckboxItem {
   display: flex;
   align-items: center;
   font-size: $font-size-desktop;
 }
-.newuser-checkbox-item input {
+.newUserCheckboxItem input {
   margin-right: 10px;
 }
 
 /* Group Input */
-.newuser-group-input-section {
+.NewUserGroupSection {
   margin-bottom: 20px;
   text-align: left;
 }
-.newuser-group-input {
+.newUserGroupInput {
   width: 100%;
   padding: 8px;
   border: 1px solid $lightGrey;
@@ -240,26 +238,26 @@ const uploadUsers = async () => {
 }
 
 /* Buttons */
-.newuser-button-section {
+.newUserButtons {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   gap: 10px;
 }
-.newuser-cancel-btn {
+.newUserCancelBtn {
     background-color: $white-color;
     color: $primaryPurple;
     border: 1px solid $primaryPurple;
     cursor: pointer
 }
-.newuser-save-btn {
+.newUserSaveBtn {
     background-color: $primaryPurple;
     color: $white-color;
     border: none;
     cursor: pointer;
 }
 
-.newuser-cancel-btn, .newuser-save-btn { 
+.newUserCancelBtn, .newUserSaveBtn { 
     padding: 6px 12px; 
     font-size: $font-size-desktop;   
     border-radius: 10px; 
@@ -288,13 +286,13 @@ const uploadUsers = async () => {
 }
 
 /* Hover effects */
-.newuser-cancel-btn:hover {
+.newUserCancelBtn:hover {
     background-color: $lightGrey;  
     color: $darkGrey;  
     border-color: $lightGrey;  
   }
   
-  .newuser-save-btn:hover {
+  .newUserSaveBtn:hover {
     background-color: $lightGrey;  
     color: $darkGrey;  
     border-color: $lightGrey;  
