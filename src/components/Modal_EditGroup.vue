@@ -1,54 +1,54 @@
 <template>
-  <div v-if="modelValue" class="edit-modal-overlay">
-    <div class="edit-modal-content">
-      <button class="edit-close-button" @click="handleClose">✖</button>
-      <h1 class="edit-title">Edit {{ groupName }}</h1>
+  <div v-if="modelValue" class="editGroupModalOverlay">
+    <div class="editGroupModalContent">
+      <button class="editCloseBtn" @click="Close">✖</button>
+      <h1 class="groupName">Edit {{ groupName }}</h1>
 
-      <div class="edit-member-list-header">
-        <div class="edit-select-all">
-          <input type="checkbox" v-model="selectAll" @change="toggleAll" /> All
+      <div class="EditGroupMemberHeader">
+        <div class="editGroupselectAllMembers">
+          <input type="checkbox" v-model="selectAllMembers" @change="toogleAll" /> All
         </div>
-        <div class="edit-icons">
-          <button @click="showAddForm = true" class="edit-icon-button-add">
+        <div class="editIcons">
+          <button @click="showNewMember = true" class="EditIconAdd">
             <i class="fas fa-plus"></i>
           </button>
-          <button @click="deleteSelectedMembers" class="edit-icon-button-delete">
+          <button @click="deleteCheckedMembers" class="editIconDelete">
             <i class="fas fa-trash-alt"></i>
           </button>
         </div>
       </div>
-      <hr class="edit-divider" />
+      <hr class="EditLine" />
 
-      <div class="edit-member-list">
-        <ul class="edit-member-list-inner">
-          <li v-for="member in teamMembers" :key="member.userId" class="edit-member-item">
-            <div class="edit-member-info">
+      <div class="editMemberList">
+        <ul class="editMemberList-All">
+          <li v-for="member in teamMembers" :key="member.userId" class="editNewMemberItem">
+            <div class="EditNewMemberInfo">
               <input type="checkbox" :value="member.userId" v-model="selectedMembers" />
-              <span class="edit-member-name">{{ member.firstName }} {{ member.lastName }}</span>
+              <span class="EditNewMemberName">{{ member.firstName }} {{ member.lastName }}</span>
             </div>
           </li>
         </ul>
       </div>
 
-      <div class="edit-footer">
-        <button class="edit-cancel-button" @click="handleClose">Cancel</button>
-        <button class="edit-save-button" @click="handleSave">Save changes</button>
+      <div class="editGroupFooter">
+        <button class="editCancelBtn" @click="Close">Cancel</button>
+        <button class="editSaveBtn" @click="handleSave">Save</button>
       </div>
     </div>
 
-    <div v-if="showAddForm" class="edit-modal-overlay">
-      <div class="edit-modal-content">
-        <button class="edit-close-button" @click="showAddForm = false">
+    <div v-if="showNewMember" class="editGroupModalOverlay">
+      <div class="editGroupModalContent">
+        <button class="editCloseBtn" @click="showNewMember = false">
           <i class="fas fa-times"></i>
         </button>
-        <h1 class="edit-title">Add Member</h1>
+        <h1 class="groupName">Add Member</h1>
 
-        <div class="addMember-form-group">
-          <input v-model="newMember.firstName" placeholder="First Name" class="addMember-form-input" />
-          <input v-model="newMember.lastName" placeholder="Last Name" class="addMember-form-input" />
-          <input v-model="newMember.uclMail" placeholder="UCL Mail" class="addMember-form-input" />
+        <div class="addNewMemberFormGroup">
+          <input v-model="newMember.firstName" placeholder="First Name" class="addNewMemberDetails" />
+          <input v-model="newMember.lastName" placeholder="Last Name" class="addNewMemberDetails" />
+          <input v-model="newMember.uclMail" placeholder="UCL Mail" class="addNewMemberDetails" />
           <div class="addMember-dropdown-container">
-            <select v-model="newMember.roleId" class="addMember-input-field">
+            <select v-model="newMember.roleId" class="addNewMemberInputField">
               <option value="" disabled selected>Select Role</option>
               <option value="2">Teacher</option>
               <option value="3">Student</option>
@@ -57,9 +57,9 @@
           </div>
         </div>
 
-        <div class="edit-footer">
-          <button class="edit-cancel-button" @click="showAddForm = false">Cancel</button>
-          <button class="edit-save-button" @click="addNewMember">Add Member</button>
+        <div class="editGroupFooter">
+          <button class="editCancelBtn" @click="showNewMember = false">Cancel</button>
+          <button class="editSaveBtn" @click="addNewMember">Add Member</button>
         </div>
       </div>
     </div>
@@ -85,8 +85,8 @@ const emit = defineEmits(['update:modelValue', 'save', 'close']);
 // the variables 
 const teamMembers = ref([]);
 const selectedMembers = ref([]);
-const selectAll = ref(false);
-const showAddForm = ref(false);
+const selectAllMembers = ref(false);
+const showNewMember = ref(false);
 const newMember = ref({
   firstName: '',
   lastName: '',
@@ -101,21 +101,21 @@ async function fetchTeamMembers() {
     const response = await ApiService.get(`/users/team/${props.teamId}/members`);
     teamMembers.value = response.data.users;
   } catch (error) {
-    console.error('Error fetching team members:', error);
+    console.error('Error with getting hold of members:', error);
   }
 }
 
 // if a user is check with a checkmark you can delete them 
-async function deleteSelectedMembers() {
+async function deleteCheckedMembers() {
   try {
     for (const userId of selectedMembers.value) {
       await ApiService.delete(`/users/${userId}`);
     }
     await fetchTeamMembers();
     selectedMembers.value = [];
-    selectAll.value = false;
+    selectAllMembers.value = false;
   } catch (error) {
-    console.error('Error deleting members:', error);
+    console.error('Error while deleting members:', error);
   }
 }
 
@@ -131,7 +131,7 @@ async function addNewMember() {
     };
     await ApiService.post('/users/new', userData);
     await fetchTeamMembers();
-    showAddForm.value = false;
+    showNewMember.value = false;
     newMember.value = {
       firstName: '',
       lastName: '',
@@ -151,8 +151,8 @@ watch(() => props.modelValue, (isModalOpen) => {
 });
 
 // make it so you can click all checkmarks 
-function toggleAll() {
-  if (selectAll.value) {
+function toogleAll() {
+  if (selectAllMembers.value) {
     selectedMembers.value = teamMembers.value.map(member => member.userId);
   } else {
     selectedMembers.value = [];
@@ -160,7 +160,7 @@ function toggleAll() {
 }
 
 // does to the user can close the modal
-function handleClose() {
+function Close() {
   emit('update:modelValue', false);
   emit('close');
 }
@@ -168,13 +168,13 @@ function handleClose() {
 // does that we can save the changes 
 function handleSave() {
   emit('save', teamMembers.value);
-  handleClose();
+  Close();
 }
 
 </script>
 
 <style lang="scss">
-.edit-modal-overlay {
+.editGroupModalOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -187,7 +187,7 @@ function handleSave() {
   z-index: 1000;
 }
 
-.edit-modal-content {
+.editGroupModalContent {
   background-color: $white-color;
   padding: 30px;
   width: 500px;
@@ -200,7 +200,7 @@ function handleSave() {
   max-height: 90vh;
 }
 
-.edit-close-button {
+.editCloseBtn {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -211,30 +211,30 @@ function handleSave() {
   color: $primaryPurple;
 }
 
-.edit-title {
+.groupName {
   font-size: $font-size-h1;
   margin-bottom: 25px;
   font-weight: $font-weight;
   text-align: left;
 }
 
-.edit-member-list-header {
+.EditGroupMemberHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.edit-select-all {
+.editGroupselectAllMembers {
   font-weight: bold;
   accent-color: $primaryPurple;
 }
 
-.edit-icons {
+.editIcons {
   display: flex;
   gap: 10px;
 }
 
-.edit-icon-button-delete {
+.editIconDelete {
   background: none;
   border: none;
   color: $dangerRed;
@@ -242,7 +242,7 @@ function handleSave() {
   cursor: pointer;
 }
 
-.edit-icon-button-add {
+.EditIconAdd {
   background: none;
   border: none;
   color: $online;
@@ -250,63 +250,63 @@ function handleSave() {
   cursor: pointer;
 }
 
-.edit-divider {
+.EditLine {
   border: none;
   border-top: 1px solid $lightGrey;
   margin: 10px 0;
 }
 
-.edit-member-list {
+.editMemberList {
   max-height: 300px;
   overflow-y: auto;
 }
 
-.edit-member-list-inner {
+.editMemberList-All {
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
 
-.edit-member-item {
+.editNewMemberItem {
   display: flex;
   align-items: center;
   padding: 10px 0;
   accent-color: $primaryPurple;
 }
 
-.edit-member-info {
+.EditNewMemberInfo {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.edit-member-name {
+.EditNewMemberName {
   text-align: left;
 }
 
-.edit-footer {
+.editGroupFooter {
   display: flex;
   justify-content: flex-start;
   margin-top: 20px;
   gap: 10px;
 }
 
-.edit-cancel-button {
+.editCancelBtn {
   background-color: $white-color;
   color: $primaryPurple;
   border: 1px solid $primaryPurple;
   cursor: pointer
 }
 
-.edit-save-button {
+.editSaveBtn {
   background-color: $primaryPurple;
   color: $white-color;
   border: none;
   cursor: pointer;
 }
 
-.edit-cancel-button,
-.edit-save-button {
+.editCancelBtn,
+.editSaveBtn {
   padding: 6px 12px;
   font-size: $font-size-desktop;
   border-radius: 10px;
@@ -314,15 +314,15 @@ function handleSave() {
   font-weight: $font-weight;
 }
 
-.addMember-form-group {
+.addNewMemberFormGroup {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin: 1rem 0;
 }
 
-.addMember-form-input,
-.addMember-input-field {
+.addNewMemberDetails,
+.addNewMemberInputField {
   padding: 0.9rem 1.2rem;
   margin: 10px 0;
   width: 100%;
@@ -332,7 +332,7 @@ function handleSave() {
   font-size: $font-size-desktop;
 }
 
-.addMember-input-field {
+.addNewMemberInputField {
   appearance: none;
   padding-right: 30px;
   color: $darkGrey;
@@ -353,24 +353,24 @@ function handleSave() {
   color: $primaryPurple;
 }
 
-.edit-cancel-button:hover {
+.editCancelBtn:hover {
   background-color: $lightGrey;
   color: $darkGrey;
   border-color: $lightGrey;
 }
 
-.edit-save-button:hover {
+.editSaveBtn:hover {
   background-color: $lightGrey;
   color: $darkGrey;
   border-color: $lightGrey;
 }
 
 @media (max-height: 600px) {
-  .edit-modal-content {
+  .editGroupModalContent {
     max-height: 90vh;
   }
 
-  .edit-member-list {
+  .editMemberList {
     max-height: 60vh;
   }
 }
