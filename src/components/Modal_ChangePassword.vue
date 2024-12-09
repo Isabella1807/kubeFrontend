@@ -1,31 +1,31 @@
 <template>
-  <div v-if="show" class="changepasswordmodal-overlay">
-    <div class="changepasswordmodal-content">
-      <div class="changepasswordmodal-header">
+  <div v-if="show" class="change-password-modal-overlay">
+    <div class="change-password-modal-content">
+      <div class="change-password-modal-header">
         <h1>Change Password</h1>
-        <button class="changepasswordmodal-close" @click="close">
+        <button class="change-password-modal-close" @click="close">
           ✖
         </button>
       </div>
-      <form @submit.prevent="changePassword" class="changepassword">
+      <form @submit.prevent="changePassword" class="change-password">
         <label>
           Old Password
-          <input type="password" v-model="oldPassword" placeholder="Enter old password..." />
+          <input type="password" v-model="old_Password" placeholder="Enter old password..." />
         </label>
         <label>
           New Password
-          <input type="password" v-model="newPassword" placeholder="Enter new password..." />
+          <input type="password" v-model="new_Password" placeholder="Enter new password..." />
         </label>
         <label>
           Repeat New Password
-          <input type="password" v-model="repeatPassword" placeholder="Repeat new password..." />
+          <input type="password" v-model="repeat_Password" placeholder="Repeat new password..." />
         </label>
-        <p v-if="error" class="changepassworderror-message">{{ error }}</p>
-        <div class="changepasswordbuttons">
-          <button type="button" @click="close" class="changepasswordcancel-button">
+        <p v-if="error" class="change-password-error-message">{{ error }}</p>
+        <div class="change-password-buttons">
+          <button type="button" @click="close" class="change-password-cancel-button">
             <i class="fas fa-times"></i> Cancel
           </button>
-          <button type="submit" class="changepasswordsave-button">
+          <button type="submit" class="change-password-save-button">
             <i class="fas fa-save"></i> Change Password
           </button>
         </div>
@@ -91,14 +91,14 @@ const changePassword = async () => {
 
 <style lang="scss" scoped>
 
-.changepassworderror-message {
+.change-password-error-message {
   color: $dangerRed;
   font-size: $font-size-desktop;
   margin-top: 10px;
   text-align: left;
 }
 
-.changepasswordmodal-overlay {
+.change-password-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -111,7 +111,7 @@ const changePassword = async () => {
   z-index: 1000;
 }
 
-.changepasswordmodal-content {
+.change-password-modal-content {
   background-color: $white-color;
   padding: 30px;
   width: 500px;
@@ -122,14 +122,14 @@ const changePassword = async () => {
   text-align: center;
 }
 
-.changepasswordmodal-header {
+.change-password-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.changepasswordmodal-close {
+.change-password-modal-close {
   position: absolute !important;
   top: 10px !important; 
   right: 10px !important;
@@ -141,13 +141,13 @@ const changePassword = async () => {
   text-align: right !important;
 }
 
-.changepasswordmodal-content h1 {
+.change-password-modal-content h1 {
   font-size: 35px;
   font-weight: $font-weight;
   text-align: left;
 }
 
-.changepassword label {
+.change-password label {
   display: block;
   font-size: 15px;
   margin-bottom: 10px;
@@ -155,7 +155,7 @@ const changePassword = async () => {
   font-weight: $font-weight;
 }
 
-.changepasswordmodal-overlay input {
+.change-password-modal-overlay input {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
@@ -167,14 +167,14 @@ const changePassword = async () => {
   color: $darkGrey;
 }
 
-.changepasswordbuttons {
+.change-password-buttons {
   display: flex;
   justify-content: flex-start;
   gap: 10px;
   margin-top: 25px;
 }
 
-.changepasswordcancel-button {
+.change-password-cancel-button {
   background-color: $white-color !important;
   color: $primaryPurple !important;
   border: 1px solid $primaryPurple !important;
@@ -186,7 +186,7 @@ const changePassword = async () => {
   font-weight: $font-weight!important;
 }
 
-.changepasswordsave-button {
+.change-password-save-button {
   background-color: $primaryPurple !important;
   color: $white-color !important;
   border: none !important;
@@ -198,41 +198,41 @@ const changePassword = async () => {
   font-weight: $font-weight !important;
 }
 
-.changepasswordcancel-button:hover {
+.change-password-cancel-button:hover {
   background-color: $lightGrey !important;
   color: $darkGrey !important;
   border-color: $lightGrey  !important;
 }
 
-.changepasswordsave-button:hover {
+.change-password-save-button:hover {
   background-color: $lightGrey !important;
   color: $darkGrey !important;
   border-color: $lightGrey  !important;
 }
 
 @media (max-width: 768px) {
-  .changepasswordmodal-content {
+  .change-password-modal-content {
     width: 90%;
     padding: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .changepasswordmodal-content {
+  .change-password-modal-content {
     width: 95%;
     padding: 15px;
   }
 
-  .changepasswordmodal-header h1 {
+  .change-password-modal-header h1 {
     font-size: 25px;
   }
 
-  .changepasswordbuttons {
+  .change-password-buttons {
     flex-direction: column;
   }
 
-  .changepasswordcancel-button,
-  .changepasswordsave-button {
+  .change-password-cancel-button,
+  .change-password-save-button {
     width: 100%;
     margin-bottom: 10px;
   }
