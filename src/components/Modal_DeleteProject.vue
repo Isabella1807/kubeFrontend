@@ -56,7 +56,7 @@ const handleConfirm = () => {
 }
 
 .deletemodal {
-  background-color: #fff;
+  background-color: $white-color;
   padding: 30px;
   width: 500px;
   max-width: 90%;
