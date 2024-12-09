@@ -1,55 +1,55 @@
 <template>
-  <div v-if="group_Modal" class="edit_Modal_Overlay">
-    <div class="edit_Modal_Content">
-      <button class="edit_Close_Button" @click="close">✖</button>
-      <h1 class="edit_Title">Edit {{ groupName }}</h1>
+  <div v-if="modelValue" class="edit-modal-overlay">
+    <div class="edit-modal-content">
+      <button class="edit-close-button" @click="handleClose">✖</button>
+      <h1 class="edit-title">Edit {{ groupName }}</h1>
 
-      <div class="edit_Member_Header">
-        <div class="edit_Select_All">
-          <input type="checkbox" v-model="select_All" @change="toogle_All" /> All
+      <div class="edit-member-list-header">
+        <div class="edit-select-all">
+          <input type="checkbox" v-model="selectAll" @change="toggleAll" /> All
         </div>
-        <div class="edit_Icons">
-          <button @click="open_All_Member = true" class="edit_Icon_Button_Add">
+        <div class="edit-icons">
+          <button @click="showAddForm = true" class="edit-icon-button-add">
             <i class="fas fa-plus"></i>
           </button>
-          <button @click="delete_Checked_Members" class="edit_Icon_Button_Delete">
+          <button @click="deleteSelectedMembers" class="edit-icon-button-delete">
             <i class="fas fa-trash-alt"></i>
           </button>
         </div>
       </div>
-      <hr class="edit_Line" />
+      <hr class="edit-divider" />
 
-      <div class="edit_Member_List">
-        <ul class="edit_Member_List_All">
-          <li v-for="member in team_Members" :key="member.userId" class="edit_Member_Item">
-            <div class="edit_Member_Info">
-              <input type="checkbox" :value="member.userId" v-model="checked_Members" />
-              <span class="edit_Member_Name">{{ member.firstName }} {{ member.lastName }}</span>
+      <div class="edit-member-list">
+        <ul class="edit-member-list-inner">
+          <li v-for="member in teamMembers" :key="member.userId" class="edit-member-item">
+            <div class="edit-member-info">
+              <input type="checkbox" :value="member.userId" v-model="selectedMembers" />
+              <span class="edit-member-name">{{ member.firstName }} {{ member.lastName }}</span>
             </div>
           </li>
         </ul>
       </div>
 
-      <div class="edit_Buttons">
-        <button class="edit_Cancel_Btn" @click="close">Cancel</button>
-        <button class="edit_Save_Btn" @click="save">Save</button>
+      <div class="edit-footer">
+        <button class="edit-cancel-button" @click="handleClose">Cancel</button>
+        <button class="edit-save-button" @click="handleSave">Save changes</button>
       </div>
     </div>
 
-    <div v-if="open_All_Member" class="edit_Modal_Overlay">
-      <div class="edit_Modal_Content">
-        <button class="edit_Close_Button" @click="open_All_Member = false">
+    <div v-if="showAddForm" class="edit-modal-overlay">
+      <div class="edit-modal-content">
+        <button class="edit-close-button" @click="showAddForm = false">
           <i class="fas fa-times"></i>
         </button>
-        <h1 class="edit_Title">Add new member</h1>
+        <h1 class="edit-title">Add Member</h1>
 
-        <div class="add_Member_Change">
-          <input v-model="membernew.firstName" placeholder="First Name" class="add_Member_Form_Input" />
-          <input v-model="membernew.lastName" placeholder="Last Name" class="add_Member_Form_Input" />
-          <input v-model="membernew.uclMail" placeholder="UCL Mail" class="add_Member_Form_Input" />
-          <div class="add_Member_Dropdown">
-            <select v-model="membernew.roleId" class="input_Field_Member">
-              <option value="" disabled selected>Pick a Role</option>
+        <div class="addMember-form-group">
+          <input v-model="newMember.firstName" placeholder="First Name" class="addMember-form-input" />
+          <input v-model="newMember.lastName" placeholder="Last Name" class="addMember-form-input" />
+          <input v-model="newMember.uclMail" placeholder="UCL Mail" class="addMember-form-input" />
+          <div class="addMember-dropdown-container">
+            <select v-model="newMember.roleId" class="addMember-input-field">
+              <option value="" disabled selected>Select Role</option>
               <option value="2">Teacher</option>
               <option value="3">Student</option>
             </select>
@@ -57,9 +57,9 @@
           </div>
         </div>
 
-        <div class="edit_Buttons">
-          <button class="edit_Cancel_Btn" @click="open_All_Member = false">Cancel</button>
-          <button class="edit_Save_Btn" @click="add_Member_New">Add Member</button>
+        <div class="edit-footer">
+          <button class="edit-cancel-button" @click="showAddForm = false">Cancel</button>
+          <button class="edit-save-button" @click="addNewMember">Add Member</button>
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@ import ApiService from '@/services/apiService';
 
 // what the modal is using from the parent 
 const props = defineProps({
-  group_Modal: Boolean,
+  modelValue: Boolean,
   groupName: String,
   teamId: {
     type: Number,
@@ -80,14 +80,14 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['update:group_Modal', 'save', 'close']);
+const emit = defineEmits(['update:modelValue', 'save', 'close']);
 
 // the variables 
-const team_Members = ref([]);
-const checked_Members = ref([]);
-const select_All = ref(false);
-const open_All_Member = ref(false);
-const membernew = ref({
+const teamMembers = ref([]);
+const selectedMembers = ref([]);
+const selectAll = ref(false);
+const showAddForm = ref(false);
+const newMember = ref({
   firstName: '',
   lastName: '',
   uclMail: '',
@@ -95,44 +95,44 @@ const membernew = ref({
 });
 
 // gets the teams from the database
-async function fetchteam_Members() {
+async function fetchTeamMembers() {
   if (!props.teamId) return;
   try {
     const response = await ApiService.get(`/users/team/${props.teamId}/members`);
-    team_Members.value = response.data.users;
+    teamMembers.value = response.data.users;
   } catch (error) {
     console.error('Error fetching team members:', error);
   }
 }
 
 // if a user is check with a checkmark you can delete them 
-async function delete_Checked_Members() {
+async function deleteSelectedMembers() {
   try {
-    for (const userId of checked_Members.value) {
+    for (const userId of selectedMembers.value) {
       await ApiService.delete(`/users/${userId}`);
     }
-    await fetchteam_Members();
-    checked_Members.value = [];
-    select_All.value = false;
+    await fetchTeamMembers();
+    selectedMembers.value = [];
+    selectAll.value = false;
   } catch (error) {
     console.error('Error deleting members:', error);
   }
 }
 
 // does you can add someone new to a team 
-async function add_Member_New() {
+async function addNewMember() {
   try {
     const userData = {
-      firstName: membernew.value.firstName,
-      lastName: membernew.value.lastName,
-      uclMail: membernew.value.uclMail,
-      roleId: membernew.value.roleId,
+      firstName: newMember.value.firstName,
+      lastName: newMember.value.lastName,
+      uclMail: newMember.value.uclMail,
+      roleId: newMember.value.roleId,
       teamId: props.teamId
     };
     await ApiService.post('/users/new', userData);
-    await fetchteam_Members();
-    open_All_Member.value = false;
-    membernew.value = {
+    await fetchTeamMembers();
+    showAddForm.value = false;
+    newMember.value = {
       firstName: '',
       lastName: '',
       uclMail: '',
@@ -144,37 +144,37 @@ async function add_Member_New() {
 }
 
 // keeps an eye out for the modal is open or not
-watch(() => props.group_Modal, (isModalOpen) => {
+watch(() => props.modelValue, (isModalOpen) => {
   if (isModalOpen && props.teamId) {
-    fetchteam_Members();
+    fetchTeamMembers();
   }
 });
 
 // make it so you can click all checkmarks 
-function toogle_All() {
-  if (select_All.value) {
-    checked_Members.value = team_Members.value.map(member => member.userId);
+function toggleAll() {
+  if (selectAll.value) {
+    selectedMembers.value = teamMembers.value.map(member => member.userId);
   } else {
-    checked_Members.value = [];
+    selectedMembers.value = [];
   }
 }
 
 // does to the user can close the modal
-function close() {
-  emit('update:group_Modal', false);
+function handleClose() {
+  emit('update:modelValue', false);
   emit('close');
 }
 
 // does that we can save the changes 
-function save() {
-  emit('save', team_Members.value);
-  close();
+function handleSave() {
+  emit('save', teamMembers.value);
+  handleClose();
 }
 
 </script>
 
 <style lang="scss">
-.edit_Modal_Overlay {
+.edit-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -187,7 +187,7 @@ function save() {
   z-index: 1000;
 }
 
-.edit_Modal_Content {
+.edit-modal-content {
   background-color: $white-color;
   padding: 30px;
   width: 500px;
@@ -200,7 +200,7 @@ function save() {
   max-height: 90vh;
 }
 
-.edit_Close_Button {
+.edit-close-button {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -211,30 +211,30 @@ function save() {
   color: $primaryPurple;
 }
 
-.edit_Title {
+.edit-title {
   font-size: $font-size-h1;
   margin-bottom: 25px;
   font-weight: $font-weight;
   text-align: left;
 }
 
-.edit_Member_Header {
+.edit-member-list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.edit_Select_All {
+.edit-select-all {
   font-weight: bold;
   accent-color: $primaryPurple;
 }
 
-.edit_Icons {
+.edit-icons {
   display: flex;
   gap: 10px;
 }
 
-.edit_Icon_Button_Delete {
+.edit-icon-button-delete {
   background: none;
   border: none;
   color: $dangerRed;
@@ -242,7 +242,7 @@ function save() {
   cursor: pointer;
 }
 
-.edit_Icon_Button_Add {
+.edit-icon-button-add {
   background: none;
   border: none;
   color: $online;
@@ -250,63 +250,63 @@ function save() {
   cursor: pointer;
 }
 
-.edit_Line {
+.edit-divider {
   border: none;
   border-top: 1px solid $lightGrey;
   margin: 10px 0;
 }
 
-.edit_Member_List {
+.edit-member-list {
   max-height: 300px;
   overflow-y: auto;
 }
 
-.edit_Member_List_All {
+.edit-member-list-inner {
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
 
-.edit_Member_Item {
+.edit-member-item {
   display: flex;
   align-items: center;
   padding: 10px 0;
   accent-color: $primaryPurple;
 }
 
-.edit_Member_Info {
+.edit-member-info {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.edit_Member_Name {
+.edit-member-name {
   text-align: left;
 }
 
-.edit_Buttons {
+.edit-footer {
   display: flex;
   justify-content: flex-start;
   margin-top: 20px;
   gap: 10px;
 }
 
-.edit_Cancel_Btn {
+.edit-cancel-button {
   background-color: $white-color;
   color: $primaryPurple;
   border: 1px solid $primaryPurple;
   cursor: pointer
 }
 
-.edit_Save_Btn {
+.edit-save-button {
   background-color: $primaryPurple;
   color: $white-color;
   border: none;
   cursor: pointer;
 }
 
-.edit_Cancel_Btn,
-.edit_Save_Btn {
+.edit-cancel-button,
+.edit-save-button {
   padding: 6px 12px;
   font-size: $font-size-desktop;
   border-radius: 10px;
@@ -314,15 +314,15 @@ function save() {
   font-weight: $font-weight;
 }
 
-.add_Member_Change {
+.addMember-form-group {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin: 1rem 0;
 }
 
-.add_Member_Form_Input,
-.input_Field_Member {
+.addMember-form-input,
+.addMember-input-field {
   padding: 0.9rem 1.2rem;
   margin: 10px 0;
   width: 100%;
@@ -332,14 +332,14 @@ function save() {
   font-size: $font-size-desktop;
 }
 
-.input_Field_Member {
+.addMember-input-field {
   appearance: none;
   padding-right: 30px;
   color: $darkGrey;
   background-color: $lightGrey;
 }
 
-.add_Member_Dropdown {
+.addMember-dropdown-container {
   position: relative;
   width: 100%;
 }
@@ -353,24 +353,24 @@ function save() {
   color: $primaryPurple;
 }
 
-.edit_Cancel_Btn:hover {
+.edit-cancel-button:hover {
   background-color: $lightGrey;
   color: $darkGrey;
   border-color: $lightGrey;
 }
 
-.edit_Save_Btn:hover {
+.edit-save-button:hover {
   background-color: $lightGrey;
   color: $darkGrey;
   border-color: $lightGrey;
 }
 
 @media (max-height: 600px) {
-  .edit_Modal_Content {
+  .edit-modal-content {
     max-height: 90vh;
   }
 
-  .edit_Member_List {
+  .edit-member-list {
     max-height: 60vh;
   }
 }
