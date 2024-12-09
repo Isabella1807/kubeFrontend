@@ -93,7 +93,11 @@
 
             <transition name="top-slider">
               <div v-if="dropdownOpen" class="top-slider">
-                <button class="changepass-btn">Change Password</button>
+                <ModalChangePassword :show="showChangePasswordModal" @close="showChangePasswordModal = false"
+                  @change="handlePasswordChange" />
+                <button @click="showChangePasswordModal = true" class="changepass-btn">
+                  Change Password
+                </button>
               </div>
             </transition>
             <!-- Settings Icon - Placér den i bunden -->
