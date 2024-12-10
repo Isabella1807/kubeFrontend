@@ -27,7 +27,7 @@
               </label>
           </div>        
           <div v-if="pickStudent || pickTeacher" class="newUserRolePick">
-              <input type="text" v-model="groupName" placeholder="Group name" class="newUserGroupInput"/>
+              <input type="text" v-model="groupName" placeholder="Group name" class="newUserOwnNameInput"/>
           </div>
           <div class="newUserButtons">
               <button class="newUserCancelBtn" @click="Close">
@@ -58,13 +58,6 @@ const groupName = ref('');
 const isLoading = ref(false);
 const error = ref('');
 const fileToUpload = ref(null);
-
-//if a file is uploaded the save button can be clicked on
-const canSave = computed(() => 
-  nameOfFile.value && 
-  fileToUpload.value && 
-  (pickTeacher.value || (pickStudent.value && groupName.value))
-);
 
 // this handles the file upload event, name the file and save the file
 const FileUpload = (event) => {
@@ -113,6 +106,7 @@ const uploadUsers = async () => {
       isLoading.value = false;
   }
 };
+
 </script>
 
 <style lang="scss">
@@ -229,7 +223,7 @@ const uploadUsers = async () => {
   margin-bottom: 20px;
   text-align: left;
 }
-.newUserGroupInput {
+.newUserOwnNameInput {
   width: 100%;
   padding: 8px;
   border: 1px solid $lightGrey;
