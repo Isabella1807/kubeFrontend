@@ -7,7 +7,7 @@ const ApiService = {
 
   // Add a method to set JWT token
   setToken(token) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    axios.defaults.headers.common["Authorization"] = token;
   },
 
   // Clear the token
