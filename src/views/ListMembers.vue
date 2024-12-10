@@ -40,7 +40,7 @@
           <td>{{ group.memberCount }}</td>
           <td>
             <div class="flex flex-end">
-              <button class="edit-btn" @click="EditGroup(group)">
+              <button class="editBtn" @click="EditGroup(group)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" />
               </button>
               <button class="deleteBtn" @click="singleDelete(group.teamId)">
@@ -283,7 +283,7 @@ table {
   }
 }
 
-.edit-btn {
+.editBtn {
   border: none;
   font-size: $iconsSize;
   background: none;
@@ -304,7 +304,7 @@ table {
 }
 
 [color-scheme='dark'] {
-  .edit-btn {
+  .editBtn {
     color: $white-color;
 
     svg {
