@@ -4,7 +4,7 @@
       <IconButton icon="addIcon" large primary @click="openCreateUserModal" />
       <h1 class="createProjectText" @click="openCreateUserModal">Create new user</h1>
     </div>
-    <NewUserModal v-if="isCreateUserModalVisible" @close="closeCreateUserModal" />
+    <NewUserModal v-if="isCreateUserModalVisible" @close="closeCreateUserModal" @uploadSucces="groupUploadSucces" />
     <Modal_EditGroup v-model="isEditModalVisible" :groupName="currentTeam?.teamName"
       :teamId="Number(currentTeam?.teamId)" @close="closeEditModal" @save="saveTeamChanges" />
     <DeleteModal v-if="isDeleteModalVisible" :selectedCount="selectedGroups.length" @confirm="deleteConfirm"
@@ -93,6 +93,7 @@ const openCreateUserModal = () => {
 
 const closeCreateUserModal = () => {
   isCreateUserModalVisible.value = false;
+  fetchGroups();
 };
 
 // open the modal for edit group and making sure we are saving teams that are being edit 
@@ -120,6 +121,11 @@ const openDeleteModal = () => {
 const closeDeleteModal = () => {
   isDeleteModalVisible.value = false;
 };
+
+const groupUploadSucces = async () => {
+  await fetchGroups();
+  closeCreateUserModal();
+}
 
 // see if there more checkmarks being clicked on with teams 
 const showMoreGroupsSelected = computed(() => {
