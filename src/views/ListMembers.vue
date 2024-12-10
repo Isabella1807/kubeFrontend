@@ -13,18 +13,18 @@
       <thead>
         <tr>
           <th>
-            <input class="checkbox-btn" type="checkbox" :checked="isAllSelected" @change="toggleAllGroups" />
+            <input class="checkboxBtn" type="checkbox" :checked="isAllSelected" @change="toggleAllGroups" />
           </th>
           <th>
             Groups
-            <button class="sort-btn" @click="toggleSort">
+            <button class="sortBtn" @click="toggleSort">
               <font-awesome-icon :icon="['fas', 'sort-down']" />
             </button>
           </th>
           <th>Members</th>
           <th>
             <div class="flex flex-end">
-              <button v-if="showMoreGroupsSelected" class="delete-btn" @click="openDeleteModal()">
+              <button v-if="showMoreGroupsSelected" class="deleteBtn" @click="openDeleteModal()">
                 <font-awesome-icon :icon="['far', 'trash-can']" />
               </button>
             </div>
@@ -34,7 +34,7 @@
       <tbody>
         <tr v-for="group in groups" :key="group.teamId">
           <td>
-            <input class="checkbox-btn" type="checkbox" v-model="selectedGroups" :value="group.teamId" />
+            <input class="checkboxBtn" type="checkbox" v-model="selectedGroups" :value="group.teamId" />
           </td>
           <td class="font-bold">{{ group.teamName }}</td>
           <td>{{ group.memberCount }}</td>
@@ -43,7 +43,7 @@
               <button class="edit-btn" @click="EditGroup(group)">
                 <font-awesome-icon :icon="['far', 'pen-to-square']" />
               </button>
-              <button class="delete-btn" @click="singleDelete(group.teamId)">
+              <button class="deleteBtn" @click="singleDelete(group.teamId)">
                 <font-awesome-icon :icon="['far', 'trash-can']" />
               </button>
             </div>
@@ -240,7 +240,7 @@ const toggleSort = async () => {
   align-content: center;
 }
 
-.sort-btn {
+.sortBtn {
   border: none;
   color: $primaryPurple;
   background: none;
@@ -253,7 +253,7 @@ const toggleSort = async () => {
   }
 }
 
-.checkbox-btn {
+.checkboxBtn {
   accent-color: $primaryPurple;
   height: 20px;
   width: 20px;
@@ -290,7 +290,7 @@ table {
   cursor: pointer;
 }
 
-.delete-btn {
+.deleteBtn {
   border: none;
   color: $dangerRed;
   font-size: $iconsSize;
