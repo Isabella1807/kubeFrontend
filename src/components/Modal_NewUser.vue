@@ -12,7 +12,7 @@
                       </span>
                       <input type="file" accept=".csv" @change="FileUpload" hidden />
                   </label>
-                  <button v-if="nameOfFile" class="newUserDeleteBtn" @click="refreahFile">✖</button>
+                  <button v-if="nameOfFile" class="newUserDeleteBtn" @click="refreshFile">✖</button>
               </div>
           </div>
           
@@ -70,7 +70,7 @@ const FileUpload = (event) => {
 };
 
 // does that you can remove the uploaded file 
-const refreahFile = () => {
+const refreshFile = () => {
   nameOfFile.value = '';
   fileToUpload.value = null;
   error.value = '';
