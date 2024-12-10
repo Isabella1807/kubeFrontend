@@ -60,12 +60,15 @@ const loginUser = async () => {
     });
 
     const token = response.data.token;
+    const roleId = response.data.role;
 
     // Hvis "Remember me" er valgt, gem token i localStorage
     if (rememberMe.value) {
       localStorage.setItem('token', token);
+      localStorage.setItem('roleId', roleId);
     } else {
       sessionStorage.setItem('token', token); // Gem token i sessionStorage hvis ikke "Remember me"
+      sessionStorage.setItem('roleId', roleId);
     }
 
     // Sæt tokenet globalt i Axios header (så det bruges til fremtidige anmodninger)
