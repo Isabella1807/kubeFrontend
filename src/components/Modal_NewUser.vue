@@ -26,8 +26,8 @@
                   Teachers
               </label>
           </div>        
-          <div v-if="pickStudent || pickTeacher" class="NewUserGroupSection">
-              <input type="text" v-model="groupName" placeholder="Group name" class="newUserGroupInput"/>
+          <div v-if="pickStudent || pickTeacher" class="newUserRolePick">
+              <input type="text" v-model="groupName" placeholder="Group name" class="newUserOwnGroupName"/>
           </div>
           <div class="newUserButtons">
               <button class="newUserCancelBtn" @click="Close">
@@ -225,11 +225,11 @@ const uploadUsers = async () => {
 }
 
 /* Group Input */
-.NewUserGroupSection {
+.newUserRolePick {
   margin-bottom: 20px;
   text-align: left;
 }
-.newUserGroupInput {
+.newUserOwnGroupName {
   width: 100%;
   padding: 8px;
   border: 1px solid $lightGrey;
