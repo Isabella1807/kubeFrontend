@@ -122,6 +122,7 @@ const closeDeleteModal = () => {
   isDeleteModalVisible.value = false;
 };
 
+// reloads the page automatic when a new group is added 
 const groupUploadSucces = async () => {
   await fetchGroups();
   closeCreateUserModal();
