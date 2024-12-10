@@ -1,9 +1,9 @@
 <template>
-  <div v-if="show" class="newProjectModalOverlay">
-    <div class="newProjectModalContent">
-      <button class="newProjectModalClose" @click="close">✖</button>
+  <div v-if="show" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" @click="close">✖</button>
       <h1>New Project</h1>
-      <form @save.prevent="saveProject">
+      <form @submit.prevent="saveProject">
         <label class="darkMode">
           Project name
           <input v-model="projectName" placeholder="Write name..." />
@@ -14,8 +14,8 @@
         </label>
         <label class="darkMode">
           Pick template
-          <div class="newProjectSelectContainter">
-            <select v-model="selectedTemplate" class="newProjectCustomSelect">
+          <div class="select-container">
+            <select v-model="selectedTemplate" class="custom-select">
               <option value="" disabled>Pick template...</option>
               <option v-for="template in templateOptions" :key="template" :value="template">
                 {{ template }}
@@ -24,11 +24,12 @@
             <i class="fas fa-chevron-down dropdown-icon"></i>
           </div>
         </label>
-        <div class="newProjecButtons">
-          <button type="button" @click="close" class="newProjecCancelBtn">
+        <p v-if="error" class="error-message">{{ error }}</p>
+        <div class="buttons">
+          <button type="button" @click="close" class="cancel-button">
             <i class="fas fa-times"></i> Cancel
           </button>
-          <button type="save" class="newProjecSaveBtn">
+          <button type="submit" class="save-button">
             <i class="fas fa-save"></i> Save project
           </button>
         </div>
@@ -82,14 +83,14 @@ const resetForm = () => {
   
 <style lang="scss">
   
-  .newproject-error-message {
+  .error-message {
     color: $dangerRed;
     font-size: $font-size-desktop;
     margin-top: 10px;
     text-align: left;
   }
  
-  .newProjectModalOverlay {
+  .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -102,7 +103,7 @@ const resetForm = () => {
     z-index: 1000;
   }
   
-  .newProjectModalContent {
+  .modal-content {
     background-color: $white-color;
     padding: 30px;
     width: 500px;
@@ -113,7 +114,7 @@ const resetForm = () => {
     text-align: center;
   }
   
-  .newProjectModalClose {
+  .modal-close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -124,7 +125,7 @@ const resetForm = () => {
     color: $primaryPurple;
   }
   
-  .newProjectModalContent h1 {   
+  .modal-content h1 {   
     font-size: $font-size-h1;
     margin-bottom: 25px;
     font-weight: $font-weight;
@@ -138,7 +139,7 @@ const resetForm = () => {
     text-align: left;
   }
   
-  .newProjectModalOverlay input, .newProjectCustomSelect {
+  .modal-overlay input, .custom-select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -149,11 +150,11 @@ const resetForm = () => {
     color: $darkGrey;
   }
   
-  .newProjectSelectContainter {
+  .select-container {
     position: relative;
   }
   
-  .newProjectCustomSelect {
+  .custom-select {
     appearance: none;
     padding-right: 30px;
     color: $darkGrey;
@@ -169,14 +170,14 @@ const resetForm = () => {
     color: $primaryPurple;
   }
   
-  .newProjecButtons {
+  .buttons {
     display: flex;
     justify-content: flex-start; 
     gap: 10px; 
     margin-top: 25px;
   }
   
-  .newProjecCancelBtn, .newProjecSaveBtn {
+  .cancel-button, .save-button {
     padding: 6px 12px; 
     font-size: $font-size-desktop;   
     border-radius: 10px; 
@@ -184,14 +185,14 @@ const resetForm = () => {
     font-weight: $font-weight;
   }
   
-  .newProjecCancelBtn {
+  .cancel-button {
     background-color: $white-color;
     color: $primaryPurple;
     border: 1px solid $primaryPurple;
     cursor: pointer
   }
   
-  .newProjecSaveBtn {
+  .save-button {
     background-color: $primaryPurple;
     color: $white-color;
     border: none;
@@ -199,27 +200,30 @@ const resetForm = () => {
   }
   
   /* Hover effects */
-  .newProjecCancelBtn:hover {
+  .cancel-button:hover {
     background-color: $lightGrey;  
     color: $darkGrey;  
     border-color: $lightGrey;  
   }
   
-  .newProjecSaveBtn:hover {
+  .save-button:hover {
     background-color: $lightGrey;  
     color: $darkGrey;  
     border-color: $lightGrey;  
   }
   
+  
+  
+  /* Responsive Styles */
   @media (max-width: 768px) {
-    .newProjectModalContent {
+    .modal-content {
       width: 90%;
       padding: 20px;
     }
   }
   
   @media (max-width: 480px) {
-    .newProjectModalContent {
+    .modal-content {
       width: 95%;
       padding: 15px;
     }
@@ -228,11 +232,11 @@ const resetForm = () => {
       font-size: $font-size-h1-moblie;
     }
   
-    .newProjecButtons {
+    .buttons {
       flex-direction: column;
     }
   
-    .newProjecButtons button {
+    .buttons button {
       width: 100%;
       margin-bottom: 10px;
     }
