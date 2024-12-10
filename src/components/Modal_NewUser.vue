@@ -26,7 +26,7 @@
                   Teachers
               </label>
           </div>        
-          <div v-if="pickStudent" class="NewUserGroupSection">
+          <div v-if="pickStudent || pickTeacher" class="NewUserGroupSection">
               <input type="text" v-model="groupName" placeholder="Group name" class="newUserGroupInput"/>
           </div>
           <div class="newUserButtons">
@@ -87,7 +87,6 @@ const resetFields = () => {
   if (pickStudent.value) pickTeacher.value = false;
   if (pickTeacher.value) {
       pickStudent.value = false;
-      groupName.value = '';
   }
 };
 
@@ -103,6 +102,7 @@ const uploadUsers = async () => {
   try {
       const formData = new FormData();
       formData.append('file', fileToUpload.value);
+      formData.append('teamName', groupName.value);
       // uploader the file to backend server API endpoint
       await ApiService.post('http://localhost:3000/users/upload', formData);
       emit('upload-success');
