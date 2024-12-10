@@ -20,7 +20,7 @@
       <hr class="EditLine" />
 
       <div class="editMemberList">
-        <ul class="editMemberList-All">
+        <ul class="editMemberListAll">
           <li v-for="member in teamMembers" :key="member.userId" class="editNewMemberItem">
             <div class="EditNewMemberInfo">
               <input type="checkbox" :value="member.userId" v-model="selectedMembers" />
@@ -261,7 +261,7 @@ function handleSave() {
   overflow-y: auto;
 }
 
-.editMemberList-All {
+.editMemberListAll {
   padding: 0;
   margin: 0;
   list-style-type: none;
