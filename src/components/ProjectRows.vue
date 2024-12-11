@@ -4,6 +4,7 @@ import IconButton from "@/components/IconButton.vue";
 import Icon from "@/components/Icon.vue";
 import Button from "@/components/Button.vue";
 import DeleteModal from '@/components/Modal_DeleteProject.vue';
+import ApiService from "@/services/apiServer.js";
 
 const showModalDeleteModal = ref(false);
 const projectName = "Example Project"; // Replace this with dynamic data if needed
@@ -27,12 +28,14 @@ const statusIcon = computed(() => {
   return isOnline.value ? 'stopIcon' : 'playIcon'
 })
 
-const toggleServer = () => {
+const toggleServer = async () => {
   if (isOnline.value) {
-    console.log("stop server")
+    //Stop server
+    const stopResponse = await ApiService.post(`/projects/stop/${props.projectData.projectId}`);
     return
   }
-  console.log("start server")
+  //Start server
+  const startResponse = await ApiService.post(`/projects/start/${props.projectData.projectId}`);
 };
 
 let accordionToggle = ref(false);
@@ -69,7 +72,8 @@ const projectLastChangeDate = new Date(props.projectData.lastChangeDate).toDateS
 
     <div class="projectAccordion" v-if="accordionToggle">
       <div class="projectAccordionText">
-        <p><span class="accordionTitle">Owner:</span> {{ `${props.projectData.firstName} ${props.projectData.lastName}`}}</p>
+        <p><span class="accordionTitle">Owner:</span>
+          {{ `${props.projectData.firstName} ${props.projectData.lastName}` }}</p>
 
         <p class="accordionResponsiveItems no1"><span class="accordionTitle">Subdomain name:</span>
           {{ props.projectData.subdomainName }}</p>
