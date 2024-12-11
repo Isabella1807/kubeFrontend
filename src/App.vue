@@ -4,6 +4,7 @@ import Header from './components/Header.vue';
 </script>
 
 <template>
+  
   <div class="body_container">
     <Header></Header>
     <div class="main_container">
