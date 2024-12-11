@@ -19,9 +19,7 @@
   </template>
   
   <script>
-  export default {
-    name: "ForgotPassword",
-  };
+
   </script>
   
   <style lang="scss">

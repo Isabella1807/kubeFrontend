@@ -19,7 +19,6 @@
         <th></th>
       </tr>
 
-      
       <tr v-for="(template, index) in templates" :key="index">
         <td class="font-bold">{{ template.templateName }}</td>
         <td>{{ template.templateText }}</td>
@@ -35,10 +34,31 @@
           </div>
         </td>
       </tr>
-
     </table>
   </div>
 </template>
+
+<script setup>
+import ApiService from "@/services/apiServer";
+import { ref, onMounted } from "vue";
+import IconButton from "@/components/IconButton.vue";
+
+const templates = ref([]);
+
+const fetchTemplates = async () => {
+  try {
+    const response = await ApiService.get("/templates");
+    templates.value = response.data;
+    console.log(response.data);
+  } catch (error) {
+    console.error("Error fetching templates:", error);
+  }
+};
+
+onMounted(() => {
+  fetchTemplates();
+});
+</script>
 
 <style scoped lang="scss">
 .createNewProjectButtonContainer {
@@ -170,38 +190,3 @@ table {
   }
 }
 </style>
-
-<script>
-import ApiService from "@/services/apiServer";
-import { ref, defineComponent, onMounted } from "vue";
-import IconButton from "@/components/IconButton.vue";
-
-export default defineComponent({
-  name: "Templates",
-  components: {IconButton},
-  setup() {
-    const templates = ref();
-
-    const fetchTemplates = async () => {
-      try {
-        const response = await ApiService.get("/templates");
-        templates.value = response.data;
-
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching templates:", error);
-      }
-    };
-
-    onMounted(() => {
-      fetchTemplates();
-    });
-
-    return {
-      templates,
-      IconButton
-
-    };
-  },
-});
-</script>

@@ -17,9 +17,9 @@
 
         <!-- Desktop Navigation -->
         <ul v-show="!mobile" class="navigation1">
-          <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
-          <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-          <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+          <RouterLink class="link" to="/projects" active-class="active-link" v-if="isStudentOrAnyone">Project</RouterLink>
+          <RouterLink class="link" to="/templates" active-class="active-link" v-if="isAdmin">Templates</RouterLink>
+          <RouterLink class="link" to="/groups" active-class="active-link" v-if="isAdminOrFaculty">Groups</RouterLink>
 
           <label class="switch">
             <input type="checkbox" v-model="isDark" @click="toggleDark()" />
@@ -93,7 +93,11 @@
 
             <transition name="top-slider">
               <div v-if="dropdownOpen" class="top-slider">
-                <button class="changepass-btn">Change Password</button>
+                <ModalChangePassword :show="showChangePasswordModal" @close="showChangePasswordModal = false"
+                  @change="handlePasswordChange" />
+                <button @click="showChangePasswordModal = true" class="changepass-btn">
+                  Change Password
+                </button>
               </div>
             </transition>
             <!-- Settings Icon - Placér den i bunden -->
@@ -111,16 +115,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed} from 'vue';
 import ApiService from '@/services/apiServer';
 import { useRouter } from 'vue-router';
 import ModalChangePassword from "@/components/Modal_ChangePassword.vue";
 
 const showChangePasswordModal = ref(false);
 
-
 const router = useRouter();
-
 
 const isDark = ref(localStorage.getItem('isDarkMode') === 'true');
 const toggleDark = () => {
@@ -148,6 +150,21 @@ const logout = async () => {
     console.error('Fejl under log-ud:', error);
   }
 };
+
+const isAdmin = computed(() => {
+  const roleId = localStorage.getItem('roleId') || sessionStorage.getItem('roleId');
+  return roleId == 1;
+})
+
+const isAdminOrFaculty = computed(() => {
+  const roleId = localStorage.getItem('roleId') || sessionStorage.getItem('roleId');
+  return roleId == 1 || roleId == 2;
+})
+
+const isStudentOrAnyone = computed(() => {
+  const roleId = localStorage.getItem('roleId') || sessionStorage.getItem('roleId');
+  return roleId == 1 || roleId == 2 || roleId == 3;
+})
 
 
 const scrolledNav = ref(false);
