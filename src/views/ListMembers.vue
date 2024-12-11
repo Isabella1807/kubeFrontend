@@ -124,7 +124,7 @@ const closeDeleteModal = () => {
 
 // reloads the page automatic when a new group is added 
 const groupUploadSucces = async () => {
-  await fetchGroups();
+  await fetchGroups(); // get groups to be at the top of the table
   closeCreateUserModal();
 }
 
