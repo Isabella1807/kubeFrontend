@@ -59,6 +59,8 @@ const loginUser = async () => {
       password: password.value,
     });
 
+    console.log(response)
+
     const token = response.data.token;
     const roleId = response.data.role;
 

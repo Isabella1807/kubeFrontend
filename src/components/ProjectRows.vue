@@ -1,12 +1,12 @@
 <script setup>
-import {computed, ref} from "vue";
+import {computed, ref, defineEmits} from "vue";
 import IconButton from "@/components/IconButton.vue";
 import Icon from "@/components/Icon.vue";
 import Button from "@/components/Button.vue";
 import DeleteModal from '@/components/Modal_DeleteProject.vue';
+import ApiService from "@/services/apiServer.js";
 
 const showModalDeleteModal = ref(false);
-const projectName = "Example Project"; // Replace this with dynamic data if needed
 
 const props = defineProps({
   projectData: {
@@ -15,8 +15,10 @@ const props = defineProps({
   }
 })
 
-const isOnline = computed(() => props.projectData.status);
+const emit = defineEmits(['projectDeleted'])
 
+
+const isOnline = computed(() => props.projectData.state);
 const statusText = computed(() => isOnline.value ? 'Online' : 'Offline');
 
 const statusClass = computed(() => {
@@ -27,18 +29,40 @@ const statusIcon = computed(() => {
   return isOnline.value ? 'stopIcon' : 'playIcon'
 })
 
-const toggleServer = () => {
+const toggleServer = async () => {
   if (isOnline.value) {
-    console.log("stop server")
+    // Stop server
+    const stopResponse = await ApiService.post(`/projects/stop/${props.projectData.projectId}`);
     return
   }
-  console.log("start server")
+  // Start server
+  const startResponse = await ApiService.post(`/projects/start/${props.projectData.projectId}`);
 };
+
+const restartProject = async () => {
+  if (!isOnline.value) {
+    const startResponse = await ApiService.post(`/projects/start/${props.projectData.projectId}`);
+  }
+  // Restart server
+  const stopResponse = await ApiService.post(`/projects/restart/${props.projectData.projectId}`);
+}
 
 let accordionToggle = ref(false);
 
 const toggleAccordion = () => {
   accordionToggle.value = !accordionToggle.value;
+}
+
+const projectCreatedDate = new Date(props.projectData.createdDate).toDateString();
+const projectLastChangeDate = new Date(props.projectData.lastChangeDate).toDateString();
+
+const deleteProject = async () => {
+  try {
+    const projectDelete = await ApiService.delete(`/projects/${props.projectData.projectId}`);
+    emit('projectDeleted', props.projectData.projectId)
+  } catch(err) {
+    console.log('DELETE NOT WORKING', err)
+  }
 }
 </script>
 
@@ -55,32 +79,33 @@ const toggleAccordion = () => {
         <p>{{ props.projectData.subdomainName }}</p>
       </div>
       <div class="table-cell projectTableGroupColumn">
-        <p>{{ props.projectData.groupName }}</p>
+        <p>{{ props.projectData.teamName }}</p>
       </div>
       <div class="table-actions" :class="statusClass">
         <p>{{ statusText }}</p>
         <IconButton :icon="statusIcon" @click="toggleServer"/>
       </div>
     </div>
+
     <div class="projectAccordion" v-if="accordionToggle">
       <div class="projectAccordionText">
-        <p><span class="accordionTitle">Owner:</span> {{ props.projectData.owner }}</p>
+        <p><span class="accordionTitle">Owner:</span>
+          {{ `${props.projectData.firstName} ${props.projectData.lastName}` }}</p>
 
-        <p class="accordionResponsiveItems no1"><span class="accordionTitle">Subdomain name:</span> {{ props.projectData.subdomainName }}</p>
-        <p class="accordionResponsiveItems no2"><span class="accordionTitle">Group name:</span> {{ props.projectData.groupName}}</p>
+        <p class="accordionResponsiveItems no1"><span class="accordionTitle">Subdomain name:</span>
+          {{ props.projectData.subdomainName }}</p>
+        <p class="accordionResponsiveItems no2"><span class="accordionTitle">Group name:</span>
+          {{ props.projectData.teamName }}</p>
 
-        <p><span class="accordionTitle">UCL mail:</span> {{ props.projectData.mail }}</p>
-        <p><span class="accordionTitle">Created:</span> {{ props.projectData.createdAt }}</p>
-        <p><span class="accordionTitle">Last change:</span> {{ props.projectData.lastChange }}</p>
+        <p><span class="accordionTitle">UCL mail:</span> {{ props.projectData.uclMail }}</p>
+        <p><span class="accordionTitle">Created:</span> {{ projectCreatedDate }}</p>
+        <p><span class="accordionTitle">Last change:</span> {{ projectLastChangeDate }}</p>
       </div>
+
       <div class="projectButtonsContainer">
-        <Button icon="restart" text="Restart"/>
-        <Button icon="trashcan" text="Delete project" danger @click="showModalDeleteModal = true" 
-        />
-         <DeleteModal 
-      v-if="showModalDeleteModal" 
-      :projectName="projectName" 
-      @close="showModalDeleteModal = false" />
+        <Button icon="restart" text="Restart" @click="restartProject"/>
+        <Button icon="trashcan" text="Delete project" danger @click="showModalDeleteModal = true"/>
+        <DeleteModal v-if="showModalDeleteModal" :projectName="props.projectData.projectName" @close="showModalDeleteModal = false" @confirm="deleteProject"/>
       </div>
     </div>
   </div>
@@ -157,7 +182,8 @@ const toggleAccordion = () => {
       .accordionTitle {
         font-weight: $font-weight;
       }
-      .accordionResponsiveItems{
+
+      .accordionResponsiveItems {
         display: none;
       }
     }
@@ -183,9 +209,10 @@ const toggleAccordion = () => {
         }
       }
     }
-    .projectAccordion{
-      .projectAccordionText{
-        .accordionResponsiveItems.no2{
+
+    .projectAccordion {
+      .projectAccordionText {
+        .accordionResponsiveItems.no2 {
           display: block;
         }
       }
@@ -200,9 +227,10 @@ const toggleAccordion = () => {
         display: none;
       }
     }
-    .projectAccordion{
-      .projectAccordionText{
-        .accordionResponsiveItems.no1{
+
+    .projectAccordion {
+      .projectAccordionText {
+        .accordionResponsiveItems.no1 {
           display: block;
         }
       }

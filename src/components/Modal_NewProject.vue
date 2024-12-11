@@ -3,6 +3,7 @@
     <div class="newProjectContent">
       <button class="newProjectCloseBtn" @click="close">✖</button>
       <h1>New Project</h1>
+
       <form @submit.prevent="saveProject">
         <label class="darkMode">
           Project name
@@ -50,7 +51,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'save']);
 
-const templateOptions = [1, 2];
+const templateOptions = [6, 7];
 const projectName = ref('');
 const subdomainName = ref('');
 const selectedTemplate = ref('');
