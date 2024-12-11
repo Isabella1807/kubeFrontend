@@ -15,7 +15,7 @@ const props = defineProps({
   }
 })
 
-const isOnline = computed(() => props.projectData.status);
+const isOnline = computed(() => props.projectData.state);
 
 const statusText = computed(() => isOnline.value ? 'Online' : 'Offline');
 
@@ -42,7 +42,7 @@ const toggleAccordion = () => {
 }
 
 const projectCreatedDate = new Date(props.projectData.createdDate).toDateString()
-const projectLastChangeDate = new Date(props.projectData.LastChangeDate).toDateString()
+const projectLastChangeDate = new Date(props.projectData.lastChangeDate).toDateString()
 
 </script>
 

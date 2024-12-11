@@ -16,6 +16,7 @@ const showModal = ref(false);
 onMounted(async () => {
   try {
     const response = await ApiService.get("/projects");
+    console.log(response)
     projectRows.value = response.data;
   } catch (error) {
     console.error("Fejl ved API-kald", error.response?.data || error.message);
@@ -32,7 +33,6 @@ onMounted(async () => {
 });
 
 const saveNewProject = async (newProject) => {
-  console.log(typeof newProject.selectedTemplate)
     try {
         const response = await ApiService.post('/projects', {
             projectName: newProject.projectName,
