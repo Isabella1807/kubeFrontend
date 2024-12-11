@@ -44,7 +44,9 @@ import Icon from "@/components/Icon.vue";
 
 <style scoped lang="scss">
 .table-wrapper {
+  background-color: pink;
   .table-header {
+    background-color: lightgreen;
     display: flex;
     border-bottom: 2px solid $lightGrey;
 

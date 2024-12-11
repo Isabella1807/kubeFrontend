@@ -40,6 +40,10 @@ let accordionToggle = ref(false);
 const toggleAccordion = () => {
   accordionToggle.value = !accordionToggle.value;
 }
+
+const projectCreatedDate = new Date(props.projectData.createdDate).toDateString()
+const projectLastChangeDate = new Date(props.projectData.LastChangeDate).toDateString()
+
 </script>
 
 <template>
@@ -55,32 +59,32 @@ const toggleAccordion = () => {
         <p>{{ props.projectData.subdomainName }}</p>
       </div>
       <div class="table-cell projectTableGroupColumn">
-        <p>{{ props.projectData.groupName }}</p>
+        <p>{{ props.projectData.teamName }}</p>
       </div>
       <div class="table-actions" :class="statusClass">
         <p>{{ statusText }}</p>
         <IconButton :icon="statusIcon" @click="toggleServer"/>
       </div>
     </div>
+
     <div class="projectAccordion" v-if="accordionToggle">
       <div class="projectAccordionText">
-        <p><span class="accordionTitle">Owner:</span> {{ props.projectData.owner }}</p>
+        <p><span class="accordionTitle">Owner:</span> {{ `${props.projectData.firstName} ${props.projectData.lastName}`}}</p>
 
-        <p class="accordionResponsiveItems no1"><span class="accordionTitle">Subdomain name:</span> {{ props.projectData.subdomainName }}</p>
-        <p class="accordionResponsiveItems no2"><span class="accordionTitle">Group name:</span> {{ props.projectData.groupName}}</p>
+        <p class="accordionResponsiveItems no1"><span class="accordionTitle">Subdomain name:</span>
+          {{ props.projectData.subdomainName }}</p>
+        <p class="accordionResponsiveItems no2"><span class="accordionTitle">Group name:</span>
+          {{ props.projectData.teamName }}</p>
 
-        <p><span class="accordionTitle">UCL mail:</span> {{ props.projectData.mail }}</p>
-        <p><span class="accordionTitle">Created:</span> {{ props.projectData.createdAt }}</p>
-        <p><span class="accordionTitle">Last change:</span> {{ props.projectData.lastChange }}</p>
+        <p><span class="accordionTitle">UCL mail:</span> {{ props.projectData.uclMail }}</p>
+        <p><span class="accordionTitle">Created:</span> {{ projectCreatedDate }}</p>
+        <p><span class="accordionTitle">Last change:</span> {{ projectLastChangeDate }}</p>
       </div>
+
       <div class="projectButtonsContainer">
         <Button icon="restart" text="Restart"/>
-        <Button icon="trashcan" text="Delete project" danger @click="showModalDeleteModal = true" 
-        />
-         <DeleteModal 
-      v-if="showModalDeleteModal" 
-      :projectName="projectName" 
-      @close="showModalDeleteModal = false" />
+        <Button icon="trashcan" text="Delete project" danger @click="showModalDeleteModal = true"/>
+        <DeleteModal v-if="showModalDeleteModal" :projectName="projectName" @close="showModalDeleteModal = false"/>
       </div>
     </div>
   </div>
@@ -157,7 +161,8 @@ const toggleAccordion = () => {
       .accordionTitle {
         font-weight: $font-weight;
       }
-      .accordionResponsiveItems{
+
+      .accordionResponsiveItems {
         display: none;
       }
     }
@@ -183,9 +188,10 @@ const toggleAccordion = () => {
         }
       }
     }
-    .projectAccordion{
-      .projectAccordionText{
-        .accordionResponsiveItems.no2{
+
+    .projectAccordion {
+      .projectAccordionText {
+        .accordionResponsiveItems.no2 {
           display: block;
         }
       }
@@ -200,9 +206,10 @@ const toggleAccordion = () => {
         display: none;
       }
     }
-    .projectAccordion{
-      .projectAccordionText{
-        .accordionResponsiveItems.no1{
+
+    .projectAccordion {
+      .projectAccordionText {
+        .accordionResponsiveItems.no1 {
           display: block;
         }
       }
