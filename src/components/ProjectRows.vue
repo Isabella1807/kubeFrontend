@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from "vue";
+import {computed, ref, defineEmits} from "vue";
 import IconButton from "@/components/IconButton.vue";
 import Icon from "@/components/Icon.vue";
 import Button from "@/components/Button.vue";
@@ -7,7 +7,6 @@ import DeleteModal from '@/components/Modal_DeleteProject.vue';
 import ApiService from "@/services/apiServer.js";
 
 const showModalDeleteModal = ref(false);
-const projectName = "Example Project"; // Replace this with dynamic data if needed
 
 const props = defineProps({
   projectData: {
@@ -16,8 +15,10 @@ const props = defineProps({
   }
 })
 
-const isOnline = computed(() => props.projectData.state);
+const emit = defineEmits(['projectDeleted'])
 
+
+const isOnline = computed(() => props.projectData.state);
 const statusText = computed(() => isOnline.value ? 'Online' : 'Offline');
 
 const statusClass = computed(() => {
@@ -30,11 +31,11 @@ const statusIcon = computed(() => {
 
 const toggleServer = async () => {
   if (isOnline.value) {
-    //Stop server
+    // Stop server
     const stopResponse = await ApiService.post(`/projects/stop/${props.projectData.projectId}`);
     return
   }
-  //Start server
+  // Start server
   const startResponse = await ApiService.post(`/projects/start/${props.projectData.projectId}`);
 };
 
@@ -42,6 +43,7 @@ const restartProject = async () => {
   if (!isOnline.value) {
     const startResponse = await ApiService.post(`/projects/start/${props.projectData.projectId}`);
   }
+  // Restart server
   const stopResponse = await ApiService.post(`/projects/restart/${props.projectData.projectId}`);
 }
 
@@ -51,9 +53,17 @@ const toggleAccordion = () => {
   accordionToggle.value = !accordionToggle.value;
 }
 
-const projectCreatedDate = new Date(props.projectData.createdDate).toDateString()
-const projectLastChangeDate = new Date(props.projectData.lastChangeDate).toDateString()
+const projectCreatedDate = new Date(props.projectData.createdDate).toDateString();
+const projectLastChangeDate = new Date(props.projectData.lastChangeDate).toDateString();
 
+const deleteProject = async () => {
+  try {
+    const projectDelete = await ApiService.delete(`/projects/${props.projectData.projectId}`);
+    emit('projectDeleted', props.projectData.projectId)
+  } catch(err) {
+    console.log('DELETE NOT WORKING', err)
+  }
+}
 </script>
 
 <template>
@@ -95,7 +105,7 @@ const projectLastChangeDate = new Date(props.projectData.lastChangeDate).toDateS
       <div class="projectButtonsContainer">
         <Button icon="restart" text="Restart" @click="restartProject"/>
         <Button icon="trashcan" text="Delete project" danger @click="showModalDeleteModal = true"/>
-        <DeleteModal v-if="showModalDeleteModal" :projectName="projectName" @close="showModalDeleteModal = false"/>
+        <DeleteModal v-if="showModalDeleteModal" :projectName="props.projectData.projectName" @close="showModalDeleteModal = false" @confirm="deleteProject"/>
       </div>
     </div>
   </div>

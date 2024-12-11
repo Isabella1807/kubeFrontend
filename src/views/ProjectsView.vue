@@ -12,7 +12,6 @@ const templateOptions = ref([]);
 const selectedTemplate = ref(null);
 const showModal = ref(false);
 
-
 onMounted(async () => {
   try {
     const response = await ApiService.get("/projects");
@@ -48,6 +47,10 @@ const saveNewProject = async (newProject) => {
     }
 };
 
+const removeProjectFromList = (projectId) => {
+  console.log(projectId)
+  projectRows.value = projectRows.value.filter(item => item.projectId !== projectId);
+}
 </script>
 
 <template>
@@ -58,8 +61,8 @@ const saveNewProject = async (newProject) => {
     </div>
     <div>
       <ProjectTableWrapper>
-        <ProjectRows v-for="item in projectRows" :key="item.id" :projectData="item"
-                     :selectedTemplate="item.selectedTemplate"/>
+        <ProjectRows v-for="item in projectRows" :key="item.projectId" :projectData="item"
+                     :selectedTemplate="item.selectedTemplate" @projectDeleted="removeProjectFromList"/>
       </ProjectTableWrapper>
     </div>
   </div>
