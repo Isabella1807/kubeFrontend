@@ -19,9 +19,7 @@
   </template>
   
   <script>
-  export default {
-    name: "ForgotPassword",
-  };
+
   </script>
   
   <style lang="scss">
@@ -90,7 +88,7 @@
   }
   
   .submit-button:hover {
-    background-color: $primaryPurpledarkmode;
+    background-color: $lightGrey;
   }
   </style>
   

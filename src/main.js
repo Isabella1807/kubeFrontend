@@ -8,7 +8,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faCircleXmark, faFloppyDisk, faPlus, faTrashCan, faPenSquare,faSortDown } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
-import ApiService from './services/apiService.js';
+import ApiService from './services/apiServer';
 
 library.add(faCircleXmark)
 library.add(far)
