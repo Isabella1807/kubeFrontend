@@ -38,6 +38,13 @@ const toggleServer = async () => {
   const startResponse = await ApiService.post(`/projects/start/${props.projectData.projectId}`);
 };
 
+const restartProject = async () => {
+  if (!isOnline.value) {
+    const startResponse = await ApiService.post(`/projects/start/${props.projectData.projectId}`);
+  }
+  const stopResponse = await ApiService.post(`/projects/restart/${props.projectData.projectId}`);
+}
+
 let accordionToggle = ref(false);
 
 const toggleAccordion = () => {
@@ -86,7 +93,7 @@ const projectLastChangeDate = new Date(props.projectData.lastChangeDate).toDateS
       </div>
 
       <div class="projectButtonsContainer">
-        <Button icon="restart" text="Restart"/>
+        <Button icon="restart" text="Restart" @click="restartProject"/>
         <Button icon="trashcan" text="Delete project" danger @click="showModalDeleteModal = true"/>
         <DeleteModal v-if="showModalDeleteModal" :projectName="projectName" @close="showModalDeleteModal = false"/>
       </div>
