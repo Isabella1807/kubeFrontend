@@ -1,12 +1,15 @@
 <template>
   <div id="template_form">
     <h1>New template</h1>
-    <form action="X">
+    <form @submit.prevent="createTemplate">
       <label for="tname" class="darkmodelabel">Template name</label>
-      <input type="text" id="tname" name="tname" placeholder="Name" />
+      <input type="text" id="tname" v-model="templateName" placeholder="Name" />
 
-      <label for="lname" class="darkmodelabel">Template</label>
-      <textarea name="" id="" placeholder="Insert code"></textarea>
+      <label for="templateText" class="darkmodelabel">Template</label>
+      <textarea id="templateText" v-model="templateText" placeholder="Insert code"></textarea>
+
+      <!-- Fejlbesked -->
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
       <div class="btn-container">
         <RouterLink to="/templates" class="cancel-btn">
@@ -22,8 +25,38 @@
   </div>
 </template>
 
-<style scoped lang="scss">
+<script setup>import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import ApiService from '@/services/apiServer'; // Dit eksisterende service-lag til API-kald
 
+const templateName = ref('');
+const templateText = ref('');
+const errorMessage = ref('');
+const router = useRouter();
+
+const createTemplate = async () => {
+  if (!templateName.value || !templateText.value) {
+    errorMessage.value = 'Both fields are required';
+    return;
+  }
+
+  try {
+    // Send POST request til backend
+    await ApiService.post('/templates', {
+      templateName: templateName.value,
+      templateText: templateText.value,
+    });
+
+    // Når oprettelsen lykkes, navigér tilbage til templates siden
+    router.push('/templates');
+  } catch (error) {
+    console.error('Failed to create template:', error);
+    errorMessage.value = error.response?.data || 'An error occurred while creating the template';
+  }
+};
+</script>
+
+<style scoped lang="scss">
 h1 {
   font-size: $font-size-h1;
   margin: 25px 0px;
@@ -71,9 +104,10 @@ textarea {
   border-radius: 10px;
   color: $primaryPurple;
   font-weight: $font-weight;
-  text-decoration:none;
-  cursor:pointer;
-  svg{
+  text-decoration: none;
+  cursor: pointer;
+
+  svg {
     margin-right: 5px;
   }
 }
@@ -85,20 +119,18 @@ textarea {
   border: none;
   border-radius: 10px;
   font-weight: $font-weight;
-  cursor:pointer;
-  svg{
+  cursor: pointer;
+
+  svg {
     margin-right: 5px;
   }
 }
 
 /* mobile version*/
 @media (max-width: 1350px) {
-#template_form{
-  padding: 20px;
-}
+  #template_form {
+    padding: 20px;
+  }
 
 }
-
 </style>
-
-<script setup></script>
