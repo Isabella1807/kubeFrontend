@@ -1,5 +1,5 @@
 <template>
-  <div class="newUserModal">
+  <div class="newUserModal" >
       <div class="newUserModalContent">
           <button class="newUserCloseBtn" @click="Close">✖</button>
           <h1>New User</h1>
@@ -163,7 +163,7 @@ const uploadUsers = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid $lightGrey;
+  border: none;
   padding: 10px 15px;
   border-radius: 8px;
   width: 100%;
@@ -228,6 +228,7 @@ const uploadUsers = async () => {
   padding: 8px;
   border: 1px solid $lightGrey;
   border-radius: 4px;
+  border: none;
   background: $lightGrey;
 }
 

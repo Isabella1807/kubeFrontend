@@ -51,6 +51,14 @@ const router = createRouter({
             component: () => import('../views/ListMembers.vue'),
             meta: { hideHeader: false }
         },
+        
+            {
+                path: '/templates/new/:id',
+                name: 'NewTemplate',
+                component: () => import('../views/NewTemplate.vue'),
+                props: true, // Gør det muligt at sende route-params som props
+              },
+                  
     ]
 })
 
