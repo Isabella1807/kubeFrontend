@@ -16,7 +16,35 @@ onMounted(async () => {
   try {
     const response = await ApiService.get("/projects");
     console.log(response)
-    projectRows.value = response.data;
+
+    const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
+    console.log(userId)
+
+    console.log(response.data[1])
+
+    const sortedProjects = response.data.sort((a, b) => {
+
+      //If it returns 1 - switch places. If returns -1 - do not switch places
+      // Place own projects first
+      if (a.userId === userId && b.userId !== userId){
+        return 1
+      }
+
+      if(b.userId === userId && a.userId !== userId){
+        return -1
+      }
+
+      // if a & b both have my ID or not my ID THEN sort alphabetically by teamName
+      if (a.teamName !== b.teamName) {
+        return a.teamName > b.teamName ? 1 : -1
+      }
+
+      // if same team - sort alphabetically by projectName
+      return a.projectName > b.projectName ? 1 : -1
+    })
+
+    projectRows.value = sortedProjects;
+
   } catch (error) {
     console.error("Fejl ved API-kald", error.response?.data || error.message);
   }

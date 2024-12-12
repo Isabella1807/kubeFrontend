@@ -32,7 +32,13 @@ const statusIcon = computed(() => {
 const toggleServer = async () => {
   if (isOnline.value) {
     // Stop server
-    const stopResponse = await ApiService.post(`/projects/stop/${props.projectData.projectId}`);
+    console.log("WOOOOOOOOHOHOHOHOHOHOHOHOHHO")
+    try {
+      const stopResponse = await ApiService.post(`/projects/stop/${props.projectData.projectId}`);
+
+    } catch {
+
+    }
     return
   }
   // Start server
@@ -41,10 +47,10 @@ const toggleServer = async () => {
 
 const restartProject = async () => {
   if (!isOnline.value) {
-    const startResponse = await ApiService.post(`/projects/start/${props.projectData.projectId}`);
+    await ApiService.post(`/projects/start/${props.projectData.projectId}`);
   }
   // Restart server
-  const stopResponse = await ApiService.post(`/projects/restart/${props.projectData.projectId}`);
+  await ApiService.post(`/projects/restart/${props.projectData.projectId}`);
 }
 
 let accordionToggle = ref(false);
