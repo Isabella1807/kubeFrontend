@@ -25,8 +25,10 @@
   </div>
 </template>
 
-<script setup>import { ref } from 'vue';
+<script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import yaml from 'js-yaml';
 import ApiService from '@/services/apiServer'; // Dit eksisterende service-lag til API-kald
 
 const templateName = ref('');
@@ -35,23 +37,35 @@ const errorMessage = ref('');
 const router = useRouter();
 
 const createTemplate = async () => {
+  // Clear any previous error messages
+  errorMessage.value = '';
+
+  // Check if both fields are filled
   if (!templateName.value || !templateText.value) {
     errorMessage.value = 'Both fields are required';
     return;
   }
 
   try {
-    // Send POST request til backend
+    // Validate YAML format
+    yaml.load(templateText.value); // Will throw an error if invalid
+
+  } catch (error) {
+    errorMessage.value = 'Invalid YAML format: ' + error.message; // Handle YAML validation error
+    return;
+  }
+
+  try {
+    // Send POST request to backend
     await ApiService.post('/templates', {
       templateName: templateName.value,
       templateText: templateText.value,
     });
 
-    // Når oprettelsen lykkes, navigér tilbage til templates siden
+    // Navigate back to templates page on success
     router.push('/templates');
   } catch (error) {
-    console.error('Failed to create template:', error);
-    errorMessage.value = error.response?.data || 'An error occurred while creating the template';
+    errorMessage.value = error.response?.data?.message || 'An error occurred while creating the template'; // Handle API error
   }
 };
 </script>
