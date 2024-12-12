@@ -85,7 +85,7 @@ const changePassword = async () => {
 };
 </script>
 
-  <style lang="scss" scoped>
+  <style lang="scss">
   
   .changepassworderror-message {
   color: $dangerRed;
@@ -157,7 +157,7 @@ const changePassword = async () => {
   margin-top: 5px;
   font-size: $font-size-desktop;
   font-style: italic;
-  border: 1px solid  $lightGrey;
+  border: none;
   border-radius: 5px;
   box-sizing: border-box;
   color: $darkGrey;
