@@ -48,7 +48,7 @@ const templates = ref([]);
 const fetchTemplates = async () => {
   try {
     const response = await ApiService.get("/templates");
-    templates.value = response.data;
+    templates.value = response.data.sort((a, b) => b.templateId - a.templateId);
     console.log(response.data);
   } catch (error) {
     console.error("Error fetching templates:", error);
