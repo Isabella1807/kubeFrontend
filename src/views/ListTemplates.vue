@@ -28,9 +28,10 @@
               <font-awesome-icon :icon="['far', 'pen-to-square']" />
             </RouterLink>
 
-            <button class="delete-btn">
+            <button class="delete-btn" @click="deleteTemplate(template.templateId)">
               <font-awesome-icon :icon="['far', 'trash-can']" />
             </button>
+
           </div>
         </td>
       </tr>
@@ -55,6 +56,19 @@ const fetchTemplates = async () => {
   }
 };
 
+const deleteTemplate = async (templateId) => {
+  if (!confirm("Are you sure you want to delete this template?")) return;
+
+  try {
+    await ApiService.delete(`/templates/${templateId}`);
+    templates.value = templates.value.filter((template) => template.templateId !== templateId);
+    console.log(`Template with ID ${templateId} deleted successfully`);
+  } catch (error) {
+    console.error(`Error deleting template with ID ${templateId}:`, error);
+    alert("Failed to delete template. Please try again.");
+  }
+};
+
 onMounted(() => {
   fetchTemplates();
 });
@@ -65,10 +79,12 @@ onMounted(() => {
   display: flex;
   align-items: center;
   margin-bottom: 4rem;
+
   .createProjectText {
     margin-left: 10px;
   }
 }
+
 @include smallScreen {
   .createNewProjectButtonContainer {
     display: flex;
@@ -77,11 +93,13 @@ onMounted(() => {
     bottom: 20px;
     left: 50%;
     transform: translate(-50%, 0);
+
     .createProjectText {
       display: none;
     }
   }
 }
+
 .flex {
   display: flex;
   gap: 20px;
@@ -95,6 +113,7 @@ onMounted(() => {
 .flex-end {
   justify-content: flex-end;
 }
+
 .create-btn {
   border-radius: 50%;
   padding: 10px;
@@ -137,16 +156,19 @@ onMounted(() => {
 
 table {
   width: 100%;
+
   tr {
     th {
       border-bottom: 1px solid $lightGrey;
       text-align: left;
       font-weight: $font-weight;
     }
+
     td {
       border-bottom: 1px solid $lightGrey;
       padding: 20px 0;
     }
+
     table tr th:first-child,
     table tr td:first-child {
       width: 400px;
@@ -166,12 +188,16 @@ table {
     left: 50%;
     transform: translate(-50%, -0%);
   }
+
   .flex h3 {
     display: none;
   }
+
   table {
     padding: 0 10px;
+
     tr {
+
       th,
       td {
         width: auto;
@@ -184,6 +210,7 @@ table {
 [color-scheme="dark"] {
   .edit-btn {
     color: $white-color;
+
     svg {
       color: $white-color;
     }
