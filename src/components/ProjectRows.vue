@@ -15,7 +15,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['projectDeleted'])
+const emit = defineEmits(['projectDeleted', 'projectStatus'])
 
 
 const isOnline = computed(() => props.projectData.state);
@@ -32,17 +32,13 @@ const statusIcon = computed(() => {
 const toggleServer = async () => {
   if (isOnline.value) {
     // Stop server
-    console.log("WOOOOOOOOHOHOHOHOHOHOHOHOHHO")
-    try {
-      const stopResponse = await ApiService.post(`/projects/stop/${props.projectData.projectId}`);
-
-    } catch {
-
-    }
+    const stopResponse = await ApiService.post(`/projects/stop/${props.projectData.projectId}`);
+    emit('projectStatus', props.projectData.projectId, 0)
     return
   }
   // Start server
   const startResponse = await ApiService.post(`/projects/start/${props.projectData.projectId}`);
+  emit('projectStatus', props.projectData.projectId, 1)
 };
 
 const restartProject = async () => {
@@ -66,7 +62,7 @@ const deleteProject = async () => {
   try {
     const projectDelete = await ApiService.delete(`/projects/${props.projectData.projectId}`);
     emit('projectDeleted', props.projectData.projectId)
-  } catch(err) {
+  } catch (err) {
     console.log('DELETE NOT WORKING', err)
   }
 }
@@ -111,7 +107,8 @@ const deleteProject = async () => {
       <div class="projectButtonsContainer">
         <Button icon="restart" text="Restart" @click="restartProject"/>
         <Button icon="trashcan" text="Delete project" danger @click="showModalDeleteModal = true"/>
-        <DeleteModal v-if="showModalDeleteModal" :projectName="props.projectData.projectName" @close="showModalDeleteModal = false" @confirm="deleteProject"/>
+        <DeleteModal v-if="showModalDeleteModal" :projectName="props.projectData.projectName"
+                     @close="showModalDeleteModal = false" @confirm="deleteProject"/>
       </div>
     </div>
   </div>

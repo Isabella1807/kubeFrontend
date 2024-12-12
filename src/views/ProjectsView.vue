@@ -15,14 +15,10 @@ const showModal = ref(false);
 onMounted(async () => {
   try {
     const response = await ApiService.get("/projects");
-    console.log(response)
 
     const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
-    console.log(userId)
 
-    console.log(response.data[1])
-
-    const sortedProjects = response.data.sort((a, b) => {
+    projectRows.value = response.data.sort((a, b) => {
 
       //If it returns 1 - switch places. If returns -1 - do not switch places
       // Place own projects first
@@ -43,7 +39,6 @@ onMounted(async () => {
       return a.projectName > b.projectName ? 1 : -1
     })
 
-    projectRows.value = sortedProjects;
 
   } catch (error) {
     console.error("Fejl ved API-kald", error.response?.data || error.message);
@@ -79,6 +74,19 @@ const removeProjectFromList = (projectId) => {
   console.log(projectId)
   projectRows.value = projectRows.value.filter(item => item.projectId !== projectId);
 }
+
+const setProjectStatus = (projectId, status) => {
+  const projectIndex = projectRows.value.findIndex((item) => {
+    return item.projectId === projectId
+  })
+
+  //-1 cause if we say !projectIndex the project at index 0 will be banished
+  if (projectIndex === -1){
+    return
+  }
+
+  projectRows.value[projectIndex].state = status
+}
 </script>
 
 <template>
@@ -90,7 +98,7 @@ const removeProjectFromList = (projectId) => {
     <div>
       <ProjectTableWrapper>
         <ProjectRows v-for="item in projectRows" :key="item.projectId" :projectData="item"
-                     :selectedTemplate="item.selectedTemplate" @projectDeleted="removeProjectFromList"/>
+                     :selectedTemplate="item.selectedTemplate" @projectDeleted="removeProjectFromList" @projectStatus="setProjectStatus"/>
       </ProjectTableWrapper>
     </div>
   </div>
