@@ -1,7 +1,7 @@
 <template>
   <div id="template_form">
-    <h1>New template</h1>
-    <form @submit.prevent="createTemplate">
+    <h1>{{ isEditing ? "Edit Template" : "New Template" }}</h1>
+    <form @submit.prevent="saveTemplate">
       <label for="tname" class="darkmodelabel">Template name</label>
       <input type="text" id="tname" v-model="templateName" placeholder="Name" />
 
@@ -18,57 +18,89 @@
         </RouterLink>
         <button type="submit" class="save-btn">
           <font-awesome-icon :icon="['far', 'floppy-disk']" />
-          Save template
+          {{ isEditing ? "Save Changes" : "Create Template" }}
         </button>
       </div>
     </form>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import yaml from 'js-yaml';
-import ApiService from '@/services/apiServer'; // Dit eksisterende service-lag til API-kald
 
-const templateName = ref('');
-const templateText = ref('');
-const errorMessage = ref('');
+<script setup>
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import yaml from "js-yaml";
+import ApiService from "@/services/apiServer";
+
+const templateName = ref("");
+const templateText = ref("");
+const errorMessage = ref("");
+const isEditing = ref(false);
+const route = useRoute();
 const router = useRouter();
 
-const createTemplate = async () => {
-  // Clear any previous error messages
-  errorMessage.value = '';
-
-  // Check if both fields are filled
-  if (!templateName.value || !templateText.value) {
-    errorMessage.value = 'Both fields are required';
-    return;
-  }
-
+const fetchTemplate = async (id) => {
   try {
-    // Validate YAML format
-    yaml.load(templateText.value); // Will throw an error if invalid
+    console.log(`Fetching template with ID: ${id}`);
+    const response = await ApiService.get(`/templates/${id}`);
+    console.log("Fetched template data:", response.data);
 
+    templateName.value = response.data.templateName;
+    templateText.value = response.data.templateText;
+    isEditing.value = true;
   } catch (error) {
-    errorMessage.value = 'Invalid YAML format: ' + error.message; // Handle YAML validation error
-    return;
-  }
-
-  try {
-    // Send POST request to backend
-    await ApiService.post('/templates', {
-      templateName: templateName.value,
-      templateText: templateText.value,
-    });
-
-    // Navigate back to templates page on success
-    router.push('/templates');
-  } catch (error) {
-    errorMessage.value = error.response?.data?.message || 'An error occurred while creating the template'; // Handle API error
+    console.error("Error fetching template:", error.response?.data || error);
+    errorMessage.value = "Failed to load template data.";
   }
 };
+
+
+const saveTemplate = async () => {
+  errorMessage.value = "";
+
+  if (!templateName.value || !templateText.value) {
+    errorMessage.value = "Both fields are required";
+    return;
+  }
+
+  try {
+    yaml.load(templateText.value); // Validate YAML
+  } catch (error) {
+    errorMessage.value = "Invalid YAML format: " + error.message;
+    return;
+  }
+
+  try {
+    if (isEditing.value) {
+  // Hvis vi er i "edit" mode, send en PUT anmodning til backend
+  await ApiService.put(`/templates/${route.params.id}`, {
+    templateName: templateName.value,
+    templateText: templateText.value,
+  });
+  alert("Template updated successfully!");
+} else {
+  // Opret ny template
+  await ApiService.post("/templates", {
+    templateName: templateName.value,
+    templateText: templateText.value,
+  });
+  alert("Template created successfully!");
+}
+
+    router.push("/templates");
+  } catch (error) {
+    errorMessage.value =
+      error.response?.data?.message || "Failed to save template.";
+  }
+};
+
+onMounted(() => {
+  if (route.params.id) {
+    fetchTemplate(route.params.id);
+  }
+});
 </script>
+
 
 <style scoped lang="scss">
 h1 {

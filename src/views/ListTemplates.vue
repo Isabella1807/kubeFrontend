@@ -24,10 +24,9 @@
         <td>{{ template.templateText }}</td>
         <td>
           <div class="flex flex-end">
-            <RouterLink to="/templates/edit" class="edit-btn">
+            <RouterLink :to="`/templates/new/${template.templateId}`" class="edit-btn">
               <font-awesome-icon :icon="['far', 'pen-to-square']" />
             </RouterLink>
-
             <button class="delete-btn" @click="deleteTemplate(template.templateId)">
               <font-awesome-icon :icon="['far', 'trash-can']" />
             </button>
