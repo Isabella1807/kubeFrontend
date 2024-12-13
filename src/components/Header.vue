@@ -68,9 +68,9 @@
         <!-- Mobile Dropdown Navigation -->
         <transition name="mobile-nav">
           <ul v-show="mobileNav" class="dropdown-nav">
-            <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
-            <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-            <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+            <RouterLink class="link" to="/projects" active-class="active-link" v-if="isStudentOrAnyone">Project</RouterLink>
+            <RouterLink class="link" to="/templates" active-class="active-link" v-if="isAdmin">Templates</RouterLink>
+            <RouterLink class="link" to="/groups" active-class="active-link" v-if="isAdminOrFaculty">Groups</RouterLink>
             <label class="switch">
               <input type="checkbox" v-model="isDark" @click="toggleDark()" />
               <span class="slider round">
