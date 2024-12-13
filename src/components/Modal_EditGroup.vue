@@ -70,7 +70,6 @@
 import { ref, watch } from 'vue';
 import ApiService from '@/services/apiService';
 
-// what the modal is using from the parent 
 const props = defineProps({
   modelValue: Boolean,
   groupName: String,
@@ -82,7 +81,6 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'save', 'close']);
 
-// the variables 
 const teamMembers = ref([]);
 const selectedMembers = ref([]);
 const selectAllMembers = ref(false);
@@ -94,7 +92,6 @@ const newMember = ref({
   roleId: '3'
 });
 
-// gets the teams from the database
 async function fetchTeamMembers() {
   if (!props.teamId) return;
   try {
@@ -105,7 +102,6 @@ async function fetchTeamMembers() {
   }
 }
 
-// if a user is check with a checkmark you can delete them 
 async function deleteCheckedMembers() {
   try {
     for (const userId of selectedMembers.value) {
@@ -119,7 +115,6 @@ async function deleteCheckedMembers() {
   }
 }
 
-// does you can add someone new to a team 
 async function addNewMember() {
   try {
     const userData = {
@@ -143,14 +138,12 @@ async function addNewMember() {
   }
 }
 
-// keeps an eye out for the modal is open or not
 watch(() => props.modelValue, (isModalOpen) => {
   if (isModalOpen && props.teamId) {
     fetchTeamMembers();
   }
 });
 
-// make it so you can click all checkmarks 
 function toogleAll() {
   if (selectAllMembers.value) {
     selectedMembers.value = teamMembers.value.map(member => member.userId);
@@ -159,18 +152,15 @@ function toogleAll() {
   }
 }
 
-// does to the user can close the modal
 function Close() {
   emit('update:modelValue', false);
   emit('close');
 }
 
-// does that we can save the changes 
 function handleSave() {
   emit('save', teamMembers.value);
   Close();
 }
-
 </script>
 
 <style lang="scss">

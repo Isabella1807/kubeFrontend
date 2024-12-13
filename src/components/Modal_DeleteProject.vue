@@ -19,8 +19,6 @@
 </template>
 
 <script setup>
-
-// get the selcted items and the number of items 
 const props = defineProps({
   selectedCount: {
     type: Number,
@@ -28,10 +26,8 @@ const props = defineProps({
   }
 });
 
-//  tells the partent component what is happening 
 const emit = defineEmits(['close', 'confirm']);
 
-// when you click on confirm or close it will close the modal 
 const Comfirm = () => {
   emit('confirm');
   emit('close');

@@ -24,9 +24,9 @@ const props = defineProps({
 
 <template>
   <div class="buttonContainer">
-    <div class="buttonShape" :class="{'hollow': props.hollow, 'danger': props.danger}">
+    <div class="buttonShape" :class="{ 'hollow': props.hollow, 'danger': props.danger }">
       <div class="iconContainer">
-        <Icon v-if="props.icon" :name="props.icon"/>
+        <Icon v-if="props.icon" :name="props.icon" />
       </div>
       <p class="buttonText">{{ props.text }}</p>
     </div>
@@ -34,7 +34,6 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
-
 .buttonShape {
   display: inline-flex;
   background-color: $primaryPurple;
@@ -83,6 +82,7 @@ const props = defineProps({
   .buttonShape {
     padding: 0.3rem 1.3rem 0.3rem 1rem;
   }
+
   .buttonText {
     font-size: $font-size-mobile;
   }

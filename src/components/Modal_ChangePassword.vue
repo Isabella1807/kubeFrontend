@@ -63,15 +63,13 @@ const changePassword = async () => {
   }
 
   try {
-    const token = localStorage.getItem("authToken"); // Get token from localStorage
+    const token = localStorage.getItem("authToken");
 
-    // Send PUT request to backend
     const response = await ApiService.put("/login/changepassword", {
       oldPassword: oldPassword.value,
       newPassword: newPassword.value,
     });
 
-    // If successful, reset form and close modal
     console.log(response.data);
     oldPassword.value = "";
     newPassword.value = "";
