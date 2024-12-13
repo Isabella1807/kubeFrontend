@@ -47,10 +47,9 @@
 import { ref, computed } from 'vue';
 import ApiService from '@/services/apiService';
 
-// close the modal efter a file has been uploaded with a success
 const emit = defineEmits(['close', 'upload-success']);
 
-//variables 
+
 const nameOfFile = ref('');
 const pickStudent = ref(false);
 const pickTeacher = ref(false);
@@ -59,7 +58,7 @@ const isLoading = ref(false);
 const error = ref('');
 const fileToUpload = ref(null);
 
-// this handles the file upload event, name the file and save the file
+
 const FileUpload = (event) => {
   const file = event.target.files[0];
   if (file?.type === "text/csv") {
@@ -69,13 +68,13 @@ const FileUpload = (event) => {
   }
 };
 
-// does that you can remove the uploaded file 
+
 const refreshFile = () => {
   nameOfFile.value = '';
   fileToUpload.value = null;
   error.value = '';
 };
-// reset if you have chosen teacher or students 
+
 const resetFields = () => {
   if (pickStudent.value) pickTeacher.value = false;
   if (pickTeacher.value) {
@@ -83,20 +82,19 @@ const resetFields = () => {
   }
 };
 
-//close the modal
+
 const Close = () => emit('close');
-//uploads the users to server
+
 const uploadUsers = async () => {
   if (!fileToUpload.value || (pickStudent.value && !groupName.value)) return;
   
   isLoading.value = true;
   
-  //formdata is javascript object that makes is possible to upload and send files
+
   try {
       const formData = new FormData();
       formData.append('file', fileToUpload.value);
       formData.append('teamName', groupName.value);
-      // uploader the file to backend server API endpoint
       await ApiService.post('http://localhost:3000/users/upload', formData);
       emit('upload-success');
       Close();
@@ -152,7 +150,6 @@ const uploadUsers = async () => {
     color: $primaryPurple;
 }
 
-/* Upload Section */
 .newUserUpload {
   margin-bottom: 20px;
   display: flex;
@@ -200,7 +197,6 @@ const uploadUsers = async () => {
   right: 10px;
 }
 
-/* check mark sektion */
 .newUserCheckbox {
     margin-bottom: 20px;
     text-align: left;
@@ -218,7 +214,7 @@ const uploadUsers = async () => {
   margin-right: 10px;
 }
 
-/* Group Input */
+
 .newUserRolePick {
   margin-bottom: 20px;
   text-align: left;
@@ -232,7 +228,7 @@ const uploadUsers = async () => {
   background: $lightGrey;
 }
 
-/* Buttons */
+
 .newUserButtons {
   display: flex;
   flex-direction: row;
@@ -261,7 +257,7 @@ const uploadUsers = async () => {
     gap: 10px;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .modal-content {
     width: 95%;
@@ -280,7 +276,7 @@ const uploadUsers = async () => {
   }
 }
 
-/* Hover effects */
+
 .newUserCancelBtn:hover {
     background-color: $lightGrey;  
     color: $darkGrey;  

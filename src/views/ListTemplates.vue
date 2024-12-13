@@ -143,6 +143,7 @@ onMounted(() => {
   font-size: $font-size-desktop;
   background: none;
   color: $darkGrey;
+  cursor: pointer;
 }
 
 .delete-btn {
@@ -151,6 +152,7 @@ onMounted(() => {
   font-size: $font-size-desktop;
   background: none;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 table {
