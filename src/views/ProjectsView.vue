@@ -4,11 +4,11 @@ import ProjectRows from "@/components/ProjectRows.vue";
 import ProjectTableWrapper from "@/components/ProjectTableWrapper.vue";
 import NewProjectModal from "../components/Modal_NewProject.vue";
 import {ref, onMounted} from 'vue';
-import ApiService from '../services/apiServer.js';
+import ApiService from '../services/apiService.js';
 
 
 const projectRows = ref([]);
-const templateOptions = ref([]); 
+const templateOptions = ref([]);
 const selectedTemplate = ref(null);
 const showModal = ref(false);
 
@@ -22,11 +22,11 @@ onMounted(async () => {
 
       //If it returns 1 - switch places. If returns -1 - do not switch places
       // Place own projects first
-      if (a.userId === userId && b.userId !== userId){
+      if (a.userId === userId && b.userId !== userId) {
         return 1
       }
 
-      if(b.userId === userId && a.userId !== userId){
+      if (b.userId === userId && a.userId !== userId) {
         return -1
       }
 
@@ -55,23 +55,17 @@ onMounted(async () => {
 });
 
 const saveNewProject = async (newProject) => {
-    try {
-        const response = await ApiService.post('/projects', {
-            projectName: newProject.projectName,
-            subdomainName: newProject.subdomainName,
-            templateId: newProject.selectedTemplate,
-        });
+  try {
 
-        // Places new data first in array
-        projectRows.value.unshift(response.data);
-        showModal.value = false;
-    } catch (error) {
-        console.error("Fejl ved oprettelse af projekt:", error.response?.data || error.message);
-    }
+    // Places new data first in array
+    projectRows.value.unshift(newProject);
+    showModal.value = false;
+  } catch (error) {
+    console.error("Fejl ved oprettelse af projekt:", error.response?.data || error.message);
+  }
 };
 
 const removeProjectFromList = (projectId) => {
-  console.log(projectId)
   projectRows.value = projectRows.value.filter(item => item.projectId !== projectId);
 }
 
@@ -80,8 +74,8 @@ const setProjectStatus = (projectId, status) => {
     return item.projectId === projectId
   })
 
-  //-1 cause if we say !projectIndex the project at index 0 will be banished
-  if (projectIndex === -1){
+  // -1 cause if we say !projectIndex the project at index 0 will be banished
+  if (projectIndex === -1) {
     return
   }
 
@@ -98,11 +92,12 @@ const setProjectStatus = (projectId, status) => {
     <div>
       <ProjectTableWrapper>
         <ProjectRows v-for="item in projectRows" :key="item.projectId" :projectData="item"
-                     :selectedTemplate="item.selectedTemplate" @projectDeleted="removeProjectFromList" @projectStatus="setProjectStatus"/>
+                     :selectedTemplate="item.selectedTemplate" @projectDeleted="removeProjectFromList"
+                     @projectStatus="setProjectStatus"/>
       </ProjectTableWrapper>
     </div>
   </div>
-  <NewProjectModal :show="showModal" @close="showModal = false" @save="saveNewProject"/>
+  <NewProjectModal v-if="showModal" @close="showModal = false" @save="saveNewProject"/>
 </template>
 
 <style scoped lang="scss">

@@ -4,7 +4,7 @@ import IconButton from "@/components/IconButton.vue";
 import Icon from "@/components/Icon.vue";
 import Button from "@/components/Button.vue";
 import DeleteModal from '@/components/Modal_DeleteProject.vue';
-import ApiService from "@/services/apiServer.js";
+import ApiService from "@/services/apiService.js";
 
 const showModalDeleteModal = ref(false);
 

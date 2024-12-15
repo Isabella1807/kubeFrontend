@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import ApiService from '@/services/apiServer'; 
+import ApiService from '@/services/apiService';
 import { useRouter } from 'vue-router';
 
 const email = ref('');
@@ -59,7 +59,7 @@ const loginUser = async () => {
       password: password.value,
     });
 
-    console.log(response)
+    //console.log(response)
 
     const token = response.data.token;
     const roleId = response.data.role;

@@ -30,7 +30,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import yaml from "js-yaml";
-import ApiService from "@/services/apiServer";
+import ApiService from "@/services/apiService";
 
 const templateName = ref("");
 const templateText = ref("");

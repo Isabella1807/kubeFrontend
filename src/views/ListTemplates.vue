@@ -2,7 +2,7 @@
   <div>
     <div class="createNewProjectButtonContainer">
       <RouterLink to="/templates/edit">
-        <IconButton icon="addIcon" large primary />
+        <IconButton icon="addIcon" large primary/>
       </RouterLink>
       <h1 class="createProjectText">Create new template</h1>
     </div>
@@ -12,7 +12,7 @@
         <th>
           Template name
           <button class="sort-btn">
-            <font-awesome-icon :icon="['fas', 'sort-down']" />
+            <font-awesome-icon :icon="['fas', 'sort-down']"/>
           </button>
         </th>
         <th>Services</th>
@@ -21,14 +21,16 @@
 
       <tr v-for="(template, index) in templates" :key="index">
         <td class="font-bold">{{ template.templateName }}</td>
-        <td>{{ template.templateText }}</td>
+        <td class="templatetext">
+          <p>{{ template.templateText }}</p>
+        </td>
         <td>
           <div class="flex flex-end">
             <RouterLink :to="`/templates/new/${template.templateId}`" class="edit-btn">
-              <font-awesome-icon :icon="['far', 'pen-to-square']" />
+              <font-awesome-icon :icon="['far', 'pen-to-square']"/>
             </RouterLink>
             <button class="delete-btn" @click="deleteTemplate(template.templateId)">
-              <font-awesome-icon :icon="['far', 'trash-can']" />
+              <font-awesome-icon :icon="['far', 'trash-can']"/>
             </button>
 
           </div>
@@ -39,8 +41,8 @@
 </template>
 
 <script setup>
-import ApiService from "@/services/apiServer";
-import { ref, onMounted } from "vue";
+import ApiService from "@/services/apiService";
+import {ref, onMounted} from "vue";
 import IconButton from "@/components/IconButton.vue";
 
 const templates = ref([]);
@@ -49,7 +51,6 @@ const fetchTemplates = async () => {
   try {
     const response = await ApiService.get("/templates");
     templates.value = response.data.sort((a, b) => b.templateId - a.templateId);
-    console.log(response.data);
   } catch (error) {
     console.error("Error fetching templates:", error);
   }
@@ -81,6 +82,16 @@ onMounted(() => {
 
   .createProjectText {
     margin-left: 10px;
+  }
+}
+
+.templatetext {
+  overflow: hidden;
+
+  p{
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
