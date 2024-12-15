@@ -77,14 +77,14 @@ const saveTemplate = async () => {
     templateName: templateName.value,
     templateText: templateText.value,
   });
-  alert("Template updated successfully!");
+  //alert("Template updated successfully!");
 } else {
   // Opret ny template
   await ApiService.post("/templates", {
     templateName: templateName.value,
     templateText: templateText.value,
   });
-  alert("Template created successfully!");
+  //alert("Template created successfully!");
 }
 
     router.push("/templates");
