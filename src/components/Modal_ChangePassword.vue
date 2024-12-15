@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref } from "vue";
-import ApiService from "@/services/apiServer";
+import ApiService from "@/services/apiService";
 
 const props = defineProps({
   show: {
@@ -70,7 +70,7 @@ const changePassword = async () => {
       newPassword: newPassword.value,
     });
 
-    console.log(response.data);
+    //console.log(response.data);
     oldPassword.value = "";
     newPassword.value = "";
     repeatPassword.value = "";

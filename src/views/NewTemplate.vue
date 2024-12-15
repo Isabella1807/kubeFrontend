@@ -30,7 +30,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import yaml from "js-yaml";
-import ApiService from "@/services/apiServer";
+import ApiService from "@/services/apiService";
 
 const templateName = ref("");
 const templateText = ref("");
@@ -77,14 +77,14 @@ const saveTemplate = async () => {
     templateName: templateName.value,
     templateText: templateText.value,
   });
-  alert("Template updated successfully!");
+  //alert("Template updated successfully!");
 } else {
   // Opret ny template
   await ApiService.post("/templates", {
     templateName: templateName.value,
     templateText: templateText.value,
   });
-  alert("Template created successfully!");
+  //alert("Template created successfully!");
 }
 
     router.push("/templates");

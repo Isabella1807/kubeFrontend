@@ -116,7 +116,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import ApiService from '@/services/apiServer';
+import ApiService from '@/services/apiService';
 import { useRouter } from 'vue-router';
 import ModalChangePassword from "@/components/Modal_ChangePassword.vue";
 

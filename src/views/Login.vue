@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import ApiService from '@/services/apiServer'; 
+import ApiService from '@/services/apiService';
 import { useRouter } from 'vue-router';
 
 const email = ref('');
@@ -59,18 +59,21 @@ const loginUser = async () => {
       password: password.value,
     });
 
-    console.log(response)
+    //console.log(response)
 
     const token = response.data.token;
     const roleId = response.data.role;
+    const userId = response.data.userId;
 
     // Hvis "Remember me" er valgt, gem token i localStorage
     if (rememberMe.value) {
       localStorage.setItem('token', token);
       localStorage.setItem('roleId', roleId);
+      localStorage.setItem('userId', userId);
     } else {
       sessionStorage.setItem('token', token); // Gem token i sessionStorage hvis ikke "Remember me"
       sessionStorage.setItem('roleId', roleId);
+      sessionStorage.setItem('userId', userId);
     }
 
     // Sæt tokenet globalt i Axios header (så det bruges til fremtidige anmodninger)
