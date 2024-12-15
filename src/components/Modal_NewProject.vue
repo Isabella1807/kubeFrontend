@@ -78,8 +78,6 @@ const resetForm = () => {
   error.value = '';
   close();
 };
-
-
 </script>
   
 <style lang="scss">
@@ -200,7 +198,6 @@ const resetForm = () => {
     cursor: pointer;
   }
   
-  /* Hover effects */
   .newProjectCancelBtn:hover {
     background-color: $lightGrey;  
     color: $darkGrey;  
@@ -214,8 +211,6 @@ const resetForm = () => {
   }
   
   
-  
-  /* Responsive Styles */
   @media (max-width: 768px) {
     .newProjectContent {
       width: 90%;

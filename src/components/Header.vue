@@ -17,7 +17,8 @@
 
         <!-- Desktop Navigation -->
         <ul v-show="!mobile" class="navigation1">
-          <RouterLink class="link" to="/projects" active-class="active-link" v-if="isStudentOrAnyone">Project</RouterLink>
+          <RouterLink class="link" to="/projects" active-class="active-link" v-if="isStudentOrAnyone">Project
+          </RouterLink>
           <RouterLink class="link" to="/templates" active-class="active-link" v-if="isAdmin">Templates</RouterLink>
           <RouterLink class="link" to="/groups" active-class="active-link" v-if="isAdminOrFaculty">Groups</RouterLink>
 
@@ -68,9 +69,10 @@
         <!-- Mobile Dropdown Navigation -->
         <transition name="mobile-nav">
           <ul v-show="mobileNav" class="dropdown-nav">
-            <RouterLink class="link" to="/projects" active-class="active-link">Project</RouterLink>
-            <RouterLink class="link" to="/templates" active-class="active-link">Templates</RouterLink>
-            <RouterLink class="link" to="/groups" active-class="active-link">Groups</RouterLink>
+            <RouterLink class="link" to="/projects" active-class="active-link" v-if="isStudentOrAnyone">Project
+            </RouterLink>
+            <RouterLink class="link" to="/templates" active-class="active-link" v-if="isAdmin">Templates</RouterLink>
+            <RouterLink class="link" to="/groups" active-class="active-link" v-if="isAdminOrFaculty">Groups</RouterLink>
             <label class="switch">
               <input type="checkbox" v-model="isDark" @click="toggleDark()" />
               <span class="slider round">
@@ -100,12 +102,10 @@
                 </button>
               </div>
             </transition>
-            <!-- Settings Icon - Placér den i bunden -->
+
             <div class="settings-footer">
               <i :class="{ 'fa-solid fa-gear': !dropdownOpen, 'fa-solid fa-times': dropdownOpen }" class="settings-icon"
                 @click="toggleDropdown"></i>
-
-
             </div>
           </ul>
         </transition>
@@ -115,7 +115,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed} from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import ApiService from '@/services/apiServer';
 import { useRouter } from 'vue-router';
 import ModalChangePassword from "@/components/Modal_ChangePassword.vue";
@@ -137,15 +137,12 @@ onMounted(() => {
 
 const logout = async () => {
   try {
-    // Fjern tokenet fra storage
     localStorage.removeItem('token');
     sessionStorage.removeItem('token');
 
-    // Fjern tokenet fra Axios headers
     ApiService.clearToken();
 
-    // Omdiriger til login-siden
-    router.push('/'); // Går tilbage til login-siden
+    router.push('/');
   } catch (error) {
     console.error('Fejl under log-ud:', error);
   }
@@ -194,17 +191,15 @@ const toggleDropdown = () => {
 
 const fontSize = ref(localStorage.getItem('fontSize') || 'default');
 
-// Funktion til at skifte fontstørrelse
 const toggleFontSize = () => {
   const newFontSize = fontSize.value === 'default' ? 'large' : 'default';
-  changeFontSize(newFontSize); // Ændrer fontstørrelse med det samme
+  changeFontSize(newFontSize); 
 };
 
-// Funktion til at ændre fontstørrelse
 const changeFontSize = (size) => {
-  document.documentElement.style.fontSize = size === 'large' ? '20px' : '15px'; // Skifter mellem stor og normal størrelse
-  localStorage.setItem('fontSize', size); // Gemmer valget i localStorage
-  fontSize.value = size; // Opdaterer den interne state
+  document.documentElement.style.fontSize = size === 'large' ? '20px' : '15px';
+  localStorage.setItem('fontSize', size); 
+  fontSize.value = size;
 };
 
 const searchItems = () => {
@@ -226,17 +221,14 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss">
-// Variabler
 $transition-duration: 0.5s;
 $header-padding: 10px 0;
 $max-width-desktop: 1350px;
 
-// Mixins
 @mixin transition($duration: $transition-duration) {
   transition: $duration ease all;
 }
 
-// Styling
 .settings-container {
   position: relative;
   display: inline-block;
@@ -244,7 +236,6 @@ $max-width-desktop: 1350px;
   .dropdown {
     position: absolute;
     top: 50px;
-    /* Just over the settings icon */
     right: 0;
     background-color: $white-color;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -269,12 +260,12 @@ $max-width-desktop: 1350px;
       }
 
       &:nth-child(2) {
-        background-color: $primaryPurple; // Brug variablen for lilla farve, hvis den er defineret
-        color: $white-color; // Sørg for, at teksten også er synlig
+        background-color: $primaryPurple;
+        color: $white-color; 
         border-radius: 5px;
 
         &:hover {
-          background-color: darken($primaryPurple, 10%); // Mørkere lilla ved hover, hvis ønsket
+          background-color: darken($primaryPurple, 10%);
         }
       }
     }
@@ -289,7 +280,6 @@ $max-width-desktop: 1350px;
   }
 }
 
-/* Animation for dropdown */
 .dropdown-fade-enter-active,
 .dropdown-fade-leave-active {
   transition: opacity 0.3s;
@@ -300,7 +290,6 @@ $max-width-desktop: 1350px;
   opacity: 0;
 }
 
-/* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
@@ -340,7 +329,6 @@ $max-width-desktop: 1350px;
   transition: 0.4s;
 }
 
-/* Ikoner for måne og sol */
 .moon-icon,
 .sun-icon {
   position: absolute;
@@ -350,7 +338,6 @@ $max-width-desktop: 1350px;
   transition: color 0.4s;
 }
 
-/* Placér måne til venstre og sol til højre */
 .moon-icon {
   left: 12px;
 }
@@ -362,7 +349,6 @@ $max-width-desktop: 1350px;
 
 input:checked+.slider:before {
   transform: translateX(-40px);
-  /* Justeret position til slider-knappen */
 }
 
 input:checked+.slider .moon-icon {
@@ -373,7 +359,6 @@ input:checked+.slider .sun-icon {
   color: $darkGrey;
 }
 
-// Nr 2 font-size
 .font-size-toggle {
   position: relative;
   display: inline-block;
@@ -412,7 +397,6 @@ input:checked+.slider .sun-icon {
   transition: 0.4s;
 }
 
-/* Ikoner for måne og sol */
 .aa-icon,
 .a-icon {
   position: absolute;
@@ -434,7 +418,6 @@ input:checked+.slider .sun-icon {
 
 input:checked+.slider-font:before {
   transform: translateX(-40px);
-  /* Justeret position til slider-knappen */
 }
 
 input:checked+.slider-font .aa-icon {
@@ -459,7 +442,6 @@ input:checked+.slider-font .a-icon {
 
     &:focus {
       border-color: $primaryPurple;
-      /* Juster farve efter behov */
       outline: none;
     }
   }
@@ -538,13 +520,9 @@ header {
 
     .icon {
       position: fixed;
-      /* Gør det fast, så det altid er på skærmen */
       top: 20px;
-      /* Justér afstand fra toppen */
       right: 20px;
-      /* Justér afstand fra højre */
       z-index: 105;
-      /* Sørg for, at den er over dropdown-menuen */
 
       i {
         font-size: 25px;
@@ -552,7 +530,7 @@ header {
         transition: transform 0.3s ease, color 0.3s ease;
 
         &.fa-times {
-          color: $primaryPurple; // Valgfri farve til krydset
+          color: $primaryPurple;
         }
 
         &.fa-bars {
@@ -567,12 +545,10 @@ header {
       position: fixed;
       top: 0;
       right: 0;
-      /* Juster til at være til højre */
       width: 200px;
       height: 100%;
       background-color: $white-color;
       box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
-      /* Skab en skygge på venstre side for at indikere sidepanel */
       padding-top: 50px;
       z-index: 100;
 
@@ -591,11 +567,9 @@ header {
     }
   }
 
-  // Placering af settings-ikonet
   .settings-footer {
     position: absolute;
     bottom: 20px;
-    /* Flytter det til bunden */
     width: 100%;
     text-align: center;
 
@@ -611,13 +585,10 @@ header {
     }
   }
 
-  // Styling til top-slideren
   .top-slider {
     position: fixed;
     top: 450px;
-    /* Skjult til at starte med */
     right: 0;
-    /* Juster til at være til højre */
     width: 200px;
     z-index: 100;
     display: flex;
@@ -638,7 +609,6 @@ header {
     }
   }
 
-  // Animation til top-slideren
   .top-slider-enter-active,
   .top-slider-leave-active {
     transition: transform 0.3s ease-in-out;
