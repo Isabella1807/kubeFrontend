@@ -63,7 +63,7 @@ onMounted(async () => {
       return {name: item.templateName, id: item.templateId}
     })
   } catch {
-    console.log("FEJL DUDE")
+    console.log("error")
   }
 })
 

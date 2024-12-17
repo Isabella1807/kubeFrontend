@@ -3,7 +3,7 @@
     <div class="deleteModal">
       <button @click="emit('close')" class="deleteCloseBtn">✖</button>
       <h1 class="deleteModalTitle">
-        Are you sure you want to delete {{ selectedCount > 1 ? `these ${selectedCount} groups` : 'this group' }}?
+        Are you sure you want to delete this project?
       </h1>
 
       <div class="deleteModalButtons">
