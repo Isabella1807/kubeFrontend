@@ -2,29 +2,30 @@ $white-color: #fff;
 $darkmode-bg: #180020;
 $darkmode-lilla: #e8aaff;
 $background-shield: #bcbcbc;
+$primaryPurpledarkmode: #7C3297;
 $red: #E04040;
 
 [color-scheme='dark'] {
   // Baggrundsfarver
-  header, body, .dropdown-nav, .modal-content, .select-container, .newuser-modal-content, .newUserModalContent, .changepasswordmodal-content, .newProjectContent{
+  header, body, .dropdown-nav, .modal-content, .select-container, .newuser-modal-content{
     background-color: $darkmode-bg;
   }
 
-  .slider-font, .slider, input, .custom-select, .newuser-upload-button, .newUserUploadBtn {
+  .slider-font, .slider, input, .custom-select, .newuser-upload-button {
     background-color: $background-shield;
   }
 
   // Tekstfarver
-  h1, h2, p, th, td, .link, .darkMode, .darkmodelabel, .newuser-checkbox-item, ul.dropdown-nav, .newUserCheckbox{
+  h1, h2, p, th, td, .link, .darkMode, .darkmodelabel, .newuser-checkbox-item {
     color: $white-color;
   }
 
   // Img logo
-  .branding img {
+  .branding img, .form-container img {
     transition: filter 0.3s ease;
   }
   
-  .dark-mode .branding img {
+  .dark-mode .branding img, .form-container img {
     filter: invert(1) brightness(2); /* Gør det sort til hvidt */
   }  
 
