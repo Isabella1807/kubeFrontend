@@ -2,7 +2,7 @@
   <div class="login-container">
     <!-- Logo and Login Form -->
     <div class="form-container">
-      <img src="@/img/logo.png" alt="KubeLab Logo" class="logo" />
+      <img src="@/img/logoKubelabLogin.png" alt="KubeLab Logo" class="logo" />
       <form @submit.prevent="loginUser">
         <!-- Email Input -->
         <input type="email" placeholder="Email" class="input-field" v-model="email" />

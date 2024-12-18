@@ -5,7 +5,7 @@
       <nav>
         <div class="branding">
           <RouterLink to="/projects">
-            <img src="../img/kubelab.png" alt="Kubelab logo" />
+            <img src="../img/logoKubelab.png" alt="Kubelab logo" />
           </RouterLink>
 
           <!-- Søgefelt -->
