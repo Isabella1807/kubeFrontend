@@ -22,7 +22,7 @@
                   Students
               </label>
               <label class="newUserCheckboxItem">
-                  <input type="checkbox" v-model="pickTeacher" @change="resetFields" />
+                  <input type="checkbox" class="darkModeText" v-model="pickTeacher" @change="resetFields" />
                   Teachers
               </label>
           </div>        
