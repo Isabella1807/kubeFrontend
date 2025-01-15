@@ -88,6 +88,7 @@ const saveProject = async () => {
     });
 
     isLoading.value = false;
+    console.log(response)
     emit('save', response.data);
   } catch (err) {
     isLoading.value = false;

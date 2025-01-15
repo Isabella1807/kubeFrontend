@@ -44,9 +44,6 @@ const toggleServer = async () => {
 };
 
 const restartProject = async () => {
-  /*if (!isOnline.value) {
-    await ApiService.post(`/projects/start/${props.projectData.projectId}`);
-  }*/
   emit('projectStatus', props.projectData.projectId, 0)
   // Restart server
   await ApiService.post(`/projects/restart/${props.projectData.projectId}`);

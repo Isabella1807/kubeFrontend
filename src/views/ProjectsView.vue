@@ -14,16 +14,6 @@ const showModal = ref(false);
 
 onMounted(async () => {
   try {
-    /* if (localStorage.getItem("roleId") || sessionStorage.getItem("roleId") === 7){
-       const response = await ApiService.get("/projects");
-     } else {
-       const response = await ApiService.get("/projects");
-     }
-
-
-
-     console.log(response.data[0].userId)*/
-
     const response = await ApiService.get("/projects");
 
     const userId = parseInt(localStorage.getItem("userId") || sessionStorage.getItem("userId"));
@@ -67,7 +57,7 @@ const saveNewProject = async (newProject) => {
   try {
 
     // Places new data first in array
-    //projectRows.value.unshift(newProject);
+    projectRows.value.unshift(newProject);
     showModal.value = false;
   } catch (error) {
     console.error("Fejl ved oprettelse af projekt:", error.response?.data || error.message);
