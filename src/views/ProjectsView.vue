@@ -14,23 +14,33 @@ const showModal = ref(false);
 
 onMounted(async () => {
   try {
+    /* if (localStorage.getItem("roleId") || sessionStorage.getItem("roleId") === 7){
+       const response = await ApiService.get("/projects");
+     } else {
+       const response = await ApiService.get("/projects");
+     }
+
+
+
+     console.log(response.data[0].userId)*/
+
     const response = await ApiService.get("/projects");
 
-    const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
+    const userId = parseInt(localStorage.getItem("userId") || sessionStorage.getItem("userId"));
 
     projectRows.value = response.data.sort((a, b) => {
 
-      //If it returns 1 - switch places. If returns -1 - do not switch places
+      // If it returns -1, a is placed before b. If it returns 1, b is placed before a.
       // Place own projects first
       if (a.userId === userId && b.userId !== userId) {
-        return 1
-      }
-
-      if (b.userId === userId && a.userId !== userId) {
         return -1
       }
 
-      // if a & b both have my ID or not my ID THEN sort alphabetically by teamName
+      if (b.userId === userId && a.userId !== userId) {
+        return 1
+      }
+
+      // If both a and b have my ID or neither does, then sort alphabetically by teamName
       if (a.teamName !== b.teamName) {
         return a.teamName > b.teamName ? 1 : -1
       }
@@ -38,7 +48,6 @@ onMounted(async () => {
       // if same team - sort alphabetically by projectName
       return a.projectName > b.projectName ? 1 : -1
     })
-
 
   } catch (error) {
     console.error("Fejl ved API-kald", error.response?.data || error.message);
@@ -58,7 +67,7 @@ const saveNewProject = async (newProject) => {
   try {
 
     // Places new data first in array
-    projectRows.value.unshift(newProject);
+    //projectRows.value.unshift(newProject);
     showModal.value = false;
   } catch (error) {
     console.error("Fejl ved oprettelse af projekt:", error.response?.data || error.message);
@@ -81,6 +90,7 @@ const setProjectStatus = (projectId, status) => {
 
   projectRows.value[projectIndex].state = status
 }
+
 </script>
 
 <template>

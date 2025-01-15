@@ -58,7 +58,6 @@ const isLoading = ref(false);
 const error = ref('');
 const fileToUpload = ref(null);
 
-
 const FileUpload = (event) => {
   const file = event.target.files[0];
   if (file?.type === "text/csv") {
@@ -68,7 +67,6 @@ const FileUpload = (event) => {
   }
 };
 
-
 const refreshFile = () => {
   nameOfFile.value = '';
   fileToUpload.value = null;
@@ -77,11 +75,8 @@ const refreshFile = () => {
 
 const resetFields = () => {
   if (pickStudent.value) pickTeacher.value = false;
-  if (pickTeacher.value) {
-      pickStudent.value = false;
-  }
+  if (pickTeacher.value) pickStudent.value = false;
 };
-
 
 const Close = () => emit('close');
 
@@ -89,7 +84,6 @@ const uploadUsers = async () => {
   if (!fileToUpload.value || (pickStudent.value && !groupName.value)) return;
   
   isLoading.value = true;
-  
 
   try {
       const formData = new FormData();

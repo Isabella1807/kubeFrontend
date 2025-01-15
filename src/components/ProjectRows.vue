@@ -15,6 +15,8 @@ const props = defineProps({
   }
 })
 
+//console.log(props.projectData)
+
 const emit = defineEmits(['projectDeleted', 'projectStatus'])
 
 

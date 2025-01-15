@@ -89,7 +89,7 @@ const newMember = ref({
   firstName: '',
   lastName: '',
   uclMail: '',
-  roleId: '3'
+  roleId: '7'
 });
 
 async function fetchTeamMembers() {
@@ -131,7 +131,7 @@ async function addNewMember() {
       firstName: '',
       lastName: '',
       uclMail: '',
-      roleId: '3'
+      roleId: '7'
     };
   } catch (error) {
     console.error('Error adding member:', error);

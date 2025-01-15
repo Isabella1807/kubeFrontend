@@ -150,17 +150,17 @@ const logout = async () => {
 
 const isAdmin = computed(() => {
   const roleId = localStorage.getItem('roleId') || sessionStorage.getItem('roleId');
-  return roleId == 1;
+  return roleId == 5;
 })
 
 const isAdminOrFaculty = computed(() => {
   const roleId = localStorage.getItem('roleId') || sessionStorage.getItem('roleId');
-  return roleId == 1 || roleId == 2;
+  return roleId == 5 || roleId == 6;
 })
 
 const isStudentOrAnyone = computed(() => {
   const roleId = localStorage.getItem('roleId') || sessionStorage.getItem('roleId');
-  return roleId == 1 || roleId == 2 || roleId == 3;
+  return roleId == 5 || roleId == 6 || roleId == 7;
 })
 
 
